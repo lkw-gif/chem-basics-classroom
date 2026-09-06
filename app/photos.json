@@ -1,0 +1,82 @@
+[
+  {
+    "id": "copper-wire",
+    "source": "https://commons.wikimedia.org/wiki/File:Electric_guide_3%C3%972.5_mm.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "objectPosition": "50% 50%",
+    "attribution": "Petar Milošević / Wikimedia Commons / CC BY-SA 4.0"
+  },
+  {
+    "id": "aluminium-foil",
+    "source": "https://commons.wikimedia.org/wiki/File:Aluminium_foil_closeup.jpg",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "objectPosition": "50% 50%",
+    "attribution": "http://images-of-elements.com/ / Wikimedia Commons / CC BY 3.0"
+  },
+  {
+    "id": "steel-nails",
+    "source": "https://commons.wikimedia.org/wiki/File:Steel_nails.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "objectPosition": "50% 50%",
+    "attribution": "Gausanchennai / Wikimedia Commons / CC BY-SA 4.0"
+  },
+  {
+    "id": "gold-ring",
+    "source": "https://commons.wikimedia.org/wiki/File:Gold_ring_MET_DP143815.jpg",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "objectPosition": "50% 43%",
+    "attribution": "The Metropolitan Museum of Art (Open Access collection) / Wikimedia Commons / CC0"
+  },
+  {
+    "id": "graphite-pencil",
+    "source": "https://commons.wikimedia.org/wiki/File:Closeup_of_pencil_graphite.JPG",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "objectPosition": "50% 50%",
+    "attribution": "Juliancolton / Wikimedia Commons / Public domain"
+  },
+  {
+    "id": "mushroom-soup",
+    "source": "https://commons.wikimedia.org/wiki/File:Cream_Mushroom_soup_2.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "objectPosition": "50% 50%",
+    "attribution": "Redeemer|Vodesnet / Wikimedia Commons / CC BY-SA 3.0"
+  },
+  {
+    "id": "muddy-water",
+    "source": "https://commons.wikimedia.org/wiki/File:Muddy_road_in_Akamas_Peninsula,_Cyprus_02.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "objectPosition": "40% 80%",
+    "attribution": "Michal Klajban / Wikimedia Commons / CC BY-SA 4.0"
+  },
+  {
+    "id": "milk",
+    "source": "https://commons.wikimedia.org/wiki/File:Milk_glass.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "objectPosition": "50% 50%",
+    "attribution": "Stefan Kühn / Wikimedia Commons / CC BY-SA 3.0"
+  },
+  {
+    "id": "water",
+    "source": "https://commons.wikimedia.org/wiki/File:Glass-of-water.jpg",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "objectPosition": "50% 60%",
+    "attribution": "Derek Jensen (Tysto) / Wikimedia Commons / Public domain"
+  },
+  {
+    "id": "air-sky",
+    "source": "https://commons.wikimedia.org/wiki/File:Trees_rising_out_of_Cheow_Lan_Lake,_blue_sky,_eternal_summer_in_Surat_Thani_edited.jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "objectPosition": "50% 15%",
+    "attribution": "Original:  Vyacheslav Argenberg\nDerivative work:  The Cosmonaut / Wikimedia Commons / CC BY 4.0"
+  }
+]
