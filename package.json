@@ -10,7 +10,9 @@
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
-    "format": "oxfmt"
+    "format": "oxfmt",
+    "build:github": "vite build --config vite.github.config.ts",
+    "check": "tsc --noEmit && node scripts/check-content.mjs && node scripts/check-render.mjs"
   },
   "dependencies": {
     "react": "19.2.6",

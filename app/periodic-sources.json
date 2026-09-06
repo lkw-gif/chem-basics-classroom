@@ -1,0 +1,180 @@
+{
+  "verifiedAt": "2026-09-07",
+  "schemaNotes": {
+    "coordinates": "row and column are CSS grid coordinates, 1-based. Periods remain 1–7. La–Lu are detached at row 8, columns 3–17; Ac–Lr are detached at row 9, columns 3–17. Leave period 6/7 column 3 for 57–71 and 89–103 placeholders. Detached columns do not represent group numbers; group is null there.",
+    "scope": "118 currently recognised named elements. Beginner facts and uses are original Traditional Chinese paraphrases; facts are distinguished from the source wording. No isotope masses or electron configurations are included.",
+    "chinese": "Common Traditional Chinese names; the 20 notes names match Hong Kong usage. Some rare-element spellings follow Taiwanese standard forms, with useful regional variants in aliases. Silicon is 矽, alias 硅. Mercury is 汞, alias 水銀. 117/118 use the Unicode characters 鿬/鿫 rather than component descriptions.",
+    "classification": "Broad classroom display convention: B, Si, Ge, As, Sb, Te are metalloids; Po is metal; At is nonmetal. Boundary classifications vary among references. For 109–118 categoryProvisional is true: display the category as provisional and do not present position-based classification as experimentally established bulk properties. No physical state is asserted for superheavy elements. In particular Ts/Og are placed with group 17/18 nonmetals as a table convention, not a claim that either is a normal gas.",
+    "sourceLimits": "The older university table is consulted for names only; its masses/other values are not copied. Modern IUPAC names/order supersede older names. No RSC artwork or prose has been copied."
+  },
+  "sources": [
+    {
+      "id": "iupac-table",
+      "title": "IUPAC — Periodic Table of the Elements",
+      "url": "https://iupac.org/what-we-do/periodic-table-of-elements/",
+      "supports": "Recognised element set and official periodic table."
+    },
+    {
+      "id": "iupac-table-pdf",
+      "title": "IUPAC Periodic Table (1 December 2018)",
+      "url": "https://iupac.org/wp-content/uploads/2018/12/IUPAC_Periodic_Table_A3-01Dec18.pdf",
+      "supports": "All 118 atomic numbers, symbols, official English spellings and detached row order."
+    },
+    {
+      "id": "iupac-new-elements",
+      "title": "IUPAC approves names 113, 115, 117 and 118",
+      "url": "https://iupac.org/iupac-announces-the-names-of-the-elements-113-115-117-and-118/",
+      "supports": "Nh nihonium, Mc moscovium, Ts tennessine and Og oganesson."
+    },
+    {
+      "id": "traditional-names",
+      "title": "Tunghai University General Chemistry Laboratory — 元素週期表",
+      "url": "https://gclab.thu.edu.tw/table/table.htm",
+      "supports": "Traditional Chinese element names and spelling variants through element 116; names only."
+    },
+    {
+      "id": "traditional-new-names",
+      "title": "Taiwan Chemical Society — 2024 first council meeting record, pages 7–8",
+      "url": "https://chemistry.org.tw/downFile/meeting/M_20240830105138.pdf",
+      "supports": "Names 113–118: 鉨、鈇、鏌、鉝、鿬、鿫."
+    },
+    {
+      "id": "traditional-naer",
+      "title": "National Academy for Educational Research — Chemical element bilingual dataset",
+      "url": "https://data.nat.gov.tw/dataset/14843",
+      "supports": "Authoritative Traditional Chinese terminology dataset provenance; direct CSV unavailable during verification."
+    },
+    {
+      "id": "hk-silicon",
+      "title": "HKU Stephen Hui Geological Museum — Mineral uses",
+      "url": "https://shmuseum.hku.hk/tc/education/earth-materials/minerals/mineral-uses",
+      "supports": "Hong Kong usage recognises 硅 (矽) for Si."
+    },
+    {
+      "id": "rsc-superheavy",
+      "title": "Royal Society of Chemistry — Oganesson",
+      "url": "https://periodic-table.rsc.org/element/118/ununoctium",
+      "supports": "Synthetic research element with only a few atoms produced; bulk properties remain uncertain."
+    },
+    {
+      "id": "rsc-H",
+      "title": "Royal Society of Chemistry — Hydrogen",
+      "url": "https://periodic-table.rsc.org/element/1/hydrogen",
+      "supports": "Simple properties and uses of H; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-He",
+      "title": "Royal Society of Chemistry — Helium",
+      "url": "https://periodic-table.rsc.org/element/2/helium",
+      "supports": "Simple properties and uses of He; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-C",
+      "title": "Royal Society of Chemistry — Carbon",
+      "url": "https://periodic-table.rsc.org/element/6/carbon",
+      "supports": "Simple properties and uses of C; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-N",
+      "title": "Royal Society of Chemistry — Nitrogen",
+      "url": "https://periodic-table.rsc.org/element/7/nitrogen",
+      "supports": "Simple properties and uses of N; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-O",
+      "title": "Royal Society of Chemistry — Oxygen",
+      "url": "https://periodic-table.rsc.org/element/8/oxygen",
+      "supports": "Simple properties and uses of O; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Na",
+      "title": "Royal Society of Chemistry — Sodium",
+      "url": "https://periodic-table.rsc.org/element/11/sodium",
+      "supports": "Simple properties and uses of Na; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Mg",
+      "title": "Royal Society of Chemistry — Magnesium",
+      "url": "https://periodic-table.rsc.org/element/12/magnesium",
+      "supports": "Simple properties and uses of Mg; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Al",
+      "title": "Royal Society of Chemistry — Aluminium",
+      "url": "https://periodic-table.rsc.org/element/13/aluminium",
+      "supports": "Simple properties and uses of Al; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-S",
+      "title": "Royal Society of Chemistry — Sulfur",
+      "url": "https://periodic-table.rsc.org/element/16/sulfur",
+      "supports": "Simple properties and uses of S; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Cl",
+      "title": "Royal Society of Chemistry — Chlorine",
+      "url": "https://periodic-table.rsc.org/element/17/chlorine",
+      "supports": "Simple properties and uses of Cl; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-K",
+      "title": "Royal Society of Chemistry — Potassium",
+      "url": "https://periodic-table.rsc.org/element/19/potassium",
+      "supports": "Simple properties and uses of K; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Ca",
+      "title": "Royal Society of Chemistry — Calcium",
+      "url": "https://periodic-table.rsc.org/element/20/calcium",
+      "supports": "Simple properties and uses of Ca; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Fe",
+      "title": "Royal Society of Chemistry — Iron",
+      "url": "https://periodic-table.rsc.org/element/26/iron",
+      "supports": "Simple properties and uses of Fe; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Cu",
+      "title": "Royal Society of Chemistry — Copper",
+      "url": "https://periodic-table.rsc.org/element/29/copper",
+      "supports": "Simple properties and uses of Cu; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Zn",
+      "title": "Royal Society of Chemistry — Zinc",
+      "url": "https://periodic-table.rsc.org/element/30/zinc",
+      "supports": "Simple properties and uses of Zn; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Ag",
+      "title": "Royal Society of Chemistry — Silver",
+      "url": "https://periodic-table.rsc.org/element/47/silver",
+      "supports": "Simple properties and uses of Ag; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Sn",
+      "title": "Royal Society of Chemistry — Tin",
+      "url": "https://periodic-table.rsc.org/element/50/tin",
+      "supports": "Simple properties and uses of Sn; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Au",
+      "title": "Royal Society of Chemistry — Gold",
+      "url": "https://periodic-table.rsc.org/element/79/gold",
+      "supports": "Simple properties and uses of Au; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Hg",
+      "title": "Royal Society of Chemistry — Mercury",
+      "url": "https://periodic-table.rsc.org/element/80/mercury",
+      "supports": "Simple properties and uses of Hg; use/info in the element JSON are brief original paraphrases."
+    },
+    {
+      "id": "rsc-Pb",
+      "title": "Royal Society of Chemistry — Lead",
+      "url": "https://periodic-table.rsc.org/element/82/lead",
+      "supports": "Simple properties and uses of Pb; use/info in the element JSON are brief original paraphrases."
+    }
+  ]
+}
