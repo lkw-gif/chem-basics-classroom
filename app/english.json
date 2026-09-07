@@ -1,5 +1,9 @@
 {
   "由這裏開始": "Start here",
+  "先選名稱。": "Choose a name first.",
+  "暫時不顯示化學式；先觀察模型和原子種類。": "The formula stays hidden for now; first observe the model and the types of atoms.",
+  "顯示化學式": "Show the chemical formula",
+  "先由名稱和模型開始，待學生觀察原子種類後，再按「顯示化學式」。": "Start with the name and model. After students observe the types of atoms, click \"Show the chemical formula\".",
   "身邊的元素": "Elements around us",
   "看懂化學式": "Read chemical formulae",
   "物質點樣分？": "Classify matter",
