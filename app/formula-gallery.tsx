@@ -70,10 +70,6 @@ export function FormulaGallery({ teacher }: { teacher: boolean }) {
               <h3>右下角的 ₂ 只跟前面的符號</h3>
               <p>H₂O 的 ₂ 跟着 H，所以有 2 個 H。O 後面沒有數字，代表 1 個 O。</p>
             </article>
-            <article className="card">
-              <h3>原子多，不一定是化合物</h3>
-              <p>H₂ 有 2 個原子，但全部都是氫，所以仍然是元素。H₂O 有氫和氧兩種元素，才是化合物。</p>
-            </article>
           </div>
 
           <div className="section-label">
