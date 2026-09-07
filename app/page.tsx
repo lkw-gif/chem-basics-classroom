@@ -7,7 +7,8 @@ import {Switch} from '@/components/ui/switch';
 import Model from './model';
 import BuildingBlocks from './building-blocks';
 import {chapters} from './content';
-import {Elements,Classification,Comparison,Changes,Laboratory,Review,Credits} from './lessons';
+import {Elements,Classification,Changes,Laboratory,Review,Credits} from './lessons';
+import Comparison from './compare-examples';
 import {FormulaGallery} from './formula-gallery';
 const icons=[Sparkles,Atom,FlaskConical,Layers3,Layers3,Lightbulb,FlaskConical,BookOpen];
 export function Classroom(){

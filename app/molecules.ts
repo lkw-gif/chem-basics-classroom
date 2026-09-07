@@ -2,7 +2,10 @@ type Ball={e:string;x:number;y:number;z:number;r?:number};
 type Scene={balls:Ball[];bonds:[number,number][]};
 export const COLORS:Record<string,string>={H:'#e6edf5',O:'#ed5d65',N:'#5689ed',C:'#566376',Cl:'#78c78a',I:'#b093db',Fe:'#8ca0b3',S:'#f5cf58',Na:'#b598dc',mud:'#b68858',fat:'#e9c36c',food:'#a8be78',other:'#aa8bd0'};
 export const names:Record<string,string>={H:'氫',O:'氧',N:'氮',C:'碳',Cl:'氯',I:'碘',Fe:'鐵',S:'硫',Na:'鈉',mud:'泥土顆粒',fat:'脂肪小滴',food:'食物成分',other:'其他成分'};
+COLORS.He='#e4af59';
+names.He='氦';
 export function molecule(kind:string):Scene{
+ if(kind==='O3')return {balls:[{e:'O',x:0,y:.38,z:0},{e:'O',x:-1.12,y:-.38,z:0},{e:'O',x:1.12,y:-.38,z:0}],bonds:[[0,1],[0,2]]};
  if(kind==='H2O')return {balls:[{e:'O',x:0,y:.15,z:0},{e:'H',x:-1.02,y:-.64,z:0},{e:'H',x:1.02,y:-.64,z:0}],bonds:[[0,1],[0,2]]};
  if(kind==='CO2')return {balls:[{e:'O',x:-1.42,y:0,z:0},{e:'C',x:0,y:0,z:0},{e:'O',x:1.42,y:0,z:0}],bonds:[[0,1],[1,2]]};
  if(['H2','N2','O2','Cl2','I2'].includes(kind)){const e=kind.replace('2','');return {balls:[{e,x:-.66,y:0,z:0},{e,x:.66,y:0,z:0}],bonds:[[0,1]]};}
@@ -13,6 +16,7 @@ export function makeScene(kind:string):Scene{
  const s:Scene={balls:[],bonds:[]};
  function add(k:string,x:number,y:number,z:number,scale=.42,angle=0){const m=molecule(k),offset=s.balls.length;m.balls.forEach(a=>s.balls.push({...a,x:x+scale*(a.x*Math.cos(angle)-a.y*Math.sin(angle)),y:y+scale*(a.x*Math.sin(angle)+a.y*Math.cos(angle)),z:z+a.z*scale,r:(a.e==='H'?.36:.5)*scale}));m.bonds.forEach(([a,b])=>s.bonds.push([a+offset,b+offset]));}
  const type=kind.split(':')[1];
+ if(type.startsWith('pure-')){const k=type.slice(5);for(let i=0;i<8;i++)add(k,(i%4-1.5)*1.25,(Math.floor(i/4)-.5)*1.6,(i%3-1)*.3,.38,i*.8);return s;}
  if(type==='carbon'||type==='iron'||type==='sulphide'){
   if(type==='carbon'){
    const seen=new Map<string,number>();
