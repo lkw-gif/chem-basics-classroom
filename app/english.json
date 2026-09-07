@@ -15,7 +15,7 @@
   "三種物質比較": "Compare types of matter",
   "性質與變化": "Properties and changes",
   "實驗與安全": "Experiments and safety",
-  "重點溫習": "Review the key ideas",
+  "重點溫習": "Review",
   "氫氣": "Hydrogen",
   "氫": "Hydrogen",
   "兩個氫原子連在一起，形成一個氫分子。": "Two hydrogen atoms join to form one hydrogen molecule.",
@@ -530,5 +530,15 @@
   "放大模型": "Zoom in",
   "重設模型": "Reset model",
   "水分子排列較整齊，中間有較多空隙，在固定位置附近振動。": "Water molecules form an ordered, open arrangement and vibrate around fixed positions.",
-  "模型只顯示部分排列，不是實際運動影片。冰的排列有較多空隙，所以同樣質量的冰比水佔用更多空間。": "This model shows only part of the arrangement, not real movement. Ice has more gaps, so the same mass of ice takes up more space than liquid water."
+  "模型只顯示部分排列，不是實際運動影片。冰的排列有較多空隙，所以同樣質量的冰比水佔用更多空間。": "This model shows only part of the arrangement, not real movement. Ice has more gaps, so the same mass of ice takes up more space than liquid water.",
+  "大色球代表泥土或食物成分。": "Large spheres represent soil or food components.",
+  "模型簡化顯示鐵和硫的組成。": "Simplified model of iron and sulphur.",
+  "看到危險標誌，先讀標籤並聽從老師指示。": "Read hazard labels and follow your teacher’s instructions.",
+  "冰的排列有較多空隙，所以同樣質量的冰佔用更多空間。": "Ice has more gaps, so the same mass takes up more space.",
+  "觀察實驗中的變化。": "Observe changes in experiments.",
+  "八條小題目，重溫重點。": "Eight questions to review the key ideas.",
+  "認識常見元素及用途。": "Everyday elements and their uses.",
+  "教材：2324 S3 Introducing Chemistry student，Unit 1。模型為教學示意，非實際比例。": "Source: 2324 S3 Introducing Chemistry student, Unit 1. Models are teaching illustrations, not to scale.",
+  "字母表示原子種類；右下角數字表示數目。": "Letters show atom types; small numbers show how many.",
+  "比較原子種類和數目。": "Compare atom types and numbers."
 }

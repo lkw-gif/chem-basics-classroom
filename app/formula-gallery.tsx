@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, ChevronDown, Lightbulb } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import './formula-gallery.css';
 import { formulae } from './content';
@@ -24,15 +24,13 @@ export function FormulaGallery({ teacher }: { teacher: boolean }) {
         <span className="eyebrow">
           02 / CHEMICAL FORMULAE <span className="notes-ref">NOTES 4, 6</span>
         </span>
-        <h1>化學式，其實是一張小地圖。</h1>
-        <p>字母告訴你是哪種原子；右下角的小數字，告訴你有多少個。</p>
+        <h1>看懂化學式</h1>
+        <p>字母表示原子種類；右下角數字表示數目。</p>
       </header>
 
       {teacher && !formulaVisible && (
         <div className="teacher-formula-prompt">
-          <p>
-            <b>先看七個模型。</b>暫時不顯示化學式；先比較原子種類和數目。
-          </p>
+          <p>比較原子種類和數目。</p>
           <button className="primary-btn" onClick={() => setFormulaVisible(true)}>
             顯示化學式 <ArrowRight size={17} />
           </button>
@@ -64,12 +62,6 @@ export function FormulaGallery({ teacher }: { teacher: boolean }) {
           );
         })}
       </section>
-
-      {!showFormula && (
-        <div className="teacher-note">
-          七個模型已同時顯示。先請學生說出每張卡有哪一種原子，再按「顯示化學式」。
-        </div>
-      )}
 
       {showFormula && (
         <>
@@ -129,14 +121,9 @@ export function FormulaGallery({ teacher }: { teacher: boolean }) {
             </div>
             <p>例如 NaCl：鈉和氯的數目比例是 1：1；不是一個獨立的「NaCl 小分子」。</p>
           </details>
-          <div className="quiet-note">球的顏色方便識別原子；不是原子的真實顏色。模型大小與距離不是實際比例。</div>
         </>
       )}
 
-      <div className="note formula-gallery-tip">
-        <Lightbulb size={20} />
-        <p>七張卡各自代表一個分子；可逐張拖曳旋轉，看看原子怎樣連在一起。</p>
-      </div>
     </>,
   );
 }

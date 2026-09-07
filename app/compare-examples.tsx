@@ -23,19 +23,19 @@ export default function CompareExamples(){
  const {language}=useLanguage();const en=language==='en';
  const [choices,setChoices]=useState([0,0,0]);const [angle,setAngle]=useState(.15);
  return <>
-  <header className="lesson-heading"><span className="eyebrow">04 / ELEMENT · COMPOUND · MIXTURE</span><h1>{en?'See how the three types of matter differ.':'看清楚，三種物質的分別。'}</h1><p>{en?'Choose examples in each group. Look at the types of atoms and how they are joined.':'在每一類選擇不同例子，比較原子的種類，以及它們怎樣連在一起。'}</p></header>
+  <header className="lesson-heading"><span className="eyebrow">04 / ELEMENT · COMPOUND · MIXTURE</span><h1>{en?'See how the three types of matter differ.':'看清楚，三種物質的分別。'}</h1><p>{en?'Compare the atoms and how they join.':'比較原子種類和連接方式。'}</p></header>
   <div className="compare-grid">{groups.map((group,i)=>{const item=group.items[choices[i]];return <article className={`comparison-card c${i}`} key={group.en}>
    <div className="comparison-head"><span>0{i+1}</span><h2>{en?group.en:group.zh}</h2><span className="type-tag">{i<2?(en?'Pure substance':'純物質'):(en?'Several substances':'多種物質')}</span></div>
    <div style={{gridColumn:'1 / -1',padding:'12px 14px'}}><Tabs value={String(choices[i])} onValueChange={v=>setChoices(old=>old.map((n,j)=>i===j?Number(v):n))}><TabsList className="pill-list" aria-label={en?group.en+' examples':group.zh+'例子'}>{group.items.map((option,j)=><TabsTrigger value={String(j)} key={option[0]}>{option[0]}</TabsTrigger>)}</TabsList></Tabs></div>
    <Model kind={'sample:'+item[3]} compact angle={angle} onAngleChange={setAngle} label={en?item[5]:item[4]}/>
    <div className="comparison-body"><b className="compare-formula">{item[0]}</b><h3>{en?item[2]:item[1]}</h3><p><strong>{en?group.ruleEn:group.ruleZh}</strong></p><p>{en?item[5]:item[4]}</p></div>
   </article>})}</div>
-  <div className="note"><p>{en?'Count the types of atoms, not just the number of atoms. He, N₂ and O₃ are all elements. H₂O and CO₂ contain different types of atoms joined together, so they are compounds.':'要看原子的種類，不只是原子的數目。He、N₂、O₃ 都是元素；H₂O 和 CO₂ 有不同種類的原子連在一起，所以是化合物。'}</p></div>
+  <div className="note"><p>{en?'One atom type → element. Different atom types joined → compound.':'一種原子 → 元素；不同種類的原子連在一起 → 化合物。'}</p></div>
   <div className="table-wrap comparison-table"><table><thead><tr>{(en?['Compare','Element','Compound','Mixture']:['比較','元素','化合物','混合物']).map(t=><th key={t}>{t}</th>)}</tr></thead><tbody>{(en?[
    ['Composition','One type of atom','Different elements chemically joined','Different substances mixed together'],
    ['Properties','Properties of that element','Usually different from the original elements','Each substance keeps its own properties'],
    ['Separation','Cannot be chemically broken into simpler substances','Chemical methods, such as electrolysis','Physical methods, such as filtration or distillation']
   ]:[['組成','一種原子','不同元素已化學結合','不同物質混合'],['性質','該元素的性質','通常與原來的元素不同','各成分保留自己的性質'],['怎樣分開','不能用化學方法分成更簡單的物質','化學方法，例如電解','物理方法，例如過濾或蒸餾']]).map(row=><tr key={row[0]}>{row.map(t=><td key={t}>{t}</td>)}</tr>)}</tbody></table></div>
-  <p className="quiet-note">{en?'Each model represents a separate sample. Colours, sizes, spacing and particle counts are simplified for teaching. Lines show atoms joined together. Drag a model to rotate the three views together.':'每個模型代表一份獨立樣本。顏色、大小、距離及粒子數目都是教學示意；線表示原子已連在一起。拖曳模型可同步轉動三個視角。'}</p>
+
  </>;
 }
