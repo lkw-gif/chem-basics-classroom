@@ -1,4 +1,4 @@
-export const chapters=[['start','由這裏開始','Start here'],['elements','身邊的元素','Elements'],['formula','看懂化學式','Chemical formulae'],['classify','物質點樣分？','Classification'],['compare','三種物質比較','Compare matter'],['changes','性質與變化','Properties & changes'],['lab','實驗與安全','In the laboratory'],['review','重點溫習','Review']] as const;
+export const chapters=[['start','由這裏開始','Start here'],['elements','身邊的元素','Elements'],['atom','原子結構','Atomic structure'],['formula','看懂化學式','Chemical formulae'],['classify','物質點樣分？','Classification'],['compare','三種物質比較','Compare matter'],['changes','性質與變化','Properties & changes'],['lab','實驗與安全','In the laboratory'],['review','重點溫習','Review']] as const;
 export const formulae=[
  {id:'H2',formula:'H₂',zh:'氫氣',en:'Hydrogen',parts:[['H','氫',2]],atoms:2,element:true,sentence:'兩個氫原子連在一起，形成一個氫分子。'},
  {id:'N2',formula:'N₂',zh:'氮氣',en:'Nitrogen',parts:[['N','氮',2]],atoms:2,element:true,sentence:'兩個氮原子連在一起。空氣中最多的氣體是氮氣。'},
