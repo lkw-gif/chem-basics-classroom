@@ -11,8 +11,8 @@
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt",
-    "build:github": "vite build --config vite.github.config.ts",
-    "check": "tsc --noEmit && node scripts/check-content.mjs && node scripts/check-render.mjs"
+    "build:github": "vite build --config vite.github.config.ts && node scripts/copy-atomic-site.mjs",
+    "check": "tsc --noEmit && node scripts/check-content.mjs && node scripts/check-render.mjs && node scripts/check-atomic-site.mjs"
   },
   "dependencies": {
     "react": "19.2.6",

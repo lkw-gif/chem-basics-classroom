@@ -11,6 +11,10 @@ A beginner-friendly, bilingual Form 3 chemistry classroom. Switch between Tradit
 - Physical and chemical properties and changes
 - Teacher-led experiment explanations, safety, revision and quizzes
 
+## Atomic Structure website
+
+The Atomic Structure notes are published as a separate, bilingual website at `/atomic-structure/`. It covers the complete Unit 2 notes (2.1–2.8), with a checkpoint for every topic and an interactive electron-shell model for the first 20 elements. The source PDF is not included in the published files.
+
 The models are simplified teaching diagrams. Colours, distances and arrangement are not exact representations. Real experiments require teacher supervision.
 
 ## Run locally
@@ -30,7 +34,7 @@ npm run build
 npm run build:github
 ```
 
-`build` produces the existing Sites deployment. `build:github` builds the same classroom as a static website in `github-dist/`, with relative asset paths for GitHub Pages. It needs no server, account, API key or database.
+`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the separate Atomic Structure website to `github-dist/atomic-structure/`. It needs no server, account, API key or database.
 
 ## GitHub Pages
 
