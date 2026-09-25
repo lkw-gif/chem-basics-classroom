@@ -254,7 +254,7 @@ function renderShells(element) {
   document.querySelector('#shell-diagram').innerHTML = `<svg viewBox="0 0 320 320" aria-hidden="true">${rings}<circle class="shell-nucleus" cx="${center}" cy="${center}" r="24"/><text class="shell-nucleus-label" x="${center}" y="${center}">${element.s}</text></svg>`;
   document.querySelector('#shell-diagram').setAttribute('aria-label', getLanguage() === 'en' ? `Electron shell diagram for ${element.en}` : `${element.zh}原子的電子層示意圖`);
   document.querySelector('#shell-atomic').textContent = element.n;
-  document.querySelector('#shell-name').innerHTML = bi(`${element.zh}　${element.s}`, `${element.en}　${element.s}`);
+  document.querySelector('#shell-name').innerHTML = bi(`${element.zh}&nbsp;${element.s}`, `${element.en}&nbsp;${element.s}`);
   document.querySelector('#shell-formula').textContent = element.shells.join(', ');
   document.querySelector('#shell-explain').innerHTML = bi(
     `${element.zh} 的原子序是 ${element.n}，中性原子有 ${element.n} 粒電子。`,
