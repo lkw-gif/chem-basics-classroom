@@ -117,8 +117,10 @@ function createPager(current, isTop) {
   const nextLink = next
     ? `<a class="pager-button pager-next" data-session-link="${next}" href="${sessionUrl(next)}"><span>${bi('下一課', 'Next lesson')}</span><span aria-hidden="true">→</span></a>`
     : `<a class="pager-button pager-next" data-home-link href="./?lang=${getLanguage()}#sessions"><span>${bi('完成 · 回課程目錄', 'Finish · all lessons')}</span><span aria-hidden="true">✓</span></a>`;
-  return `${isTop ? `<a class="pager-home" data-home-link href="./?lang=${getLanguage()}#sessions">← ${bi('所有課題', 'All lessons')}</a>` : ''}
-    <div class="pager-current"><small>${bi(`第 ${String(index + 1).padStart(2, '0')} 課`, `SESSION ${String(index + 1).padStart(2, '0')} / 08`)}</small>${isTop ? `<b>${title}</b>` : ''}</div>
+  if (isTop) {
+    return `<div class="lesson-breadcrumb"><a data-home-link href="./?lang=${getLanguage()}#sessions">${bi('中三化學', 'Form 3 Chemistry')}</a><span aria-hidden="true">/</span><b>${title}</b><span class="breadcrumb-count">${String(index + 1).padStart(2, '0')} / 08</span></div>`;
+  }
+  return `<div class="pager-current"><small>${bi(`第 ${String(index + 1).padStart(2, '0')} 課`, `SESSION ${String(index + 1).padStart(2, '0')} / 08`)}</small></div>
     <div class="pager-actions">${previousLink}${nextLink}</div>`;
 }
 
@@ -143,6 +145,10 @@ function setLanguage(language, updateUrl = true) {
   localStorage.setItem('atomic-structure-language', language);
   document.querySelector('.back-link').href = `../?lang=${language}#start`;
   document.querySelector('.brand').href = `./?lang=${language}#top`;
+  document.querySelector('.mobile-menu').setAttribute('aria-label', language === 'en' ? 'Open lesson contents' : '開啟課堂目錄');
+  document.querySelector('.nav-backdrop').setAttribute('aria-label', language === 'en' ? 'Close lesson contents' : '關閉課堂目錄');
+  const selected = firstTwenty.find((element) => element.n === Number(document.querySelector('#shell-atomic').textContent));
+  if (selected) document.querySelector('#shell-diagram').setAttribute('aria-label', language === 'en' ? `Electron shell diagram for ${selected.en}` : `${selected.zh}原子的電子層示意圖`);
   document.querySelectorAll('[data-session], [data-session-card], [data-session-link]').forEach((link) => {
     link.href = sessionUrl(link.dataset.session || link.dataset.sessionCard || link.dataset.sessionLink, language);
   });
@@ -230,19 +236,23 @@ function renderIsotopeModels() {
 
 function renderShells(element) {
   const center = 160;
-  const radii = [42, 68, 94, 120];
+  const radii = [46, 78, 110, 142];
   const rings = element.shells.map((count, shellIndex) => {
     const radius = radii[shellIndex];
     const electrons = Array.from({ length: count }, (_, index) => {
-      const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
-      const x = (center + Math.cos(angle) * radius).toFixed(2);
-      const y = (center + Math.sin(angle) * radius).toFixed(2);
-      return `<circle class="shell-electron" cx="${x}" cy="${y}" r="5.3"/>`;
+      const paired = count > 4;
+      const slot = paired ? index % 4 : index;
+      const angle = -Math.PI / 2 + (Math.PI * 2 * slot) / (paired ? 4 : count);
+      const pairSide = paired && index >= 4 ? 1 : 0;
+      const tangent = pairSide ? 7.5 : 0;
+      const x = (center + Math.cos(angle) * radius - Math.sin(angle) * tangent).toFixed(2);
+      const y = (center + Math.sin(angle) * radius + Math.cos(angle) * tangent).toFixed(2);
+      return `<circle class="shell-electron${pairSide ? ' is-paired' : ''}" cx="${x}" cy="${y}" r="6.4"/>`;
     }).join('');
     return `<circle class="shell-ring" cx="${center}" cy="${center}" r="${radius}"/>${electrons}`;
   }).join('');
   document.querySelector('#shell-diagram').innerHTML = `<svg viewBox="0 0 320 320" aria-hidden="true">${rings}<circle class="shell-nucleus" cx="${center}" cy="${center}" r="24"/><text class="shell-nucleus-label" x="${center}" y="${center}">${element.s}</text></svg>`;
-  document.querySelector('#shell-diagram').setAttribute('aria-label', `Shell diagram for ${element.en}`);
+  document.querySelector('#shell-diagram').setAttribute('aria-label', getLanguage() === 'en' ? `Electron shell diagram for ${element.en}` : `${element.zh}原子的電子層示意圖`);
   document.querySelector('#shell-atomic').textContent = element.n;
   document.querySelector('#shell-name').innerHTML = bi(`${element.zh}　${element.s}`, `${element.en}　${element.s}`);
   document.querySelector('#shell-formula').textContent = element.shells.join(', ');
@@ -260,10 +270,14 @@ function renderChlorineDiagram() {
   const radii = [27, 54, 81];
   const contents = [2, 8, 7].map((count, shellIndex) => {
     const radius = radii[shellIndex];
+    const paired = count > 4;
     const marks = Array.from({ length: count }, (_, index) => {
-      const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
-      const x = (center + Math.cos(angle) * radius).toFixed(2);
-      const y = (center + Math.sin(angle) * radius).toFixed(2);
+      const slot = paired ? index % 4 : index;
+      const angle = -Math.PI / 2 + (Math.PI * 2 * slot) / (paired ? 4 : count);
+      const pairSide = paired && index >= 4 ? 1 : 0;
+      const tangent = pairSide ? 7 : 0;
+      const x = (center + Math.cos(angle) * radius - Math.sin(angle) * tangent).toFixed(2);
+      const y = (center + Math.sin(angle) * radius + Math.cos(angle) * tangent).toFixed(2);
       return `<text class="dot-cross-mark" x="${x}" y="${y}">×</text>`;
     }).join('');
     return `<circle class="dot-cross-ring" cx="${center}" cy="${center}" r="${radius}"/>${marks}`;
@@ -307,6 +321,24 @@ function setupProgress() {
 }
 
 setupPage();
+const menuButton = document.querySelector('.mobile-menu');
+const navBackdrop = document.querySelector('.nav-backdrop');
+const closeLessonMenu = () => {
+  document.body.classList.remove('menu-open');
+  menuButton.setAttribute('aria-expanded', 'false');
+  navBackdrop.hidden = true;
+};
+menuButton.addEventListener('click', () => {
+  const open = menuButton.getAttribute('aria-expanded') !== 'true';
+  document.body.classList.toggle('menu-open', open);
+  menuButton.setAttribute('aria-expanded', String(open));
+  navBackdrop.hidden = !open;
+});
+navBackdrop.addEventListener('click', closeLessonMenu);
+document.querySelectorAll('.lesson-nav a').forEach((link) => link.addEventListener('click', closeLessonMenu));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeLessonMenu();
+});
 document.querySelectorAll('[data-language]').forEach((button) => {
   button.addEventListener('click', () => setLanguage(button.dataset.language));
 });
