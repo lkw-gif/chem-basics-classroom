@@ -395,17 +395,57 @@ function renderProtonBuilder() {
   if (!root) return;
   const element = firstTwenty.find((item) => item.n === builderAtomicNumber);
   const neutrons = element.mass - element.n;
+  const language = getLanguage();
+  const arrangement = element.shells.join(', ');
   root.querySelector('#builder-proton-count').textContent = element.n;
   root.querySelector('#builder-atomic-number').textContent = element.n;
+  root.querySelector('#builder-mass-number').textContent = element.mass;
   root.querySelector('#builder-neutron-count').textContent = neutrons;
   root.querySelector('#builder-electron-count').textContent = element.n;
-  root.querySelector('#builder-element-name').innerHTML = `<b>${element.s}</b><span>${bi(element.zh, element.en)}</span><small>${getLanguage() === 'en' ? `Example isotope: ${element.s}-${element.mass}` : `常見原子例子：${element.s}-${element.mass}`}</small>`;
-  root.querySelector('#builder-nucleus').innerHTML = [...Array(element.n).fill('p'), ...Array(neutrons).fill('n')].map((particle) => `<i class="${particle}" aria-hidden="true"></i>`).join('');
-  root.querySelector('#builder-nucleus').setAttribute('aria-label', getLanguage() === 'en' ? `Nucleus with ${element.n} protons and ${neutrons} neutrons` : `原子核內有 ${element.n} 粒質子和 ${neutrons} 粒中子`);
+  root.querySelector('#builder-card-number').textContent = element.n;
+  root.querySelector('#builder-card-symbol').textContent = element.s;
+  root.querySelector('#builder-element-name').innerHTML = `<b>${bi(element.zh, element.en)}</b><small>${language === 'en' ? `Example atom: ${element.s}-${element.mass}` : `原子例子：${element.s}-${element.mass}`}</small>`;
+  root.querySelector('#builder-summary-text').innerHTML = language === 'en'
+    ? `${element.n === 1 ? 'One proton makes' : `${element.n} protons make`} this element <b>${element.en}</b>. Its electron arrangement is <b>${arrangement}</b>.`
+    : `${element.n} 粒質子決定這是<b>${element.zh}</b>。電子排佈是 <b>${arrangement}</b>。`;
+  const particles = [];
+  for (let index = 0; index < Math.max(element.n, neutrons); index += 1) {
+    if (index < element.n) particles.push('p');
+    if (index < neutrons) particles.push('n');
+  }
+  root.querySelector('#builder-nucleus-particles').innerHTML = particles.map((particle) => `<i class="${particle}" aria-hidden="true"></i>`).join('');
+  root.querySelector('#builder-model-stage').setAttribute('aria-label', language === 'en'
+    ? `${element.en} atom model: ${element.n} protons, ${neutrons} neutrons and ${element.n} electrons in shells ${arrangement}. Not to scale.`
+    : `${element.zh}原子模型：${element.n}粒質子、${neutrons}粒中子和${element.n}粒電子，電子排佈為${arrangement}。示意圖並非按比例繪畫。`);
+  const shellRadii = [62, 98, 130, 158];
+  const shellMarkup = element.shells.map((count, shellIndex) => {
+    const radius = shellRadii[shellIndex];
+    const electrons = Array.from({ length: count }, (_, index) => {
+      const angle = (-90 + (360 / count) * index) * Math.PI / 180;
+      const x = 200 + radius * Math.cos(angle);
+      const y = 170 + radius * Math.sin(angle);
+      return `<g class="builder-electron"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9"/><text x="${x.toFixed(1)}" y="${(y + 2.6).toFixed(1)}">e⁻</text></g>`;
+    }).join('');
+    return `<circle class="builder-orbit" cx="200" cy="170" r="${radius}"/><g class="builder-shell-electrons" style="--orbit-time:${12 + shellIndex * 3}s">${electrons}</g>`;
+  }).join('');
+  root.querySelector('#builder-shell-diagram').innerHTML = shellMarkup;
+  root.querySelector('#builder-proton-slider').value = element.n;
+  root.querySelector('#builder-proton-slider').setAttribute('aria-valuetext', language === 'en' ? `${element.n} protons, ${element.en}` : `${element.n}粒質子，${element.zh}`);
   root.querySelector('#remove-proton').disabled = element.n <= 1;
   root.querySelector('#add-proton').disabled = element.n >= firstTwenty.length;
-  root.querySelector('#add-proton').setAttribute('aria-label', getLanguage() === 'en' ? 'Add one proton' : '加一粒質子');
-  root.querySelector('#remove-proton').setAttribute('aria-label', getLanguage() === 'en' ? 'Remove one proton' : '減一粒質子');
+  root.querySelector('#builder-proton-slider').setAttribute('aria-label', language === 'en' ? 'Choose an element by proton number' : '用質子數選擇元素');
+  const picker = root.querySelector('#builder-element-picker');
+  picker.setAttribute('aria-label', language === 'en' ? 'Choose one of the first 20 elements' : '選擇首 20 種元素之一');
+  if (!picker.children.length) {
+    picker.innerHTML = firstTwenty.map((item) => `<button type="button" class="builder-element-choice" data-atomic-number="${item.n}" title="${item.en} · ${item.zh}"><small>${item.n}</small><b>${item.s}</b></button>`).join('');
+  }
+  picker.querySelectorAll('[data-atomic-number]').forEach((choice) => {
+    const item = firstTwenty[Number(choice.dataset.atomicNumber) - 1];
+    choice.setAttribute('aria-pressed', String(item.n === element.n));
+    choice.setAttribute('aria-label', `${item.n} ${item.en}${language === 'zh' ? `，${item.zh}` : ''}`);
+  });
+  root.querySelector('#add-proton').setAttribute('aria-label', language === 'en' ? 'Add one proton' : '加一粒質子');
+  root.querySelector('#remove-proton').setAttribute('aria-label', language === 'en' ? 'Remove one proton' : '減一粒質子');
 }
 
 function setupProtonBuilder() {
@@ -417,6 +457,16 @@ function setupProtonBuilder() {
   });
   root.querySelector('#remove-proton').addEventListener('click', () => {
     builderAtomicNumber = Math.max(1, builderAtomicNumber - 1);
+    renderProtonBuilder();
+  });
+  root.querySelector('#builder-proton-slider').addEventListener('input', (event) => {
+    builderAtomicNumber = Number(event.currentTarget.value);
+    renderProtonBuilder();
+  });
+  root.querySelector('#builder-element-picker').addEventListener('click', (event) => {
+    const choice = event.target.closest('[data-atomic-number]');
+    if (!choice) return;
+    builderAtomicNumber = Number(choice.dataset.atomicNumber);
     renderProtonBuilder();
   });
   renderProtonBuilder();
