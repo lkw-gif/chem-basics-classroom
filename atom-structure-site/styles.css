@@ -219,5 +219,9 @@ body{background:var(--paper);color:var(--ink);font-size:16px;line-height:1.7}
 @media(max-width:390px){.brand>b{font-size:17px}.language-switch button{padding:6px 7px;font-size:12px}.topbar{grid-template-columns:36px minmax(0,1fr) auto;gap:5px;padding:0 9px}.mobile-menu{width:34px;height:34px}.shell-view{grid-template-columns:minmax(165px,1fr) minmax(105px,.65fr)}.shell-info{display:block}.shell-info>div{margin-top:5px}}
 @media(prefers-reduced-motion:reduce){.sidebar{transition:none}}
 .shell-nucleus-label{font-size:15px}
+.shell-select .panel-top{display:grid;grid-template-columns:minmax(0,1fr) max-content;gap:14px;align-items:center}
+.shell-select .panel-top>.zh,.shell-select .panel-top>.en{min-width:0;white-space:nowrap;font-size:11px;letter-spacing:.025em}
+.shell-selected-name{display:inline-block;min-width:max-content;white-space:nowrap;font-size:13px}
+@media(max-width:1100px){.shell-select .panel-top{grid-template-columns:minmax(0,1fr);row-gap:2px}.shell-selected-name{grid-column:1;justify-self:end}}
 @media(min-width:950px) and (max-width:1100px){.shell-panel{grid-template-columns:minmax(240px,.72fr) minmax(0,1.28fr)}.shell-view{grid-template-columns:minmax(0,1.4fr) minmax(155px,.9fr);gap:14px;padding:20px}}
 @media(min-width:761px) and (max-width:949px){.shell-panel{grid-template-columns:1fr}.shell-select{border-right:0;border-bottom:1px solid var(--line)}.shell-view{grid-template-columns:minmax(0,1.1fr) minmax(190px,.8fr);gap:18px}}
