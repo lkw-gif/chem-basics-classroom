@@ -220,7 +220,7 @@ body{background:var(--paper);color:var(--ink);font-size:16px;line-height:1.7}
 @media(prefers-reduced-motion:reduce){.sidebar{transition:none}}
 .shell-nucleus-label{font-size:15px}
 .shell-select .panel-top{display:grid;grid-template-columns:minmax(0,1fr) max-content;gap:14px;align-items:center}
-.shell-select .panel-top>.zh,.shell-select .panel-top>.en{min-width:0;white-space:nowrap;font-size:11px;letter-spacing:.025em}
+.shell-select .panel-top>.zh,.shell-select .panel-top>.en{width:max-content;min-width:0;white-space:nowrap;font-size:11px;letter-spacing:.025em}
 .shell-selected-name{display:inline-block;min-width:max-content;white-space:nowrap;font-size:13px}
 @media(max-width:1100px){.shell-select .panel-top{grid-template-columns:minmax(0,1fr);row-gap:2px}.shell-selected-name{grid-column:1;justify-self:end}}
 @media(min-width:950px) and (max-width:1100px){.shell-panel{grid-template-columns:minmax(240px,.72fr) minmax(0,1.28fr)}.shell-view{grid-template-columns:minmax(0,1.4fr) minmax(155px,.9fr);gap:14px;padding:20px}}
