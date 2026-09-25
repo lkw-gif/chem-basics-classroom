@@ -41,6 +41,7 @@ assert.match(html, /id="builder-proton-slider"/);
 assert.match(html, /id="builder-element-picker"/);
 assert.match(html, /id="builder-shell-diagram"/);
 assert.match(html, /id="builder-mass-number"/);
+assert.match(html, /class="builder-nucleus-model"/);
 assert.match(script, /function renderPeriodicTable\(/);
 assert.match(script, /function renderStateLab\(/);
 assert.match(script, /function renderProtonBuilder\(/);

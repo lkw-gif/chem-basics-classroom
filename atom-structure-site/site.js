@@ -417,7 +417,7 @@ function renderProtonBuilder() {
   root.querySelector('#builder-model-stage').setAttribute('aria-label', language === 'en'
     ? `${element.en} atom model: ${element.n} protons, ${neutrons} neutrons and ${element.n} electrons in shells ${arrangement}. Not to scale.`
     : `${element.zh}原子模型：${element.n}粒質子、${neutrons}粒中子和${element.n}粒電子，電子排佈為${arrangement}。示意圖並非按比例繪畫。`);
-  const shellRadii = [62, 98, 130, 158];
+  const shellRadii = [78, 108, 137, 160];
   const shellMarkup = element.shells.map((count, shellIndex) => {
     const radius = shellRadii[shellIndex];
     const electrons = Array.from({ length: count }, (_, index) => {
