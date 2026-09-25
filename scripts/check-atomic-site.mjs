@@ -28,6 +28,24 @@ assert.match(html, /id="chlorine-dot-cross"/);
 assert.match(script, /function renderChlorineDiagram\(\)/);
 assert.match(script, /const firstTwenty = \[/);
 assert.match(script, /renderIsotopeModels\(\);/);
+assert.match(html, /id="atomic-periodic-grid"/);
+assert.match(html, /id="highlight-first20" checked/);
+assert.equal((html.match(/<figure(?: class="gallery-feature")?>/g) || []).length, 9, 'Metals, non-metals and metalloids should each show three examples.');
+assert.equal((html.match(/class="liquid-art (?:mercury|bromine)-art"/g) || []).length, 2, 'Mercury and bromine should each have a visual example.');
+assert.match(html, /室溫約 20–25 °C[\s\S]*只有汞（Hg）和溴（Br）/);
+assert.match(html, /id="state-temperature"/);
+assert.match(html, /id="state-temperature-number"/);
+assert.match(html, /id="add-proton"/);
+assert.match(html, /id="builder-neutron-count"/);
+assert.match(script, /function renderPeriodicTable\(/);
+assert.match(script, /function renderStateLab\(/);
+assert.match(script, /function renderProtonBuilder\(/);
+assert.match(script, /melting: -219, boiling: -183/);
+assert.match(script, /melting: 1538, boiling: 2862/);
+
+const periodicElements = JSON.parse(await readFile(resolve(root, 'app', 'periodic-elements.json'), 'utf8'));
+assert.equal(periodicElements.length, 118, 'The inserted periodic table should use all 118 elements.');
+assert.ok(periodicElements.filter((element) => element.atomicNumber <= 20).length === 20);
 
 const elementData = script.match(/const firstTwenty = \[([\s\S]*?)\n\];/);
 assert.ok(elementData, 'First-twenty element data is present.');
@@ -44,4 +62,4 @@ elements.forEach(([, number, symbol, , , mass, shellsText], index) => {
 
 const crustShares = [...html.matchAll(/style="--value:([\d.]+)%"/g)].map(([, value]) => Number(value));
 assert.ok(Math.abs(crustShares.reduce((sum, value) => sum + value, 0) - 100) < 1e-9, 'Crust-composition chart should add to 100%.');
-console.log('PASS: standalone bilingual site covers notes 2.1–2.8 as eight session pages, with three questions per session, complete shell diagrams for the first 20 elements, isotope counts and a balanced crust chart.');
+console.log('PASS: standalone bilingual site covers notes 2.1–2.8, with session quizzes, the 118-element table, nine visual examples, temperature simulation, proton builder, isotope counts and a balanced crust chart.');

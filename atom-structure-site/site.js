@@ -81,6 +81,19 @@ const firstTwenty = [
   { n: 20, s: 'Ca', zh: '鈣', en: 'Calcium', mass: 40, shells: [2, 8, 8, 2] },
 ];
 
+let periodicElements = [];
+let builderAtomicNumber = 1;
+let selectedStateMaterial = 'water';
+let selectedTemperature = 20;
+
+const stateMaterials = {
+  water: { zh: '水', en: 'Water', melting: 0, boiling: 100, min: -50, max: 150 },
+  oxygen: { zh: '氧', en: 'Oxygen', melting: -219, boiling: -183, min: -260, max: -160 },
+  bromine: { zh: '溴', en: 'Bromine', melting: -7, boiling: 59, min: -80, max: 120 },
+  mercury: { zh: '汞', en: 'Mercury', melting: -39, boiling: 357, min: -100, max: 500 },
+  iron: { zh: '鐵', en: 'Iron', melting: 1538, boiling: 2862, min: 1400, max: 3000 },
+};
+
 const sessionIds = ['earth', 'atom', 'types', 'structure', 'numbers', 'isotopes', 'average', 'shells'];
 const sessionUrl = (id, language = getLanguage()) => `./sessions/${id}/?lang=${language}`;
 
@@ -160,6 +173,12 @@ function setLanguage(language, updateUrl = true) {
       group.setAttribute('aria-label', quizzes[root.dataset.quiz].questions[index].q[language === 'en' ? 1 : 0]);
     });
   });
+  document.querySelectorAll('#state-substance option').forEach((option) => {
+    option.textContent = option.dataset[language];
+  });
+  renderPeriodicTable(language);
+  renderStateLab();
+  renderProtonBuilder();
   if (updateUrl) {
     const url = new URL(location.href);
     url.searchParams.set('lang', language);
@@ -222,6 +241,185 @@ function renderFirstTwenty() {
   document.querySelector('#first-twenty').innerHTML = firstTwenty.map((element) =>
     `<div><b>${element.n}</b><strong>${element.s}</strong><span>${bi(element.zh, element.en)}</span></div>`,
   ).join('');
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+}
+
+function elementCategory(element, language) {
+  if (element.categoryProvisional) return language === 'en' ? 'Still being studied' : '性質仍在研究';
+  const labels = language === 'en'
+    ? { metal: 'Metal', nonmetal: 'Non-metal', metalloid: 'Metalloid' }
+    : { metal: '金屬', nonmetal: '非金屬', metalloid: '類金屬' };
+  return labels[element.category] || (language === 'en' ? 'Element' : '元素');
+}
+
+function renderPeriodicTable(language = getLanguage()) {
+  const grid = document.querySelector('#atomic-periodic-grid');
+  const detail = document.querySelector('#atomic-periodic-detail');
+  if (!grid || !detail || !periodicElements.length) return;
+  document.querySelector('.atomic-periodic .periodic-scroll')?.setAttribute('aria-label', language === 'en' ? 'Periodic table; scroll sideways on smaller screens' : '元素週期表；小螢幕可左右滑動');
+  const selectedNumber = Number(grid.dataset.selected || 29);
+  const selected = periodicElements.find((element) => element.atomicNumber === selectedNumber) || periodicElements[28];
+  const category = (element) => element.categoryProvisional ? 'research' : element.category;
+  const languageKey = language === 'en' ? 'en' : 'zh';
+  const label = (element) => languageKey === 'en' ? element.nameEn : element.nameZh;
+  grid.innerHTML = Array.from({ length: 18 }, (_, index) => `<span class="table-axis" style="grid-column:${index + 2};grid-row:1">${index + 1}</span>`).join('')
+    + Array.from({ length: 7 }, (_, index) => `<span class="table-axis period-axis" style="grid-column:1;grid-row:${index + 2}">${index + 1}</span>`).join('')
+    + periodicElements.map((element) => {
+      const inFirstTwenty = element.atomicNumber <= 20;
+      const elementLabel = `${element.atomicNumber}, ${element.symbol}, ${label(element)}${element.inNotes ? (language === 'en' ? ', in this lesson' : '，本課常用') : ''}`;
+      return `<button type="button" aria-pressed="${element.atomicNumber === selectedNumber}" aria-label="${escapeHTML(elementLabel)}" title="${escapeHTML(`${element.atomicNumber} · ${element.symbol} · ${label(element)}`)}" class="element-cell ${category(element)}${inFirstTwenty ? ' first-twenty' : ''}${element.inNotes ? ' in-notes' : ''}" style="grid-column:${element.column + 1};grid-row:${element.row >= 8 ? element.row + 2 : element.row + 1}" data-atomic-number="${element.atomicNumber}"><span class="atomic-number">${element.atomicNumber}</span><strong>${escapeHTML(element.symbol)}</strong><span class="cell-name">${escapeHTML(label(element))}</span>${element.inNotes ? '<i aria-hidden="true"></i>' : ''}</button>`;
+    }).join('')
+    + '<span class="series-placeholder" style="grid-column:4;grid-row:7">57–71<br />↓</span><span class="series-placeholder" style="grid-column:4;grid-row:8">89–103<br />↓</span><span class="series-label" style="grid-column:1 / 4;grid-row:10">57–71</span><span class="series-label" style="grid-column:1 / 4;grid-row:11">89–103</span>';
+  grid.dataset.selected = String(selected.atomicNumber);
+  grid.classList.toggle('highlight-first20', document.querySelector('#highlight-first20')?.checked !== false);
+  grid.querySelectorAll('[data-atomic-number]').forEach((button) => button.addEventListener('click', () => {
+    grid.dataset.selected = button.dataset.atomicNumber;
+    renderPeriodicTable(getLanguage());
+  }));
+  const info = language === 'en' ? (selected.infoEn || `${selected.nameEn} has the symbol ${selected.symbol} and atomic number ${selected.atomicNumber}.`) : selected.info;
+  const use = language === 'en' ? selected.useEn : selected.use;
+  const categoryText = elementCategory(selected, language);
+  detail.innerHTML = `<div class="large-element ${category(selected)}"><small>${selected.atomicNumber}</small><strong>${escapeHTML(selected.symbol)}</strong><span>${escapeHTML(label(selected))}</span></div><div class="periodic-description"><div><span class="type-tag">${escapeHTML(categoryText)}</span>${selected.inNotes ? `<span class="notes-element-tag">${language === 'en' ? 'In this lesson' : '本課常用'}</span>` : ''}</div><h4>${escapeHTML(label(selected))}<small>${escapeHTML(language === 'en' ? selected.symbol : selected.nameEn)}</small></h4><p>${escapeHTML(info || '')}</p>${use ? `<p><b>${language === 'en' ? 'A use: ' : '生活用途：'}</b>${escapeHTML(use)}</p>` : ''}</div>`;
+}
+
+function setupPeriodicTable() {
+  const root = document.querySelector('#atomic-periodic-grid');
+  if (!root) return;
+  document.querySelector('#highlight-first20')?.addEventListener('change', () => renderPeriodicTable());
+  fetch('./periodic-elements.json')
+    .then((response) => {
+      if (!response.ok) throw new Error(`Periodic table data returned ${response.status}`);
+      return response.json();
+    })
+    .then((elements) => {
+      periodicElements = elements;
+      renderPeriodicTable();
+    })
+    .catch((error) => {
+      console.error(error);
+      root.innerHTML = `<p class="periodic-load-error">${bi('週期表暫時未能載入。', 'The periodic table could not be loaded.')}</p>`;
+    });
+}
+
+function stateOf(material, temperature) {
+  if (temperature < material.melting) return 'solid';
+  if (temperature === material.melting) return 'melting';
+  if (temperature < material.boiling) return 'liquid';
+  if (temperature === material.boiling) return 'boiling';
+  return 'gas';
+}
+
+function renderStateLab() {
+  const lab = document.querySelector('[data-state-lab]');
+  if (!lab) return;
+  const language = getLanguage();
+  const material = stateMaterials[selectedStateMaterial];
+  const range = lab.querySelector('#state-temperature');
+  const number = lab.querySelector('#state-temperature-number');
+  const particleBox = lab.querySelector('#state-particles');
+  const phase = stateOf(material, selectedTemperature);
+  const stateLabels = {
+    solid: ['固體', 'Solid'],
+    melting: ['正在熔化', 'Melting'],
+    liquid: ['液體', 'Liquid'],
+    boiling: ['正在沸騰', 'Boiling'],
+    gas: ['氣體', 'Gas'],
+  }[phase];
+  const low = material.melting;
+  const high = material.boiling;
+  let explanation;
+  if (phase === 'solid') explanation = language === 'en' ? `At ${selectedTemperature} °C, the temperature is below the melting point (${low} °C).` : `在 ${selectedTemperature} °C，溫度低於熔點（${low} °C）。`;
+  else if (phase === 'melting') explanation = language === 'en' ? `At the melting point (${low} °C), solid and liquid are both present.` : `到達熔點（${low} °C）時，固體和液體會同時出現。`;
+  else if (phase === 'liquid') explanation = language === 'en' ? `At ${selectedTemperature} °C, the temperature is between the melting point (${low} °C) and boiling point (${high} °C).` : `在 ${selectedTemperature} °C，溫度介乎熔點（${low} °C）和沸點（${high} °C）之間。`;
+  else if (phase === 'boiling') explanation = language === 'en' ? `At the boiling point (${high} °C), liquid and gas are both present.` : `到達沸點（${high} °C）時，液體和氣體會同時出現。`;
+  else explanation = language === 'en' ? `At ${selectedTemperature} °C, the temperature is above the boiling point (${high} °C).` : `在 ${selectedTemperature} °C，溫度高於沸點（${high} °C）。`;
+  range.min = material.min;
+  range.max = material.max;
+  range.value = selectedTemperature;
+  range.setAttribute('aria-label', language === 'en' ? 'Temperature in degrees Celsius' : '攝氏溫度');
+  number.min = material.min;
+  number.max = material.max;
+  if (document.activeElement !== number) number.value = selectedTemperature;
+  number.setAttribute('aria-label', language === 'en' ? 'Temperature in degrees Celsius' : '攝氏溫度');
+  lab.querySelector('#state-melting-point').textContent = `${material.melting} °C`;
+  lab.querySelector('#state-boiling-point').textContent = `${material.boiling} °C`;
+  lab.querySelector('#state-badge').textContent = stateLabels[language === 'en' ? 1 : 0];
+  lab.querySelector('#state-name').innerHTML = bi(material.zh, material.en);
+  lab.querySelector('#state-explanation').textContent = explanation;
+  particleBox.dataset.state = phase;
+  particleBox.innerHTML = stateParticles(phase);
+  particleBox.setAttribute('aria-label', language === 'en' ? `${material.en} particle model: ${stateLabels[1]}` : `${material.zh}粒子示意圖：${stateLabels[0]}`);
+}
+
+function stateParticles(phase) {
+  const solid = [[24,29],[43,29],[62,29],[81,29],[24,48],[43,48],[62,48],[81,48],[24,67],[43,67],[62,67],[81,67],[24,86],[43,86],[62,86],[81,86]];
+  const liquid = [[28,59],[38,72],[49,62],[61,76],[72,60],[80,75],[33,85],[51,87],[67,88],[44,51],[58,53],[76,49],[23,77],[37,48],[66,69],[53,72]];
+  const gas = [[18,20],[48,15],[81,24],[31,37],[69,39],[91,50],[12,59],[42,58],[61,54],[22,79],[53,85],[84,77],[72,16],[36,23],[11,38],[89,90]];
+  const melting = [...solid.slice(0, 8), ...liquid.slice(8)];
+  const boiling = [...liquid.slice(0, 8), ...gas.slice(8)];
+  const layout = { solid, melting, liquid, boiling, gas }[phase];
+  return layout.map(([x, y], index) => `<i style="--x:${x}%;--y:${y}%;--delay:${index * 35}ms"></i>`).join('');
+}
+
+function setupStateLab() {
+  const lab = document.querySelector('[data-state-lab]');
+  if (!lab) return;
+  lab.querySelector('#state-substance').addEventListener('change', (event) => {
+    selectedStateMaterial = event.target.value;
+    const material = stateMaterials[selectedStateMaterial];
+    selectedTemperature = Math.round((material.melting + material.boiling) / 2);
+    renderStateLab();
+  });
+  const updateTemperature = (event) => {
+    const rawValue = event.target.value;
+    if (rawValue === '' || rawValue === '-') return;
+    const value = Number(rawValue);
+    if (!Number.isFinite(value)) return;
+    selectedTemperature = Math.max(Number(event.target.min), Math.min(Number(event.target.max), value));
+    renderStateLab();
+  };
+  lab.querySelector('#state-temperature').addEventListener('input', updateTemperature);
+  lab.querySelector('#state-temperature-number').addEventListener('input', updateTemperature);
+  lab.querySelector('#state-temperature-number').addEventListener('change', updateTemperature);
+  lab.querySelector('#state-temperature-number').addEventListener('blur', () => {
+    lab.querySelector('#state-temperature-number').value = selectedTemperature;
+  });
+  renderStateLab();
+}
+
+function renderProtonBuilder() {
+  const root = document.querySelector('[data-proton-builder]');
+  if (!root) return;
+  const element = firstTwenty.find((item) => item.n === builderAtomicNumber);
+  const neutrons = element.mass - element.n;
+  root.querySelector('#builder-proton-count').textContent = element.n;
+  root.querySelector('#builder-atomic-number').textContent = element.n;
+  root.querySelector('#builder-neutron-count').textContent = neutrons;
+  root.querySelector('#builder-electron-count').textContent = element.n;
+  root.querySelector('#builder-element-name').innerHTML = `<b>${element.s}</b><span>${bi(element.zh, element.en)}</span><small>${getLanguage() === 'en' ? `Example isotope: ${element.s}-${element.mass}` : `常見原子例子：${element.s}-${element.mass}`}</small>`;
+  root.querySelector('#builder-nucleus').innerHTML = [...Array(element.n).fill('p'), ...Array(neutrons).fill('n')].map((particle) => `<i class="${particle}" aria-hidden="true"></i>`).join('');
+  root.querySelector('#builder-nucleus').setAttribute('aria-label', getLanguage() === 'en' ? `Nucleus with ${element.n} protons and ${neutrons} neutrons` : `原子核內有 ${element.n} 粒質子和 ${neutrons} 粒中子`);
+  root.querySelector('#remove-proton').disabled = element.n <= 1;
+  root.querySelector('#add-proton').disabled = element.n >= firstTwenty.length;
+  root.querySelector('#add-proton').setAttribute('aria-label', getLanguage() === 'en' ? 'Add one proton' : '加一粒質子');
+  root.querySelector('#remove-proton').setAttribute('aria-label', getLanguage() === 'en' ? 'Remove one proton' : '減一粒質子');
+}
+
+function setupProtonBuilder() {
+  const root = document.querySelector('[data-proton-builder]');
+  if (!root) return;
+  root.querySelector('#add-proton').addEventListener('click', () => {
+    builderAtomicNumber = Math.min(firstTwenty.length, builderAtomicNumber + 1);
+    renderProtonBuilder();
+  });
+  root.querySelector('#remove-proton').addEventListener('click', () => {
+    builderAtomicNumber = Math.max(1, builderAtomicNumber - 1);
+    renderProtonBuilder();
+  });
+  renderProtonBuilder();
 }
 
 function renderIsotopeModels() {
@@ -348,4 +546,7 @@ renderFirstTwenty();
 renderIsotopeModels();
 setupShellPicker();
 renderChlorineDiagram();
+setupPeriodicTable();
+setupStateLab();
+setupProtonBuilder();
 setupProgress();

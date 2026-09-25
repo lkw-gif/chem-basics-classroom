@@ -12,6 +12,7 @@ await cp(source, output, { recursive: true });
 
 const css = await readFile(resolve(output, 'styles.css'));
 const js = await readFile(resolve(output, 'site.js'));
+await cp(resolve(root, 'app', 'periodic-elements.json'), resolve(output, 'periodic-elements.json'));
 const version = (asset) => createHash('sha256').update(asset).digest('hex').slice(0, 12);
 const page = (await readFile(resolve(output, 'index.html'), 'utf8'))
   .replace('href="./styles.css"', `href="./styles.css?v=${version(css)}"`)
