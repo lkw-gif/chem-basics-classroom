@@ -13,7 +13,7 @@ A beginner-friendly, bilingual Form 3 chemistry classroom. Switch between Tradit
 
 ## Atomic Structure website
 
-The Atomic Structure notes are published as a separate, bilingual website at `/atomic-structure/`. It covers the complete Unit 2 notes (2.1–2.8), with a checkpoint for every topic and an interactive electron-shell model for the first 20 elements. The source PDF is not included in the published files.
+The Atomic Structure notes are published as a separate, bilingual website at `/atomic-structure/`. The home page is a lesson directory; each of the eight note topics (2.1–2.8) has its own page under `/atomic-structure/sessions/`, with three multiple-choice questions. Session pages include previous/next links and an interactive electron-shell model for the first 20 elements. The source PDF is not included in the published files.
 
 The models are simplified teaching diagrams. Colours, distances and arrangement are not exact representations. Real experiments require teacher supervision.
 
@@ -34,13 +34,13 @@ npm run build
 npm run build:github
 ```
 
-`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the separate Atomic Structure website to `github-dist/atomic-structure/`. It needs no server, account, API key or database.
+`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the separate Atomic Structure website to `github-dist/atomic-structure/`, including one generated route for each session. It needs no server, account, API key or database.
 
 ## GitHub Pages
 
 The included `.github/workflows/pages.yml` publishes after a push to `main`. Repository Settings → Pages → Source should be **GitHub Actions**.
 
-Direct links can include `?lang=en#elements` or `?lang=zh#formula`. Language is remembered only in the current browser. No student accounts or analytics are used.
+Direct links to Atomic Structure lessons use `/atomic-structure/sessions/earth/` through `/atomic-structure/sessions/shells/`; add `?lang=en` or `?lang=zh` to select a language. The main CHEM site also supports links such as `?lang=en#elements` or `?lang=zh#formula`. Language is remembered only in the current browser. No student accounts or analytics are used.
 
 ## Material and image credits
 

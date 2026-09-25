@@ -11,7 +11,12 @@ const [html, script, oldSiteContent] = await Promise.all([
 ]);
 
 assert.equal((html.match(/data-topic="\d"/g) || []).length, 8, 'The standalone lesson must cover all eight note topics.');
+assert.equal((html.match(/data-session-card="(earth|atom|types|structure|numbers|isotopes|average|shells)"/g) || []).length, 8, 'The home page must link to all eight standalone sessions.');
 assert.equal((script.match(/^  (earth|atom|types|structure|numbers|isotopes|average|shells): \{/gm) || []).length, 8, 'Every lesson topic must have a checkpoint.');
+assert.equal((script.match(/^      \{ q:/gm) || []).length, 24, 'Every session must contain three multiple-choice questions.');
+assert.equal((html.match(/<div class="checkpoint" data-quiz=/g) || []).length, 8, 'Each lesson topic must have its own checkpoint container.');
+assert.match(script, /function setupPage\(\)/, 'Session routes should display one topic per page.');
+assert.match(script, /function createPager\(current, isTop\)/, 'Lesson pages should have previous and next navigation.');
 assert.match(html, /2\.1[\s\S]*2\.2[\s\S]*2\.3[\s\S]*2\.4[\s\S]*2\.5[\s\S]*2\.6[\s\S]*2\.7[\s\S]*2\.8/);
 assert.match(html, /lang="zh-Hant-HK"/);
 assert.match(html, /data-language="en"/);
@@ -39,4 +44,4 @@ elements.forEach(([, number, symbol, , , mass, shellsText], index) => {
 
 const crustShares = [...html.matchAll(/style="--value:([\d.]+)%"/g)].map(([, value]) => Number(value));
 assert.ok(Math.abs(crustShares.reduce((sum, value) => sum + value, 0) - 100) < 1e-9, 'Crust-composition chart should add to 100%.');
-console.log('PASS: standalone bilingual site covers notes 2.1–2.8, has 8 checkpoints, complete shell diagrams for the first 20 elements, isotope counts and a balanced crust chart.');
+console.log('PASS: standalone bilingual site covers notes 2.1–2.8 as eight session pages, with three questions per session, complete shell diagrams for the first 20 elements, isotope counts and a balanced crust chart.');
