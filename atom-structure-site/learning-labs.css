@@ -96,3 +96,23 @@
 @media(max-width:1250px){.builder-controls-grid{grid-template-columns:1fr}.builder-controls-grid .proton-control-label{display:flex;min-height:0}.builder-controls-grid .proton-slider-row{grid-template-columns:38px minmax(0,1fr) 38px;gap:9px}.builder-controls-grid .proton-slider-row button{width:38px;height:38px}}
 @media(max-width:760px){.learning-lab{padding:16px;margin:18px 0}.learning-lab-head h3{font-size:19px}.number-practice-layout,.isotope-lab-layout,.shell-practice-layout{grid-template-columns:1fr;gap:14px}.builder-particle-summary{gap:5px;padding:8px}.builder-particle-summary>div{display:grid;justify-items:center;gap:4px;padding:7px 2px;font-size:11px;text-align:center}.builder-particle-summary b{margin:0}.builder-control-footer{align-items:stretch;flex-direction:column}.shell-practice-visual{min-height:280px}.practice-clue{font-size:15px}.number-answer-grid{gap:5px}.number-answer-grid input{font-size:14px}.average-atom-sample{gap:4px;padding:10px}}
 @media(max-width:390px){.learning-lab{padding:12px}.learning-lab-head .source-chip{display:none}.number-answer-grid{grid-template-columns:1fr 1fr}.builder-nucleus-model{width:110px;height:110px}.builder-nucleus-model>div{width:64px}.builder-nucleus-model i{width:10px;height:10px;flex-basis:10px}.builder-particle-summary>div{font-size:10px}.average-atom-sample span{font-size:8px}}
+
+/* Lesson 03: real examples and a moving particle model. */
+.nonmetal-gallery .gallery-images figure:last-child img{object-fit:contain;background:#a7a7a7}
+.liquid-examples{grid-template-columns:repeat(2,minmax(0,1fr))}
+.liquid-examples>article{min-width:0}
+.liquid-art{width:128px;height:92px;object-fit:cover}
+.bromine-art{object-fit:contain;background:#c0c1cb}
+.room-temperature-rule{grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center}
+.phase-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:17px}
+.phase-shortcuts button{min-height:39px;padding:6px 4px;border:1px solid #d4e4dc;border-radius:8px;background:#f8fbf9;color:#35586a;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.phase-shortcuts button[aria-pressed="true"]{border-color:#08765c;background:#e5f3ec;color:#076b55}
+.phase-shortcuts button:focus-visible,.state-auto-heat:focus-visible{outline:3px solid #56b99b;outline-offset:2px}
+.state-auto-heat{width:100%;min-height:43px;margin-top:10px;border:1px solid #08765c;border-radius:8px;background:#08765c;color:#fff;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.state-auto-heat[aria-pressed="true"]{background:#e5f3ec;color:#076b55}
+.state-model{min-width:0}
+.particle-box{min-height:245px}
+.particle-box canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+.state-motion-description{margin:8px 0 0;color:#355f68;font-size:13px;line-height:1.45}
+@media(max-width:760px){.room-temperature-rule{grid-template-columns:1fr 1fr}.particle-box{min-height:220px}}
+@media(max-width:520px){.liquid-examples{grid-template-columns:1fr}.liquid-art{width:118px;height:86px}.state-display{grid-template-columns:1fr}.particle-box{min-height:230px}.phase-shortcuts button{font-size:11px}}
