@@ -23,6 +23,10 @@ The Unit 3 notes are published as a separate, bilingual website at `/periodic-ta
 
 Unit 3 electron diagrams pair dots after the fourth electron in a shell. Groups I and II include rotatable 3D reaction observations with playback and a progress slider; Group VII shows diatomic molecules in different states, while Group 0 shows separate atoms alongside full electron shells. Models use projected 3D geometry without external libraries, support touch and keyboard controls, and respect reduced-motion preferences. Reaction times are illustrative, not experimental measurements.
 
+## Metals website
+
+The Unit 4 student notes are published as a separate, bilingual website at `/metals/`. Eight pages cover properties and uses, history, natural sources, physical separation and heating, carbon reduction, electrolysis, rusting conditions, and rust prevention. Each page has three multiple-choice checkpoints. The source PDF is not included in the published files. Diagrams are simplified classroom models; extraction and rusting experiments need teacher supervision.
+
 ## Run locally
 
 Requires Node.js 22.13 or later and npm.
@@ -40,13 +44,13 @@ npm run build
 npm run build:github
 ```
 
-`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the Atomic Structure and Periodic Table websites to `github-dist/`, including one generated route for each session. It needs no server, account, API key or database.
+`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the Atomic Structure, Periodic Table and Metals websites to `github-dist/`, including one generated route for each session. It needs no server, account, API key or database.
 
 ## GitHub Pages
 
 The included `.github/workflows/pages.yml` publishes after a push to `main`. Repository Settings → Pages → Source should be **GitHub Actions**.
 
-Direct links to Atomic Structure lessons use `/atomic-structure/sessions/earth/` through `/atomic-structure/sessions/shells/`; Periodic Table lessons use `/periodic-table/sessions/map/` through `/periodic-table/sessions/noble/`. Add `?lang=en` or `?lang=zh` to select a language. The main CHEM site also supports links such as `?lang=en#elements` or `?lang=zh#formula`. Language is remembered only in the current browser. No student accounts or analytics are used.
+Direct links to Atomic Structure lessons use `/atomic-structure/sessions/earth/` through `/atomic-structure/sessions/shells/`; Periodic Table lessons use `/periodic-table/sessions/map/` through `/periodic-table/sessions/noble/`; Metals lessons use `/metals/sessions/properties/` through `/metals/sessions/protect/`. Add `?lang=en` or `?lang=zh` to select a language. The main CHEM site also supports links such as `?lang=en#elements` or `?lang=zh#formula`. Language is remembered only in the current browser. No student accounts or analytics are used.
 
 ## Material and image credits
 
