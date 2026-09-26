@@ -21,6 +21,8 @@ The models are simplified teaching diagrams. Colours, distances and arrangement 
 
 The Unit 3 notes are published as a separate, bilingual website at `/periodic-table/`. Its seven pages follow sections 3.1–3.7 under `/periodic-table/sessions/`, each with three multiple-choice checkpoints. Students can inspect the first 36 elements, compare electron shells, and explore illustrated group trends and reaction observations. The supplied Unit 3 PDF is not included in the published files.
 
+Unit 3 electron diagrams pair dots after the fourth electron in a shell. Groups I and II include rotatable 3D reaction observations with playback and a progress slider; Group VII shows diatomic molecules in different states, while Group 0 shows separate atoms alongside full electron shells. Models use projected 3D geometry without external libraries, support touch and keyboard controls, and respect reduced-motion preferences. Reaction times are illustrative, not experimental measurements.
+
 ## Run locally
 
 Requires Node.js 22.13 or later and npm.
