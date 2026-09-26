@@ -17,6 +17,10 @@ The Atomic Structure notes are published as a separate, bilingual website at `/a
 
 The models are simplified teaching diagrams. Colours, distances and arrangement are not exact representations. Real experiments require teacher supervision.
 
+## Periodic Table website
+
+The Unit 3 notes are published as a separate, bilingual website at `/periodic-table/`. Its seven pages follow sections 3.1–3.7 under `/periodic-table/sessions/`, each with three multiple-choice checkpoints. Students can inspect the first 36 elements, compare electron shells, and explore illustrated group trends and reaction observations. The supplied Unit 3 PDF is not included in the published files.
+
 ## Run locally
 
 Requires Node.js 22.13 or later and npm.
@@ -34,13 +38,13 @@ npm run build
 npm run build:github
 ```
 
-`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the separate Atomic Structure website to `github-dist/atomic-structure/`, including one generated route for each session. It needs no server, account, API key or database.
+`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the Atomic Structure and Periodic Table websites to `github-dist/`, including one generated route for each session. It needs no server, account, API key or database.
 
 ## GitHub Pages
 
 The included `.github/workflows/pages.yml` publishes after a push to `main`. Repository Settings → Pages → Source should be **GitHub Actions**.
 
-Direct links to Atomic Structure lessons use `/atomic-structure/sessions/earth/` through `/atomic-structure/sessions/shells/`; add `?lang=en` or `?lang=zh` to select a language. The main CHEM site also supports links such as `?lang=en#elements` or `?lang=zh#formula`. Language is remembered only in the current browser. No student accounts or analytics are used.
+Direct links to Atomic Structure lessons use `/atomic-structure/sessions/earth/` through `/atomic-structure/sessions/shells/`; Periodic Table lessons use `/periodic-table/sessions/map/` through `/periodic-table/sessions/noble/`. Add `?lang=en` or `?lang=zh` to select a language. The main CHEM site also supports links such as `?lang=en#elements` or `?lang=zh#formula`. Language is remembered only in the current browser. No student accounts or analytics are used.
 
 ## Material and image credits
 

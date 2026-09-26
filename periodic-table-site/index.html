@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant-HK">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f8fb" />
+    <meta name="description" content="Bilingual S3 Chemistry lessons on the periodic table, based on Unit 3 student notes." />
+    <title>元素週期表 · CHEM Explore</title>
+    <link rel="icon" href="../favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./site.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" id="skip-link">跳到課堂內容</a>
+    <header class="topbar">
+      <button class="menu-button" type="button" id="menu-button" aria-controls="sidebar" aria-expanded="false" aria-label="開啟課堂目錄">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+      <a class="brand" id="brand-link" href="./?lang=zh">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="3"/><ellipse cx="16" cy="16" rx="13" ry="5.5"/><ellipse cx="16" cy="16" rx="13" ry="5.5" transform="rotate(60 16 16)"/></svg></span>
+        <b>CHEM <span>Explore</span></b>
+      </a>
+      <span class="course-label" id="course-label"></span>
+      <div class="language-switch" role="group" aria-label="Language / 語言">
+        <button type="button" data-language="zh" aria-pressed="true">繁中</button>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <button class="nav-backdrop" type="button" id="nav-backdrop" aria-label="關閉課堂目錄" hidden></button>
+    <div class="page-layout">
+      <aside class="sidebar" id="sidebar" aria-label="Lesson contents">
+        <div class="side-heading" id="side-heading"></div>
+        <nav class="lesson-nav" id="lesson-nav"></nav>
+        <div class="sidebar-bottom">
+          <div class="progress-copy"><span id="progress-label"></span><b id="progress-count"></b></div>
+          <div class="progress-track"><span id="progress-fill"></span></div>
+          <a class="back-link" id="previous-unit-link" href="../atomic-structure/?lang=zh"></a>
+        </div>
+      </aside>
+      <main id="main" class="main-content" tabindex="-1"></main>
+    </div>
+  </body>
+</html>
