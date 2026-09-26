@@ -1,0 +1,98 @@
+/* Interactive lesson additions follow the shared CHEM classroom colours. */
+.lesson-model-note{margin:12px 2px 20px;color:#536b79;font-size:14px;line-height:1.6}
+.discovery-strip{display:grid;gap:12px;margin:12px 0 18px;padding:16px}
+.discovery-buttons,.practice-choices,.practice-actions{display:flex;flex-wrap:wrap;gap:9px}
+.discovery-buttons button,.practice-choices button,.isotope-lab-buttons button{min-height:42px;padding:8px 14px;border:1px solid #d4e4dc;border-radius:9px;background:#f8fbf9;color:#365468;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.discovery-buttons button[aria-pressed="true"],.practice-choices button[aria-pressed="true"],.isotope-lab-buttons button[aria-pressed="true"]{border-color:#08765c;background:#e5f3ec;color:#076b55}
+.discovery-strip p{min-height:27px;margin:0;color:#27485c;font-size:15px}
+.cutaway .copper-block,.cutaway .copper-grains,.cutaway .single-atom{transition:opacity .2s,transform .2s,box-shadow .2s}
+.cutaway .zoom-active{transform:scale(1.06);filter:drop-shadow(0 5px 8px #08765c33)}
+.cutaway .zoom-dim{opacity:.45}
+.learning-lab{margin:22px 0;padding:22px;border:1px solid #dce5eb;border-radius:14px;background:#fff}
+.learning-lab-head{display:flex;justify-content:space-between;align-items:start;gap:16px;margin-bottom:18px}
+.learning-lab-head .panel-eyebrow{display:block;color:#06745c;font-weight:700}
+.learning-lab-head h3{margin:6px 0 0;color:#172c40;font-size:21px;line-height:1.35}
+.learning-lab .source-chip{flex:none}
+.practice-clue{margin:0 0 16px;color:#2c4b5e;font-size:17px;line-height:1.55}
+.practice-clue b{color:#06745c;font-size:21px}
+.practice-choices button:hover,.discovery-buttons button:hover,.isotope-lab-buttons button:hover{border-color:#0b8065}
+.practice-choices button.is-correct{border-color:#08765c;background:#e5f3ec;color:#076b55}
+.practice-choices button.is-incorrect{border-color:#d49b60;background:#fff4e7;color:#86521e}
+.practice-feedback{margin:12px 0 0;color:#815626;font-size:14px;line-height:1.55}
+.practice-feedback:empty{display:none}
+.practice-feedback.is-correct{color:#08705a}
+.practice-next,.practice-check,.builder-control-footer button{min-height:40px;padding:8px 14px;border:1px solid #0b765f;border-radius:9px;background:#08765c;color:#fff;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.practice-next{margin-top:14px;border-color:#c9ddd4;background:#e6f4ee;color:#076b55}
+.practice-next:hover,.builder-control-footer button:hover:not(:disabled){background:#d8ede3}
+.practice-check:hover{background:#05634e}
+.learning-lab select,.learning-lab input[type="number"]{min-height:42px;border:1px solid #cdded7;border-radius:8px;background:#fff;color:#172c40;font-family:inherit;font-size:15px;font-weight:600}
+.learning-lab select{max-width:100%;padding:7px 35px 7px 11px}
+.learning-lab input[type="number"]{width:100%;padding:7px 10px}
+.learning-lab input[type="range"]{width:100%;accent-color:#08765c}
+.learning-lab label{display:block;color:#365468;font-size:15px;font-weight:600;line-height:1.5}
+.number-practice-layout,.isotope-lab-layout,.shell-practice-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:24px;align-items:start}
+.number-practice-question{padding:16px;border-radius:11px;background:#f3f8f6}
+.number-practice-question select{display:block;margin:9px 0 5px}
+.number-practice-question .nuclide-notation{min-height:125px;padding:14px 0}
+.number-practice-question p{margin:0;color:#536b79;font-size:14px;line-height:1.5}
+.number-answer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0 0 14px}
+.number-answer-grid label{font-size:13px}
+.number-answer-grid input{display:block;margin-top:6px}
+.isotope-lab-visual{display:grid;justify-items:center;gap:14px;padding:15px;border-radius:11px;background:#f1f7f4}
+.isotope-lab-nucleus{display:grid;grid-template-columns:repeat(7,13px);grid-auto-rows:13px;justify-content:center;align-content:center;gap:2px;min-width:150px;min-height:150px;border:8px solid #e1efe7;border-radius:50%;background:#f8fbf9}
+.isotope-lab-nucleus i{width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#ffd0bd,#e87560 65%,#b4534d)}
+.isotope-lab-nucleus i.n{background:radial-gradient(circle at 30% 25%,#e2eff7,#7398b0 65%,#466d87)}
+.isotope-lab-buttons{display:flex;gap:8px}
+.isotope-lab-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.isotope-lab-results>div{display:flex;justify-content:space-between;gap:10px;padding:12px;border:1px solid #dce7e1;border-radius:9px;background:#fbfdfc;color:#536b79;font-size:14px}
+.isotope-lab-results b{color:#06745c;font-size:19px}
+.isotope-lab-results p{grid-column:1/-1;margin:5px 0 0;color:#365468;font-size:15px;line-height:1.55}
+.average-lab-legend{display:flex;justify-content:space-between;gap:12px;margin:10px 0 14px;color:#486371;font-size:14px}
+.average-lab-legend span:first-child b{color:#08765c}
+.average-lab-legend span:last-child b{color:#bc6545}
+.average-atom-sample{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;max-width:530px;margin:8px 0 18px;padding:15px;border-radius:12px;background:#f4f8f6}
+.average-atom-sample span{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;background:#208b72;color:#fff;font-family:inherit;font-size:11px;font-weight:700}
+.average-atom-sample span.atom-37{background:#cf785d}
+.average-calculation{width:fit-content;margin:13px 0;padding:12px 17px;border-radius:9px;background:#e6f4ee;color:#075c49;font-size:19px;font-weight:700}
+.average-calculation[hidden]{display:none}
+.learning-lab .lesson-model-note{margin:17px 0 0}
+.shell-practice-task select{display:block;margin:8px 0 12px}
+.shell-practice-task>p{margin:0 0 13px;color:#536b79;font-size:14px;line-height:1.55}
+.shell-practice-controls{display:grid;gap:7px;margin:0 0 13px}
+.shell-practice-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;border:1px solid #e2ebe6;border-radius:9px;background:#fbfdfc;color:#365468;font-size:14px}
+.shell-practice-row>div{display:flex;align-items:center;gap:9px}
+.shell-practice-row button{width:34px;height:34px;border:1px solid #cbded5;border-radius:7px;background:#e8f4ed;color:#08765c;font-size:20px;cursor:pointer}
+.shell-practice-row button:disabled{opacity:.4;cursor:not-allowed}
+.shell-practice-row b{min-width:20px;text-align:center;color:#08765c;font-size:17px}
+.shell-practice-visual{display:grid;justify-items:center;align-content:center;min-height:340px;padding:16px;border-radius:12px;background:#f3f8f6}
+.shell-practice-visual svg{display:block;width:min(100%,285px);height:auto}
+.shell-practice-visual>p{margin:9px 0 0;color:#536b79;font-size:13px;text-align:center}
+.builder-model-stage{min-height:345px}
+.builder-shell-electrons{animation:none}
+.builder-nucleus-model{width:128px;height:128px}
+.builder-nucleus-model>div{display:flex;flex-wrap:wrap;align-content:center;justify-content:center;width:82px;gap:2px}
+.builder-nucleus-model i{flex:0 0 12px}
+.builder-nucleus-model.dense>div{grid-template-columns:repeat(6,9px);grid-auto-rows:9px;gap:1px}
+.builder-nucleus-model.dense>div{width:64px}
+.builder-nucleus-model.dense i{width:9px;height:9px;flex-basis:9px}
+.builder-particle-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px;border-top:1px solid #e7eeea;background:#fbfcfb}
+.builder-particle-summary>div{display:flex;align-items:center;gap:5px;min-width:0;padding:8px;border:1px solid #dce7e1;border-radius:8px;background:#fff;color:#365468;font-size:12px}
+.builder-particle-summary i{flex:none;width:10px;height:10px;border-radius:50%}
+.builder-particle-summary i.p-dot{background:#e47760}.builder-particle-summary i.n-dot{background:#6d94ae}.builder-particle-summary i.e-dot{background:#08765c}
+.builder-particle-summary b{margin-left:auto;color:#08765c;font-size:18px}
+.builder-controls-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px;border-top:1px solid #e7eeea}
+.builder-controls-grid .proton-control{min-width:0;padding:10px;border:1px solid #dce7e1;border-radius:10px;background:#f9fcfa}
+.builder-controls-grid .proton-control-label{display:grid;gap:4px;min-height:40px;margin-bottom:10px;font-size:12px}
+.builder-controls-grid .proton-slider-row{grid-template-columns:30px minmax(0,1fr) 30px;gap:4px}
+.builder-controls-grid .proton-slider-row button{width:30px;height:34px}
+.builder-controls-grid .proton-control>p{margin:9px 0 0;font-size:11px}
+.builder-control-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 13px 13px}
+.builder-control-footer p{margin:0;color:#365468;font-size:12px;line-height:1.5}
+.builder-control-footer button{flex:none;background:#e6f4ee;color:#076b55}
+.builder-control-footer button:disabled{opacity:.5;cursor:not-allowed}
+.builder-count-grid>div{font-size:12px}
+.builder-count-grid b{overflow-wrap:anywhere}
+.learning-lab :is(button,select,input):focus-visible,.discovery-strip button:focus-visible,.builder-controls-grid :is(button,input):focus-visible,.builder-control-footer button:focus-visible{outline:3px solid #e2ae69;outline-offset:2px}
+@media(max-width:1250px){.builder-controls-grid{grid-template-columns:1fr}.builder-controls-grid .proton-control-label{display:flex;min-height:0}.builder-controls-grid .proton-slider-row{grid-template-columns:38px minmax(0,1fr) 38px;gap:9px}.builder-controls-grid .proton-slider-row button{width:38px;height:38px}}
+@media(max-width:760px){.learning-lab{padding:16px;margin:18px 0}.learning-lab-head h3{font-size:19px}.number-practice-layout,.isotope-lab-layout,.shell-practice-layout{grid-template-columns:1fr;gap:14px}.builder-particle-summary{gap:5px;padding:8px}.builder-particle-summary>div{display:grid;justify-items:center;gap:4px;padding:7px 2px;font-size:11px;text-align:center}.builder-particle-summary b{margin:0}.builder-control-footer{align-items:stretch;flex-direction:column}.shell-practice-visual{min-height:280px}.practice-clue{font-size:15px}.number-answer-grid{gap:5px}.number-answer-grid input{font-size:14px}.average-atom-sample{gap:4px;padding:10px}}
+@media(max-width:390px){.learning-lab{padding:12px}.learning-lab-head .source-chip{display:none}.number-answer-grid{grid-template-columns:1fr 1fr}.builder-nucleus-model{width:110px;height:110px}.builder-nucleus-model>div{width:64px}.builder-nucleus-model i{width:10px;height:10px;flex-basis:10px}.builder-particle-summary>div{font-size:10px}.average-atom-sample span{font-size:8px}}

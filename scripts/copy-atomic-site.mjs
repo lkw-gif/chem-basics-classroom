@@ -12,11 +12,19 @@ await cp(source, output, { recursive: true });
 
 const css = await readFile(resolve(output, 'styles.css'));
 const js = await readFile(resolve(output, 'site.js'));
+const labCss = await readFile(resolve(output, 'learning-labs.css'));
+const labJs = await readFile(resolve(output, 'learning-labs.js'));
 await cp(resolve(root, 'app', 'periodic-elements.json'), resolve(output, 'periodic-elements.json'));
 const version = (asset) => createHash('sha256').update(asset).digest('hex').slice(0, 12);
+const versionedJs = js.toString().replace(
+  "from './learning-labs.js'",
+  "from './learning-labs.js?v=" + version(labJs) + "'",
+);
+await writeFile(resolve(output, 'site.js'), versionedJs);
 const page = (await readFile(resolve(output, 'index.html'), 'utf8'))
   .replace('href="./styles.css"', `href="./styles.css?v=${version(css)}"`)
-  .replace('src="./site.js"', `src="./site.js?v=${version(js)}"`);
+  .replace('href="./learning-labs.css"', `href="./learning-labs.css?v=${version(labCss)}"`)
+  .replace('src="./site.js"', `src="./site.js?v=${version(versionedJs)}"`);
 await writeFile(resolve(output, 'index.html'), page);
 const nestedPage = page.replace('<head>', '<head>\n    <base href="../../" />');
 const sessions = ['earth', 'atom', 'types', 'structure', 'numbers', 'isotopes', 'average', 'shells'];

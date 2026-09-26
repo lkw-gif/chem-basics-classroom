@@ -1,3 +1,5 @@
+import { setupLearningLabs } from './learning-labs.js';
+
 const bi = (zh, en) => `<span class="zh">${zh}</span><span class="en">${en}</span>`;
 const quizzes = {
   earth: {
@@ -83,6 +85,11 @@ const firstTwenty = [
 
 let periodicElements = [];
 let builderAtomicNumber = 1;
+let builderNeutrons = 0;
+let builderElectrons = 1;
+let builderRenderedAtomicNumber = 0;
+let builderLastChange = 'preset';
+let refreshLearningLabs = () => {};
 let selectedStateMaterial = 'water';
 let selectedTemperature = 20;
 
@@ -176,14 +183,15 @@ function setLanguage(language, updateUrl = true) {
   document.querySelectorAll('#state-substance option').forEach((option) => {
     option.textContent = option.dataset[language];
   });
-  renderPeriodicTable(language);
-  renderStateLab();
-  renderProtonBuilder();
   if (updateUrl) {
     const url = new URL(location.href);
     url.searchParams.set('lang', language);
     history.replaceState(null, '', url);
   }
+  renderPeriodicTable(language);
+  renderStateLab();
+  renderProtonBuilder();
+  refreshLearningLabs();
 }
 
 function renderQuiz(id, data) {
@@ -390,7 +398,7 @@ function setupStateLab() {
   renderStateLab();
 }
 
-function renderProtonBuilder() {
+function renderBaseProtonBuilder() {
   const root = document.querySelector('[data-proton-builder]');
   if (!root) return;
   const element = firstTwenty.find((item) => item.n === builderAtomicNumber);
@@ -448,6 +456,117 @@ function renderProtonBuilder() {
   root.querySelector('#remove-proton').setAttribute('aria-label', language === 'en' ? 'Remove one proton' : '減一粒質子');
 }
 
+function practiceText(zh, en) {
+  return getLanguage() === 'en' ? en : zh;
+}
+
+function simpleElectronShells(total) {
+  let remaining = total;
+  const counts = [];
+  for (const capacity of [2, 8, 8, 2]) {
+    if (remaining <= 0) break;
+    const count = Math.min(remaining, capacity);
+    counts.push(count);
+    remaining -= count;
+  }
+  return counts;
+}
+
+function renderProtonBuilder() {
+  const root = document.querySelector('[data-proton-builder]');
+  if (!root) return;
+  const element = firstTwenty[builderAtomicNumber - 1];
+  if (builderRenderedAtomicNumber !== builderAtomicNumber) {
+    builderNeutrons = element.mass - element.n;
+    builderElectrons = element.n;
+    builderRenderedAtomicNumber = builderAtomicNumber;
+    builderLastChange = 'proton';
+  }
+  renderBaseProtonBuilder();
+  const arrangement = simpleElectronShells(builderElectrons);
+  const neutral = builderElectrons === element.n;
+  const mass = element.n + builderNeutrons;
+  const charge = element.n - builderElectrons;
+  const language = getLanguage();
+  root.querySelector('#builder-proton-summary').textContent = element.n;
+  root.querySelector('#builder-proton-unit').textContent = element.n === 1 ? 'proton' : 'protons';
+  root.querySelector('#builder-neutron-count').textContent = builderNeutrons;
+  root.querySelector('#builder-electron-count').textContent = builderElectrons;
+  root.querySelector('#builder-neutron-control-count').textContent = builderNeutrons;
+  root.querySelector('#builder-electron-control-count').textContent = builderElectrons;
+  root.querySelector('#builder-mass-number').textContent = mass;
+  root.querySelector('#builder-charge-count').textContent = charge === 0 ? '0' : (charge > 0 ? '+' : '−') + Math.abs(charge);
+  root.querySelector('#builder-shell-count').textContent = arrangement.length ? arrangement.join(', ') : '0';
+  root.querySelector('#builder-element-name').innerHTML = '<b>' + bi(element.zh, element.en) + '</b><small>' +
+    practiceText('元素：' + element.s + '；質量數：' + mass, 'Element: ' + element.s + '; mass number: ' + mass) + '</small>';
+  root.querySelector('#builder-summary-text').textContent = neutral
+    ? practiceText(element.n + ' 粒質子決定這是' + element.zh + '。質子和電子數相同，所以是中性原子。',
+      'This is ' + element.en.toLowerCase() + ' because it has ' + element.n +
+      (element.n === 1 ? ' proton. ' : ' protons. ') +
+      'Equal numbers of protons and electrons make a neutral atom.')
+    : practiceText('仍然是' + element.zh + '元素，但質子和電子數不同，因此這粒子帶電。',
+      'It is still the element ' + element.en + ', but unequal proton and electron counts make this particle charged.');
+  const particles = [];
+  for (let index = 0; index < Math.max(element.n, builderNeutrons); index += 1) {
+    if (index < element.n) particles.push('p');
+    if (index < builderNeutrons) particles.push('n');
+  }
+  root.querySelector('#builder-nucleus-particles').innerHTML = particles.map((particle) =>
+    '<i class="' + particle + '" aria-hidden="true"></i>').join('');
+  root.querySelector('.builder-nucleus-model').classList.toggle('dense', particles.length > 35);
+  const radii = [76, 105, 133, 158];
+  const diagram = arrangement.map((count, shellIndex) => {
+    const radius = radii[shellIndex];
+    const electrons = Array.from({ length: count }, (_, index) => {
+      const paired = count > 4;
+      const slot = count <= 2 ? index * 2 : index % 4;
+      const angle = -Math.PI / 2 + Math.PI * 2 * slot / 4;
+      const tangent = paired && index >= 4 ? 8 : 0;
+      const x = (200 + radius * Math.cos(angle) - Math.sin(angle) * tangent).toFixed(1);
+      const y = (170 + radius * Math.sin(angle) + Math.cos(angle) * tangent).toFixed(1);
+      return '<g class="builder-electron"><circle cx="' + x + '" cy="' + y +
+        '" r="8"/><text x="' + x + '" y="' + (Number(y) + 2.5).toFixed(1) + '">e⁻</text></g>';
+    }).join('');
+    return '<circle class="builder-orbit" cx="200" cy="170" r="' + radius + '"/>' + electrons;
+  }).join('');
+  root.querySelector('#builder-shell-diagram').innerHTML = diagram;
+  root.querySelector('#builder-model-stage').setAttribute('aria-label', practiceText(
+    element.zh + '粒子示意圖：' + element.n + '粒質子、' + builderNeutrons + '粒中子、' + builderElectrons + '粒電子。並非按比例。',
+    element.en + ' particle model: ' + element.n + (element.n === 1 ? ' proton, ' : ' protons, ') +
+    builderNeutrons + (builderNeutrons === 1 ? ' neutron and ' : ' neutrons and ') +
+    builderElectrons + (builderElectrons === 1 ? ' electron. ' : ' electrons. ') + 'Not to scale.'
+  ));
+  root.querySelector('#builder-neutron-slider').value = builderNeutrons;
+  root.querySelector('#builder-electron-slider').value = builderElectrons;
+  root.querySelector('#builder-neutron-slider').setAttribute('aria-valuetext',
+    practiceText(builderNeutrons + '粒中子', builderNeutrons + ' neutrons'));
+  root.querySelector('#builder-electron-slider').setAttribute('aria-valuetext',
+    practiceText(builderElectrons + '粒電子', builderElectrons + ' electrons'));
+  root.querySelector('#remove-neutron').disabled = builderNeutrons <= 0;
+  root.querySelector('#add-neutron').disabled = builderNeutrons >= 30;
+  root.querySelector('#remove-electron').disabled = builderElectrons <= 0;
+  root.querySelector('#add-electron').disabled = builderElectrons >= 20;
+  root.querySelector('#reset-neutral-atom').disabled =
+    neutral && builderNeutrons === element.mass - element.n;
+  const messages = {
+    proton: ['質子數決定元素。選另一種元素時，模型先載入一種常見的中性原子。',
+      'Proton number determines the element. Choosing another element loads one common neutral atom.'],
+    neutron: ['中子數改變質量數，但元素仍是' + element.zh + '。',
+      'Changing neutrons changes the mass number, but the element stays ' + element.en + '.'],
+    electron: [neutral ? '質子數和電子數相同，粒子不帶電。' : '電子數改變電荷，但元素仍由質子數決定。',
+      neutral ? 'Equal protons and electrons give no charge.' : 'Electron count changes charge; proton number still determines the element.'],
+    preset: ['選一種元素，再調整粒子數來比較。', 'Choose an element, then change particle counts to compare.'],
+  };
+  root.querySelector('#builder-change-explanation').textContent =
+    messages[builderLastChange][language === 'en' ? 1 : 0];
+  root.querySelector('#remove-neutron').setAttribute('aria-label', practiceText('減一粒中子', 'Remove one neutron'));
+  root.querySelector('#add-neutron').setAttribute('aria-label', practiceText('加一粒中子', 'Add one neutron'));
+  root.querySelector('#remove-electron').setAttribute('aria-label', practiceText('減一粒電子', 'Remove one electron'));
+  root.querySelector('#add-electron').setAttribute('aria-label', practiceText('加一粒電子', 'Add one electron'));
+  root.querySelector('#builder-neutron-slider').setAttribute('aria-label', practiceText('中子數', 'Number of neutrons'));
+  root.querySelector('#builder-electron-slider').setAttribute('aria-label', practiceText('電子數', 'Number of electrons'));
+}
+
 function setupProtonBuilder() {
   const root = document.querySelector('[data-proton-builder]');
   if (!root) return;
@@ -467,6 +586,38 @@ function setupProtonBuilder() {
     const choice = event.target.closest('[data-atomic-number]');
     if (!choice) return;
     builderAtomicNumber = Number(choice.dataset.atomicNumber);
+    const element = firstTwenty[builderAtomicNumber - 1];
+    builderNeutrons = element.mass - element.n;
+    builderElectrons = element.n;
+    builderLastChange = 'preset';
+    renderProtonBuilder();
+  });
+  root.querySelector('#builder-neutron-slider').addEventListener('input', (event) => {
+    builderNeutrons = Number(event.currentTarget.value);
+    builderLastChange = 'neutron';
+    renderProtonBuilder();
+  });
+  root.querySelector('#builder-electron-slider').addEventListener('input', (event) => {
+    builderElectrons = Number(event.currentTarget.value);
+    builderLastChange = 'electron';
+    renderProtonBuilder();
+  });
+  for (const [buttonId, particle, amount, limit] of [
+    ['remove-neutron', 'neutron', -1, 30], ['add-neutron', 'neutron', 1, 30],
+    ['remove-electron', 'electron', -1, 20], ['add-electron', 'electron', 1, 20],
+  ]) {
+    root.querySelector('#' + buttonId).addEventListener('click', () => {
+      if (particle === 'neutron') builderNeutrons = Math.max(0, Math.min(limit, builderNeutrons + amount));
+      else builderElectrons = Math.max(0, Math.min(limit, builderElectrons + amount));
+      builderLastChange = particle;
+      renderProtonBuilder();
+    });
+  }
+  root.querySelector('#reset-neutral-atom').addEventListener('click', () => {
+    const element = firstTwenty[builderAtomicNumber - 1];
+    builderNeutrons = element.mass - element.n;
+    builderElectrons = element.n;
+    builderLastChange = 'preset';
     renderProtonBuilder();
   });
   renderProtonBuilder();
@@ -600,3 +751,4 @@ setupPeriodicTable();
 setupStateLab();
 setupProtonBuilder();
 setupProgress();
+refreshLearningLabs = setupLearningLabs({ getLanguage, firstTwenty });
