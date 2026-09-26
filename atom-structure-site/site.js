@@ -20,7 +20,7 @@ const quizzes = {
     questions: [
       { q: ['哪一種元素是類金屬？', 'Which element is a metalloid?'], choices: [['矽', 'Silicon'], ['鈉', 'Sodium'], ['氧', 'Oxygen']], answer: 0, why: ['矽有些性質像金屬，有些像非金屬。', 'Silicon has some properties of metals and some of non-metals.'] },
       { q: ['哪一種物質通常善於導電？', 'Which type of substance usually conducts electricity well?'], choices: [['金屬', 'Metals'], ['非金屬', 'Non-metals'], ['氣體', 'Gases']], answer: 0, why: ['金屬通常善於導電；石墨是例外的非金屬。', 'Metals usually conduct electricity well; graphite is a non-metal exception.'] },
-      { q: ['在 −70 °C，元素 Y（熔點 −110 °C，沸點 −40 °C）是甚麼狀態？', 'At −70 °C, what state is element Y in (melting point −110 °C; boiling point −40 °C)?'], choices: [['固體', 'Solid'], ['液體', 'Liquid'], ['氣體', 'Gas']], answer: 1, why: ['−70 °C 高於熔點、低於沸點，所以 Y 是液體。', '−70 °C is above the melting point and below the boiling point, so Y is a liquid.'] },
+      { q: ['在 −120 °C，元素 Y（熔點 −110 °C，沸點 −40 °C）是甚麼狀態？', 'At −120 °C, what state is element Y in (melting point −110 °C; boiling point −40 °C)?'], choices: [['固體', 'Solid'], ['液體', 'Liquid'], ['氣體', 'Gas']], answer: 0, why: ['−120 °C 低於熔點 −110 °C，所以 Y 是固體。', '−120 °C is below the melting point of −110 °C, so Y is a solid.'] },
     ],
   },
   structure: {
@@ -90,18 +90,6 @@ let builderElectrons = 1;
 let builderRenderedAtomicNumber = 0;
 let builderLastChange = 'preset';
 let refreshLearningLabs = () => {};
-let selectedStateMaterial = 'water';
-let selectedTemperature = 20;
-let stateMotion = null;
-
-const stateMaterials = {
-  water: { zh: '水', en: 'Water', melting: 0, boiling: 100, min: -50, max: 150 },
-  oxygen: { zh: '氧', en: 'Oxygen', melting: -219, boiling: -183, min: -260, max: -160 },
-  bromine: { zh: '溴', en: 'Bromine', melting: -7, boiling: 59, min: -80, max: 120 },
-  mercury: { zh: '汞', en: 'Mercury', melting: -39, boiling: 357, min: -100, max: 500 },
-  iron: { zh: '鐵', en: 'Iron', melting: 1538, boiling: 2862, min: 1400, max: 3000 },
-};
-
 const sessionIds = ['earth', 'atom', 'types', 'structure', 'numbers', 'isotopes', 'average', 'shells'];
 const sessionUrl = (id, language = getLanguage()) => `./sessions/${id}/?lang=${language}`;
 
@@ -181,16 +169,12 @@ function setLanguage(language, updateUrl = true) {
       group.setAttribute('aria-label', quizzes[root.dataset.quiz].questions[index].q[language === 'en' ? 1 : 0]);
     });
   });
-  document.querySelectorAll('#state-substance option').forEach((option) => {
-    option.textContent = option.dataset[language];
-  });
   if (updateUrl) {
     const url = new URL(location.href);
     url.searchParams.set('lang', language);
     history.replaceState(null, '', url);
   }
   renderPeriodicTable(language);
-  renderStateLab();
   renderProtonBuilder();
   refreshLearningLabs();
 }
@@ -311,338 +295,6 @@ function setupPeriodicTable() {
       console.error(error);
       root.innerHTML = `<p class="periodic-load-error">${bi('週期表暫時未能載入。', 'The periodic table could not be loaded.')}</p>`;
     });
-}
-
-function stateOf(material, temperature) {
-  if (temperature < material.melting) return 'solid';
-  if (temperature === material.melting) return 'melting';
-  if (temperature < material.boiling) return 'liquid';
-  if (temperature === material.boiling) return 'boiling';
-  return 'gas';
-}
-
-function renderStateLab() {
-  const lab = document.querySelector('[data-state-lab]');
-  if (!lab) return;
-  const language = getLanguage();
-  const material = stateMaterials[selectedStateMaterial];
-  lab.setAttribute('aria-label', language === 'en' ? 'Try different temperatures' : '試試不同溫度');
-  lab.querySelector('.phase-shortcuts').setAttribute('aria-label',
-    language === 'en' ? 'Choose a temperature near a phase change' : '選擇不同狀態的溫度');
-  const range = lab.querySelector('#state-temperature');
-  const number = lab.querySelector('#state-temperature-number');
-  const particleBox = lab.querySelector('#state-particles');
-  const phase = stateOf(material, selectedTemperature);
-  const stateLabels = {
-    solid: ['固體', 'Solid'],
-    melting: ['正在熔化', 'Melting'],
-    liquid: ['液體', 'Liquid'],
-    boiling: ['正在沸騰', 'Boiling'],
-    gas: ['氣體', 'Gas'],
-  }[phase];
-  const low = material.melting;
-  const high = material.boiling;
-  let explanation;
-  if (phase === 'solid') explanation = language === 'en' ? `At ${selectedTemperature} °C, the temperature is below the melting point (${low} °C).` : `在 ${selectedTemperature} °C，溫度低於熔點（${low} °C）。`;
-  else if (phase === 'melting') explanation = language === 'en' ? `At the melting point (${low} °C), solid and liquid are both present.` : `到達熔點（${low} °C）時，固體和液體會同時出現。`;
-  else if (phase === 'liquid') explanation = language === 'en' ? `At ${selectedTemperature} °C, the temperature is between the melting point (${low} °C) and boiling point (${high} °C).` : `在 ${selectedTemperature} °C，溫度介乎熔點（${low} °C）和沸點（${high} °C）之間。`;
-  else if (phase === 'boiling') explanation = language === 'en' ? `At the boiling point (${high} °C), liquid and gas are both present.` : `到達沸點（${high} °C）時，液體和氣體會同時出現。`;
-  else explanation = language === 'en' ? `At ${selectedTemperature} °C, the temperature is above the boiling point (${high} °C).` : `在 ${selectedTemperature} °C，溫度高於沸點（${high} °C）。`;
-  range.min = material.min;
-  range.max = material.max;
-  range.value = selectedTemperature;
-  range.setAttribute('aria-label', language === 'en' ? 'Temperature in degrees Celsius' : '攝氏溫度');
-  number.min = material.min;
-  number.max = material.max;
-  if (document.activeElement !== number) number.value = selectedTemperature;
-  number.setAttribute('aria-label', language === 'en' ? 'Temperature in degrees Celsius' : '攝氏溫度');
-  lab.querySelector('#state-melting-point').textContent = `${material.melting} °C`;
-  lab.querySelector('#state-boiling-point').textContent = `${material.boiling} °C`;
-  lab.querySelector('#state-badge').textContent = stateLabels[language === 'en' ? 1 : 0];
-  lab.querySelector('#state-name').innerHTML = bi(material.zh, material.en);
-  lab.querySelector('#state-explanation').textContent = explanation;
-  particleBox.dataset.state = phase;
-  particleBox.setAttribute('aria-label', language === 'en' ? `${material.en} particle model: ${stateLabels[1]}` : `${material.zh}粒子示意圖：${stateLabels[0]}`);
-  const motionDescriptions = {
-    solid: ['粒子留在固定位置，輕微振動。', 'Particles vibrate gently in fixed positions.'],
-    melting: ['有些粒子仍在原位振動，有些開始滑動。', 'Some particles still vibrate in place; others begin to slide.'],
-    liquid: ['粒子靠近，但可以互相滑動。', 'Particles stay close but slide past one another.'],
-    boiling: ['有些粒子仍然靠近，有些已經散開。', 'Some particles remain close; others spread apart.'],
-    gas: ['粒子分散，向不同方向移動。', 'Particles spread out and move in different directions.'],
-  };
-  lab.querySelector('#state-motion-description').textContent =
-    motionDescriptions[phase][language === 'en' ? 1 : 0];
-  lab.querySelectorAll('[data-phase]').forEach((button) => {
-    button.setAttribute('aria-pressed', String(button.dataset.phase === phase));
-  });
-  const heatButton = lab.querySelector('#state-auto-heat');
-  heatButton.innerHTML = heatButton.getAttribute('aria-pressed') === 'true'
-    ? bi('⏸ 暫停加熱', '⏸ Pause heating')
-    : bi('▶ 從低溫播放加熱', '▶ Play heating from cold');
-  stateMotion?.setPhase(phase, selectedStateMaterial, selectedTemperature);
-}
-
-function createStateMotion(canvas) {
-  const context = canvas.getContext('2d');
-  if (!context) return { setPhase() {} };
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const palette = {
-    water: ['#47a8bb', '#247c94'],
-    oxygen: ['#e47b85', '#b6495c'],
-    bromine: ['#c27a53', '#915039'],
-    mercury: ['#b4c1c8', '#667e8b'],
-    iron: ['#9eafb9', '#5f7887'],
-  };
-  const particles = Array.from({ length: 24 }, (_, index) => ({
-    x: 0.2 + (index % 6) * 0.12,
-    y: 0.56 + Math.floor(index / 6) * 0.1,
-    vx: Math.cos(index * 2.4) || 0.6,
-    vy: Math.sin(index * 2.4) || 0.5,
-    seed: index * 1.71,
-  }));
-  let width = 0;
-  let height = 0;
-  let phase = 'liquid';
-  let material = 'water';
-  let temperature = 20;
-  let firstPhase = true;
-  let visible = false;
-  let frameId = 0;
-  let lastTime = 0;
-
-  const modeOf = (index) => {
-    if (phase === 'melting') return index < 12 ? 'solid' : 'liquid';
-    if (phase === 'boiling') return index < 12 ? 'liquid' : 'gas';
-    return phase;
-  };
-  const targetOf = (index, mode) => {
-    const column = index % 6;
-    const row = Math.floor(index / 6);
-    if (mode === 'solid') {
-      return phase === 'melting'
-        ? [0.12 + column * 0.06, 0.7 + row * 0.12]
-        : [0.2 + column * 0.12, 0.56 + row * 0.1];
-    }
-    if (mode === 'liquid') {
-      const staggerX = Math.sin(index * 2.35) * 0.027;
-      const staggerY = Math.cos(index * 3.1) * 0.022;
-      if (phase === 'melting') {
-        return [0.58 + column * 0.06 + staggerX * 0.4,
-          0.7 + (row - 2) * 0.12 + staggerY];
-      }
-      return [0.2 + column * 0.12 + staggerX,
-        (phase === 'boiling' ? 0.7 + row * 0.12 : 0.58 + row * 0.1) + staggerY];
-    }
-    if (phase === 'boiling') return [0.12 + column * 0.15, 0.16 + (row - 2) * 0.22];
-    return [0.12 + column * 0.15, 0.14 + row * 0.22];
-  };
-  function draw() {
-    if (!width || !height) return;
-    context.clearRect(0, 0, width, height);
-    const [light, dark] = palette[material];
-    particles.forEach((particle) => {
-      const x = particle.x * width;
-      const y = particle.y * height;
-      const radius = Math.max(5, Math.min(7.5, width / 35));
-      const gradient = context.createRadialGradient(x - radius * 0.35, y - radius * 0.4, 1, x, y, radius);
-      gradient.addColorStop(0, '#ffffff');
-      gradient.addColorStop(0.35, light);
-      gradient.addColorStop(1, dark);
-      context.beginPath();
-      context.arc(x, y, radius, 0, Math.PI * 2);
-      context.fillStyle = gradient;
-      context.fill();
-      context.strokeStyle = '#ffffffb8';
-      context.lineWidth = 1;
-      context.stroke();
-    });
-  }
-  function resize() {
-    const bounds = canvas.getBoundingClientRect();
-    width = bounds.width;
-    height = bounds.height;
-    if (!width || !height) return;
-    const scale = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(width * scale);
-    canvas.height = Math.round(height * scale);
-    context.setTransform(scale, 0, 0, scale, 0, 0);
-    draw();
-  }
-  function tick(now) {
-    const elapsed = Math.min((now - (lastTime || now)) / 1000, 0.05);
-    lastTime = now;
-    const solidHeat = Math.max(0, Math.min(1,
-      (temperature - stateMaterials[material].min) /
-      (stateMaterials[material].melting - stateMaterials[material].min)));
-    const gasHeat = Math.max(0, Math.min(1,
-      (temperature - stateMaterials[material].boiling) /
-      (stateMaterials[material].max - stateMaterials[material].boiling)));
-    particles.forEach((particle, index) => {
-      const mode = modeOf(index);
-      if (mode === 'gas') {
-        const speed = 0.15 + gasHeat * 0.13;
-        particle.x += particle.vx * speed * elapsed;
-        particle.y += particle.vy * speed * elapsed;
-        if (phase === 'boiling') {
-          const [targetX, targetY] = targetOf(index, mode);
-          particle.x += (targetX - particle.x) * Math.min(1, elapsed * 0.8);
-          particle.y += (targetY - particle.y) * Math.min(1, elapsed * 0.8);
-        }
-        if (particle.x < 0.05 || particle.x > 0.95) particle.vx *= -1;
-        if (particle.y < 0.06 || particle.y > 0.94) particle.vy *= -1;
-        particle.x = Math.max(0.05, Math.min(0.95, particle.x));
-        particle.y = Math.max(0.06, Math.min(0.94, particle.y));
-        return;
-      }
-      const [baseX, baseY] = targetOf(index, mode);
-      const wave = now / 1000 * (mode === 'solid' ? 2 + solidHeat * 4 : 1.5 + solidHeat * 1.5);
-      const amplitude = mode === 'solid' ? 0.003 + solidHeat * 0.012 : 0.035;
-      const x = baseX + Math.sin(wave + particle.seed) * amplitude;
-      const y = baseY + Math.cos(wave * 0.9 + particle.seed * 1.4) * amplitude * 0.6;
-      const ease = Math.min(1, elapsed * (mode === 'solid' ? 5 : 2.5));
-      particle.x += (x - particle.x) * ease;
-      particle.y += (y - particle.y) * ease;
-    });
-    draw();
-    frameId = requestAnimationFrame(tick);
-  }
-  function stop() {
-    cancelAnimationFrame(frameId);
-    frameId = 0;
-    lastTime = 0;
-  }
-  function start() {
-    if (!visible || document.hidden || reducedMotion.matches || frameId) return;
-    frameId = requestAnimationFrame(tick);
-  }
-  new ResizeObserver(resize).observe(canvas);
-  new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
-    if (visible) { resize(); start(); }
-    else stop();
-  }, { threshold: 0.05 }).observe(canvas);
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop();
-    else start();
-  });
-  reducedMotion.addEventListener('change', () => {
-    if (reducedMotion.matches) stop();
-    else start();
-    draw();
-  });
-  return {
-    reset() {
-      particles.forEach((particle, index) => {
-        [particle.x, particle.y] = targetOf(index, modeOf(index));
-      });
-      draw();
-    },
-    setPhase(nextPhase, nextMaterial, nextTemperature) {
-      phase = nextPhase;
-      material = nextMaterial;
-      temperature = nextTemperature;
-      if (firstPhase || reducedMotion.matches) {
-        particles.forEach((particle, index) => {
-          [particle.x, particle.y] = targetOf(index, modeOf(index));
-        });
-        firstPhase = false;
-      }
-      draw();
-      start();
-    },
-  };
-}
-
-function setupStateLab() {
-  const lab = document.querySelector('[data-state-lab]');
-  if (!lab) return;
-  stateMotion = createStateMotion(lab.querySelector('#state-particle-canvas'));
-  let heatingTimer = null;
-  let heatingValue = selectedTemperature;
-  let holdTicks = 0;
-  const heatButton = lab.querySelector('#state-auto-heat');
-  function stopHeating() {
-    if (heatingTimer) clearInterval(heatingTimer);
-    heatingTimer = null;
-    heatButton.setAttribute('aria-pressed', 'false');
-  }
-  lab.querySelector('#state-substance').addEventListener('change', (event) => {
-    stopHeating();
-    selectedStateMaterial = event.target.value;
-    const material = stateMaterials[selectedStateMaterial];
-    selectedTemperature = Math.round((material.melting + material.boiling) / 2);
-    renderStateLab();
-  });
-  const updateTemperature = (event) => {
-    stopHeating();
-    const rawValue = event.target.value;
-    if (rawValue === '' || rawValue === '-') return;
-    const value = Number(rawValue);
-    if (!Number.isFinite(value)) return;
-    selectedTemperature = Math.max(Number(event.target.min), Math.min(Number(event.target.max), value));
-    renderStateLab();
-  };
-  lab.querySelector('#state-temperature').addEventListener('input', updateTemperature);
-  lab.querySelector('#state-temperature-number').addEventListener('input', updateTemperature);
-  lab.querySelector('#state-temperature-number').addEventListener('change', updateTemperature);
-  lab.querySelector('#state-temperature-number').addEventListener('blur', () => {
-    lab.querySelector('#state-temperature-number').value = selectedTemperature;
-  });
-  lab.querySelectorAll('[data-phase]').forEach((button) => {
-    button.addEventListener('click', () => {
-      stopHeating();
-      const material = stateMaterials[selectedStateMaterial];
-      const values = {
-        solid: Math.round((material.min + material.melting) / 2),
-        melting: material.melting,
-        liquid: Math.round((material.melting + material.boiling) / 2),
-        boiling: material.boiling,
-        gas: Math.round((material.boiling + material.max) / 2),
-      };
-      selectedTemperature = values[button.dataset.phase];
-      renderStateLab();
-    });
-  });
-  heatButton.addEventListener('click', () => {
-    if (heatingTimer) {
-      stopHeating();
-      renderStateLab();
-      return;
-    }
-    const material = stateMaterials[selectedStateMaterial];
-    heatingValue = material.min;
-    holdTicks = 0;
-    selectedTemperature = material.min;
-    heatButton.setAttribute('aria-pressed', 'true');
-    renderStateLab();
-    stateMotion.reset();
-    const step = (material.max - material.min) / 180;
-    heatingTimer = setInterval(() => {
-      if (holdTicks > 0) {
-        holdTicks -= 1;
-        return;
-      }
-      let next = Math.min(material.max, heatingValue + step);
-      for (const point of [material.melting, material.boiling]) {
-        if (heatingValue < point && next >= point) {
-          next = point;
-          holdTicks = 12;
-          break;
-        }
-      }
-      heatingValue = next;
-      selectedTemperature = Math.round(next);
-      if (heatingValue >= material.max) stopHeating();
-      renderStateLab();
-    }, 75);
-  });
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && heatingTimer) {
-      stopHeating();
-      renderStateLab();
-    }
-  });
-  renderStateLab();
 }
 
 function renderBaseProtonBuilder() {
@@ -995,7 +647,6 @@ renderIsotopeModels();
 setupShellPicker();
 renderChlorineDiagram();
 setupPeriodicTable();
-setupStateLab();
 setupProtonBuilder();
 setupProgress();
 refreshLearningLabs = setupLearningLabs({ getLanguage, firstTwenty });

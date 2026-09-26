@@ -97,22 +97,60 @@
 @media(max-width:760px){.learning-lab{padding:16px;margin:18px 0}.learning-lab-head h3{font-size:19px}.number-practice-layout,.isotope-lab-layout,.shell-practice-layout{grid-template-columns:1fr;gap:14px}.builder-particle-summary{gap:5px;padding:8px}.builder-particle-summary>div{display:grid;justify-items:center;gap:4px;padding:7px 2px;font-size:11px;text-align:center}.builder-particle-summary b{margin:0}.builder-control-footer{align-items:stretch;flex-direction:column}.shell-practice-visual{min-height:280px}.practice-clue{font-size:15px}.number-answer-grid{gap:5px}.number-answer-grid input{font-size:14px}.average-atom-sample{gap:4px;padding:10px}}
 @media(max-width:390px){.learning-lab{padding:12px}.learning-lab-head .source-chip{display:none}.number-answer-grid{grid-template-columns:1fr 1fr}.builder-nucleus-model{width:110px;height:110px}.builder-nucleus-model>div{width:64px}.builder-nucleus-model i{width:10px;height:10px;flex-basis:10px}.builder-particle-summary>div{font-size:10px}.average-atom-sample span{font-size:8px}}
 
-/* Lesson 03: real examples and a moving particle model. */
+/* Lesson 03: user-supplied photos and the static temperature guide. */
 .nonmetal-gallery .gallery-images figure:last-child img{object-fit:contain;background:#a7a7a7}
 .liquid-examples{grid-template-columns:repeat(2,minmax(0,1fr))}
 .liquid-examples>article{min-width:0}
 .liquid-art{width:128px;height:92px;object-fit:cover}
 .bromine-art{object-fit:contain;background:#c0c1cb}
 .room-temperature-rule{grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center}
-.phase-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:17px}
-.phase-shortcuts button{min-height:39px;padding:6px 4px;border:1px solid #d4e4dc;border-radius:8px;background:#f8fbf9;color:#35586a;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer}
-.phase-shortcuts button[aria-pressed="true"]{border-color:#08765c;background:#e5f3ec;color:#076b55}
-.phase-shortcuts button:focus-visible,.state-auto-heat:focus-visible{outline:3px solid #56b99b;outline-offset:2px}
-.state-auto-heat{width:100%;min-height:43px;margin-top:10px;border:1px solid #08765c;border-radius:8px;background:#08765c;color:#fff;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
-.state-auto-heat[aria-pressed="true"]{background:#e5f3ec;color:#076b55}
-.state-model{min-width:0}
-.particle-box{min-height:245px}
-.particle-box canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
-.state-motion-description{margin:8px 0 0;color:#355f68;font-size:13px;line-height:1.45}
-@media(max-width:760px){.room-temperature-rule{grid-template-columns:1fr 1fr}.particle-box{min-height:220px}}
-@media(max-width:520px){.liquid-examples{grid-template-columns:1fr}.liquid-art{width:118px;height:86px}.state-display{grid-template-columns:1fr}.particle-box{min-height:230px}.phase-shortcuts button{font-size:11px}}
+.example-line .symbol-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:8px}
+.stacked-symbol{display:grid;gap:2px;line-height:1.05}
+.stacked-symbol small,.gallery-symbol-wrap small{color:#647d85;font:11px/1.25 Arial,'Microsoft JhengHei',sans-serif}
+.gallery-symbol-wrap{display:grid;justify-items:center;gap:3px;flex:none;min-width:52px;text-align:center}
+.gallery-symbol-wrap small{font-size:9px}
+.symbol-item{display:grid;align-content:start;gap:2px;min-width:0}
+.symbol-item strong{color:#126d58;font:700 16px Arial,sans-serif}
+.symbol-item small{color:#54707c;font:11px Arial,'Microsoft JhengHei',sans-serif;line-height:1.25;overflow-wrap:anywhere}
+.gallery-element{display:grid;gap:1px;min-width:0}
+.gallery-element strong{color:#08745c;font:700 15px Arial,sans-serif}
+.gallery-element small{color:#536f7b;font:11px Arial,'Microsoft JhengHei',sans-serif;line-height:1.25;overflow-wrap:anywhere}
+.metalloid-gallery .gallery-images img{object-fit:cover}
+.metalloid-gallery .gallery-images figure:nth-child(2) img{object-fit:contain;background:#f7f7f5}
+.phase-guide{margin-top:18px;overflow:hidden}
+.phase-guide>.panel-top{padding:15px 19px;font-size:17px;color:#172c40}
+.phase-guide-body{padding:19px}
+.phase-question{margin:0 0 14px;font-size:17px;font-weight:700;color:#172c40}
+.phase-table-wrap{overflow-x:auto}
+.phase-table{width:100%;border-collapse:collapse;text-align:center;font-size:15px;font-variant-numeric:tabular-nums}
+.phase-table th,.phase-table td{padding:9px 10px;border:1px solid #dce5eb}
+.phase-table thead{background:#edf4f2;color:#315a51}
+.phase-table tbody th{font-size:17px;color:#172c40}
+.phase-table tbody tr:nth-child(2){background:#f2faf5}
+.phase-key{display:flex;gap:15px;flex-wrap:wrap;margin:22px 0 11px;font-size:13px;color:#526b7b}
+.phase-key>span{display:flex;align-items:center;gap:6px}
+.phase-key i{display:inline-block;width:14px;height:14px;border-radius:4px;background:#b9c7d1}
+.phase-key .liquid i{background:#51ae90}
+.phase-key .gas i{background:#a5d0e5}
+.phase-chart{display:grid;gap:8px}
+.phase-chart-axis,.phase-chart-row{display:grid;grid-template-columns:30px minmax(0,1fr) 70px;align-items:center;gap:9px}
+.phase-chart-axis{height:26px;margin-bottom:2px;font-size:12px;font-variant-numeric:tabular-nums;color:#5e7783}
+.phase-axis-track{position:relative;grid-column:2;height:100%}
+.phase-axis-track span,.phase-axis-track strong{position:absolute;top:3px;white-space:nowrap}
+.phase-axis-track span:nth-child(1){left:0}
+.phase-axis-track span:nth-child(2){left:31.82%;transform:translateX(-50%)}
+.phase-axis-track strong{left:68.18%;color:#06745c;transform:translateX(-50%)}
+.phase-axis-track span:nth-child(4){right:0}
+.phase-chart-row{min-height:41px}
+.phase-chart-row>b{text-align:center;font-size:17px}
+.phase-bar{height:25px;position:relative;border-radius:6px;box-shadow:inset 0 0 0 1px #d5e1e3;background:linear-gradient(to right,#b9c7d1 0 var(--melt),#51ae90 var(--melt) var(--boil),#a5d0e5 var(--boil) 100%)}
+.reference-line{position:absolute;z-index:1;top:-4px;bottom:-4px;left:68.18%;border-left:2px dashed #126d58}
+.phase-result{justify-self:stretch;padding:5px 2px;border-radius:5px;text-align:center;font-size:12px;font-weight:700}
+.phase-result.solid{background:#e9eff2;color:#3d586a}
+.phase-result.liquid{background:#e6f4ee;color:#08745c}
+.phase-result.gas{background:#e9f4f8;color:#335e78}
+.phase-conclusion{display:flex;align-items:center;gap:10px;margin:19px 0 0;padding:12px 14px;border-radius:9px;background:#e6f4ee;color:#185c49;font-size:14px;line-height:1.5}
+.phase-conclusion b{display:grid;flex:none;place-items:center;width:29px;height:29px;border-radius:7px;background:#06745c;color:#fff;font-size:17px}
+.phase-guide-note{margin:0;padding:13px 19px;border-top:1px solid #dce5eb;background:#f7faf9;color:#566f7b;font-size:13px;line-height:1.55}
+@media(max-width:760px){.room-temperature-rule{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.liquid-examples{grid-template-columns:1fr}.liquid-art{width:118px;height:86px}.phase-guide-body{padding:14px}.phase-guide>.panel-top{font-size:15px}.phase-question{font-size:15px}.phase-table{font-size:13px}.phase-table th,.phase-table td{padding:7px 5px}.phase-chart-axis,.phase-chart-row{grid-template-columns:22px minmax(0,1fr) 56px;gap:5px}.phase-chart-axis{font-size:10px}.phase-axis-track span:nth-child(2){display:none}.phase-result{font-size:11px}.phase-conclusion{align-items:flex-start;font-size:13px}.gallery-element small{font-size:10px}}

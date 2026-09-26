@@ -33,8 +33,13 @@ assert.match(html, /id="highlight-first20" checked/);
 assert.equal((html.match(/<figure(?: class="gallery-feature")?>/g) || []).length, 9, 'Metals, non-metals and metalloids should each show three examples.');
 assert.equal((html.match(/class="liquid-art (?:mercury|bromine)-art"/g) || []).length, 2, 'Mercury and bromine should each have a visual example.');
 assert.match(html, /室溫約 20–25 °C[\s\S]*只有汞（Hg）和溴（Br）/);
-assert.match(html, /id="state-temperature"/);
-assert.match(html, /id="state-temperature-number"/);
+assert.match(html, /class="phase-table"/);
+assert.match(html, /<th scope="row">X<\/th><td>−189<\/td><td>−186<\/td>/);
+assert.match(html, /<th scope="row">Y<\/th><td>−110<\/td><td>−40<\/td>/);
+assert.match(html, /<th scope="row">Z<\/th><td>−60<\/td><td>−5<\/td>/);
+assert.equal((html.match(/class="phase-bar"/g) || []).length, 3, 'Each example should have a temperature bar.');
+assert.doesNotMatch(html, /id="state-temperature"|id="state-particle-canvas"/, 'The temperature lesson should be a static worked example.');
+assert.match(html, /silicon-chip-example\.png[\s\S]*borosilicate-glass-example\.png[\s\S]*silicon-solar-example\.png/);
 assert.match(html, /id="add-proton"/);
 assert.match(html, /id="builder-neutron-count"/);
 assert.match(html, /id="builder-proton-slider"/);
@@ -43,10 +48,7 @@ assert.match(html, /id="builder-shell-diagram"/);
 assert.match(html, /id="builder-mass-number"/);
 assert.match(html, /class="builder-nucleus-model"/);
 assert.match(script, /function renderPeriodicTable\(/);
-assert.match(script, /function renderStateLab\(/);
 assert.match(script, /function renderProtonBuilder\(/);
-assert.match(script, /melting: -219, boiling: -183/);
-assert.match(script, /melting: 1538, boiling: 2862/);
 
 const periodicElements = JSON.parse(await readFile(resolve(root, 'app', 'periodic-elements.json'), 'utf8'));
 assert.equal(periodicElements.length, 118, 'The inserted periodic table should use all 118 elements.');
@@ -67,4 +69,4 @@ elements.forEach(([, number, symbol, , , mass, shellsText], index) => {
 
 const crustShares = [...html.matchAll(/style="--value:([\d.]+)%"/g)].map(([, value]) => Number(value));
 assert.ok(Math.abs(crustShares.reduce((sum, value) => sum + value, 0) - 100) < 1e-9, 'Crust-composition chart should add to 100%.');
-console.log('PASS: standalone bilingual site covers notes 2.1–2.8, with session quizzes, the 118-element table, nine visual examples, temperature simulation, proton builder, isotope counts and a balanced crust chart.');
+console.log('PASS: standalone bilingual site covers notes 2.1–2.8, with session quizzes, the 118-element table, nine visual examples, a static phase guide, proton builder, isotope counts and a balanced crust chart.');
