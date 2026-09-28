@@ -14,16 +14,21 @@ const css = await readFile(resolve(output, 'styles.css'));
 const js = await readFile(resolve(output, 'site.js'));
 const labCss = await readFile(resolve(output, 'learning-labs.css'));
 const labJs = await readFile(resolve(output, 'learning-labs.js'));
+const readability = await readFile(resolve(output, 'readability.css'));
+const copperModel = await readFile(resolve(output, 'copper-model.js'));
 await cp(resolve(root, 'app', 'periodic-elements.json'), resolve(output, 'periodic-elements.json'));
 const version = (asset) => createHash('sha256').update(asset).digest('hex').slice(0, 12);
+const versionedLabJs = labJs.toString().replace("from './copper-model.js'", `from './copper-model.js?v=${version(copperModel)}'`);
+await writeFile(resolve(output, 'learning-labs.js'), versionedLabJs);
 const versionedJs = js.toString().replace(
   "from './learning-labs.js'",
-  "from './learning-labs.js?v=" + version(labJs) + "'",
+  "from './learning-labs.js?v=" + version(versionedLabJs) + "'",
 );
 await writeFile(resolve(output, 'site.js'), versionedJs);
 const page = (await readFile(resolve(output, 'index.html'), 'utf8'))
   .replace('href="./styles.css"', `href="./styles.css?v=${version(css)}"`)
   .replace('href="./learning-labs.css"', `href="./learning-labs.css?v=${version(labCss)}"`)
+  .replace('href="./readability.css"', `href="./readability.css?v=${version(readability)}"`)
   .replace('src="./site.js"', `src="./site.js?v=${version(versionedJs)}"`);
 await writeFile(resolve(output, 'index.html'), page);
 const nestedPage = page.replace('<head>', '<head>\n    <base href="../../" />');

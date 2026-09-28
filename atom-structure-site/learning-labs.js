@@ -1,32 +1,9 @@
+import { setupCopperModel } from './copper-model.js';
 // Short, bilingual practice activities for the eight independent lessons.
 export function setupLearningLabs({ getLanguage, firstTwenty }) {
   const wording = (zh, en) => getLanguage() === 'en' ? en : zh;
 
-  const zoomRoot = document.querySelector('[data-copper-zoom]');
-  let zoomStep = 0;
-  const zoomMessages = [
-    ['一塊銅含有非常多銅原子。', 'A piece of copper contains many copper atoms.'],
-    ['放大看，仍然是同一種銅原子。', 'Zoom in: these are still the same type of copper atom.'],
-    ['一個 Cu 是一粒銅原子，不是一整塊銅。', 'One Cu is one copper atom, not a whole piece of copper.'],
-  ];
-  function renderCopperZoom() {
-    const stages = zoomRoot.previousElementSibling.querySelectorAll('.copper-block, .copper-grains, .single-atom');
-    stages.forEach((stage, index) => {
-      stage.classList.toggle('zoom-active', index === zoomStep);
-      stage.classList.toggle('zoom-dim', index !== zoomStep);
-    });
-    zoomRoot.querySelectorAll('[data-zoom]').forEach((button) => {
-      button.setAttribute('aria-pressed', String(Number(button.dataset.zoom) === zoomStep));
-    });
-    zoomRoot.querySelector('#copper-zoom-feedback').textContent =
-      zoomMessages[zoomStep][getLanguage() === 'en' ? 1 : 0];
-  }
-  zoomRoot.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-zoom]');
-    if (!button) return;
-    zoomStep = Number(button.dataset.zoom);
-    renderCopperZoom();
-  });
+  const refreshCopperModel = setupCopperModel(getLanguage);
 
   const classifyRoot = document.querySelector('[data-classify-practice]');
   const classifyExamples = [
@@ -292,7 +269,7 @@ export function setupLearningLabs({ getLanguage, firstTwenty }) {
   });
 
   function refreshAll() {
-    renderCopperZoom();
+    refreshCopperModel();
     renderClassifyPractice();
     renderNumberPractice();
     renderIsotopeLab();

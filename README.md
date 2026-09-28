@@ -2,6 +2,8 @@
 
 A beginner-friendly, bilingual Form 3 chemistry classroom. The root page is a four-unit course directory. Switch between Traditional Chinese and English without leaving the current lesson.
 
+All four units share `public/classroom.css`, the CHEM atom mark and a common model-control icon set. The shared theme keeps lesson navigation, readable typography, cards and interactive controls consistent. Unit 2 adds larger key statements, colour emphasis and labelled arrows for atomic notation. Its copper model moves from a rotatable copper piece to many atoms and then one atom, with touch, keyboard and zoom controls.
+
 ## Introducing Chemistry website
 
 Unit 1 now has its own lesson directory at `/introducing-chemistry/`, followed by eight direct lesson URLs under `/introducing-chemistry/sessions/`. The original visuals, 3D models and lesson content remain in each lesson. Existing root links such as `?lang=en#formula` redirect to the matching Unit 1 lesson.

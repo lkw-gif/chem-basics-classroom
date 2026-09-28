@@ -1,0 +1,70 @@
+/* One classroom language for all four units and the course hub. */
+:root{--classroom-font:Arial,'Microsoft JhengHei','PingFang TC',sans-serif;--classroom-ink:#172c40;--classroom-green:#06745c;--classroom-blue:#245fa5;--classroom-red:#b74639;--classroom-border:#dce5eb}
+body,button,input,select,textarea{font-family:var(--classroom-font)}
+body{font-size:18px;line-height:1.7;color:var(--classroom-ink);background:#f5f8fb}
+body .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;height:80px;padding:0 32px;background:#fff;border-bottom:1px solid var(--classroom-border)}
+body .brand{display:flex;align-items:center;gap:12px;letter-spacing:-.035em;white-space:nowrap}
+body .brand>b{font-family:var(--classroom-font);font-size:27px;line-height:1.2;font-weight:700;letter-spacing:-.035em}
+body .brand>b>span{font-weight:400}
+body .topbar .brand-mark,body .topbar .brand-icon{display:block;flex:none;width:49px;height:49px;border-radius:14px;background:#08785f url('./chem-mark.svg') center/32px no-repeat}
+body .topbar .brand-mark svg,body .topbar .brand-icon svg{display:none}
+body .topbar .course-label{position:absolute;left:50%;transform:translateX(-50%);font:700 12px/1.4 var(--classroom-font);letter-spacing:.15em;color:#61788b;white-space:nowrap}
+body .language-switch{display:flex;gap:3px;padding:4px;border:1px solid var(--classroom-border);border-radius:11px;background:#f5f8fb}
+body .language-switch button{min-width:46px;min-height:40px;height:auto;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#526b7d;font:700 14px/1.4 var(--classroom-font);white-space:nowrap}
+body .language-switch button[aria-pressed=true]{background:var(--classroom-green);color:#fff;box-shadow:none}
+body .page-layout,body .app .course-shell{grid-template-columns:248px minmax(0,1fr);max-width:none}
+body .sidebar,body .app .course-nav{top:80px;height:calc(100vh - 80px);padding:26px 16px 20px;background:#fff;border-right:1px solid var(--classroom-border);overflow-y:auto}
+body .side-heading,body .app .nav-heading{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 10px 22px;margin:0 0 14px;border-bottom:1px solid var(--classroom-border);font:700 15px/1.5 var(--classroom-font);letter-spacing:0}
+body .side-heading .unit-code,body .side-heading>span:first-child{font:700 12px/1.5 var(--classroom-font);letter-spacing:.1em;color:#61788b}
+body .lesson-nav{display:grid;gap:7px;padding:0 0 20px}
+body .lesson-nav a,body .app .chapter-list .chapter-item{min-height:58px;padding:11px 10px!important;border-radius:11px!important;gap:10px!important;font:600 16px/1.45 var(--classroom-font)!important}
+body .app .chapter-item>b,body .lesson-nav a b{font:600 16px/1.45 var(--classroom-font)}
+body .lesson-nav a>span:first-child,body .app .chapter-index{font:700 13px/1.4 var(--classroom-font);color:#06745c}
+body .lesson-nav a.current,body .lesson-nav a[aria-current=page],body .app .chapter-item[data-active]{background:#e6f4ee!important;color:#056e58!important;box-shadow:none!important}
+body .main-content,body .app .lesson-main{width:100%;max-width:1500px;padding:34px 42px 65px;margin:0 auto;min-width:0}
+body .breadcrumb,body .lesson-breadcrumb{font-size:15px;line-height:1.5;gap:12px}
+body .lesson-heading h1,body .section-head h2{font:700 clamp(34px,3.2vw,48px)/1.2 var(--classroom-font);letter-spacing:-.035em}
+body .lesson-heading>p,body .section-head p{font:400 21px/1.7 var(--classroom-font);max-width:1020px}
+body .lesson-main [data-slot=tabs-content]{font-size:18px}
+body .panel,body .card,body .catalog-card,body .session-card{border-color:var(--classroom-border);border-radius:14px;box-shadow:0 4px 14px #172c4006}
+body .catalog-card b,body .session-card-copy b,body .unit-one-card-copy>b{font-size:22px}
+body .catalog-card p,body .session-card-copy small,body .unit-one-card-copy>span{font-size:17px;line-height:1.6}
+body .panel-heading h2,body .learning-lab-head h3{font-size:24px;line-height:1.4}
+body .simple-panel p,body .mini-concept p,body .compare-strip p,body .worked-example,body .observation-copy,body .data-table td,body .data-table th{font-size:18px;line-height:1.65}
+body .checkpoint-question,body .quiz-question{font-size:20px;line-height:1.55}
+body .checkpoint-options button,body .quiz-options button,body .practice-choices button,body .discovery-buttons button,body .selector-row button,body .element-picker button,body .pager-button,body .practice-check,body .practice-next{min-height:46px;font-size:17px;line-height:1.5;border-radius:9px}
+body .checkpoint-feedback,body .practice-feedback,body .quiz-feedback{font-size:18px;line-height:1.6}
+body .quiz-item h3,body .question h3{font-size:20px;line-height:1.55}
+body .quiz-choices button,body .answer-options .option-label,body .tube-picker button,body .use-picker button,body .protection-picker button,body .age-track button{min-height:46px;font:600 17px/1.5 var(--classroom-font);border-radius:9px}
+body .tube-picker button span,body .tube-picker button b,body .age-track button b{font-size:17px;line-height:1.5}
+body .age-track button span,body .selector-row button small{font-size:14px}
+body .answer-feedback,body .protection-summary p,body .source-steps>div>p,body .rust-facts>small,body .use-explorer .photo-card figcaption b{font-size:17px;line-height:1.6}
+body .element-picker button small{font-size:13px;line-height:1.4}
+body button,body a{touch-action:manipulation}
+body button:focus-visible,body a:focus-visible,body [tabindex]:focus-visible,body input:focus-visible,body select:focus-visible{outline:3px solid #268ac1;outline-offset:3px}
+body .scene-toolbar button,body .model-tools button,body .copper-toolbar button{display:inline-grid;place-items:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:9px;border:1px solid #99b7ca66;border-radius:9px;background:#91b0c212;color:inherit}
+.classroom-icon,.scene-toolbar button svg,.copper-toolbar button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body .scene-toolbar>span,body .drag-hint,body .copper-toolbar>span{font-size:15px;line-height:1.4}
+body .scene-playback button{min-height:44px;font-size:16px}
+.classroom-home-link svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8}
+strong.key-blue,b.key-blue{color:#245fa5;background:#edf4ff}strong.key-red,b.key-red{color:#b74639;background:#fff0ed}strong.key-green,b.key-green{color:#06745c;background:#e6f4ee}
+.key-blue,.key-red,.key-green{font-weight:750;padding:1px 3px;border-radius:4px}
+@media(max-width:1150px){body .topbar .course-label{display:none}body .main-content,body .app .lesson-main{padding:28px 28px 50px}}
+@media(max-width:760px){
+ body .topbar{height:68px;padding:0 14px;gap:8px}body .brand{gap:8px}body .brand>b{font-size:20px}
+ body .topbar .brand-mark,body .topbar .brand-icon{width:38px;height:38px;border-radius:10px;background-size:27px}
+ body .language-switch button{min-width:36px;min-height:38px;padding:6px;font-size:13px}body .language-switch{padding:3px}
+ body .page-layout,body .app .course-shell{display:block!important}
+ body .sidebar,body .app .course-nav{position:fixed;top:68px;bottom:0;left:0;z-index:32;width:min(320px,87vw);height:auto;transform:translateX(-105%);transition:transform .2s}
+ body.menu-open .sidebar,body .app .course-nav.nav-open{transform:translateX(0)}
+ body .nav-backdrop{inset:68px 0 0;z-index:31}body .nav-backdrop:not([hidden]){display:block}
+ body .mobile-menu,body .menu-button{display:grid;place-items:center;width:38px;height:38px;min-width:38px;padding:7px;border:1px solid var(--classroom-border);border-radius:9px;background:#fff;color:#365267}
+ body .mobile-menu svg,body .menu-button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8}
+ body .main-content,body .app .lesson-main{padding:24px 18px 45px}
+ body .lesson-heading h1,body .section-head h2{font-size:32px}body .lesson-heading>p,body .section-head p{font-size:19px;line-height:1.65}
+ body .catalog-card b,body .session-card-copy b,body .unit-one-card-copy>b{font-size:20px}body .breadcrumb,body .lesson-breadcrumb{font-size:14px}
+ body .app .teacher-toggle>span:not([data-slot]){display:none}body .app .teacher-toggle svg{display:none}body .app .header-controls{gap:7px;margin-left:auto}body .app .topbar{overflow-x:clip}
+ body .scene-toolbar{gap:10px;flex-wrap:wrap}body .scene-toolbar>div{display:flex;flex-wrap:wrap;gap:7px}
+ body .element-picker{grid-template-columns:repeat(4,minmax(0,1fr));padding:16px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}

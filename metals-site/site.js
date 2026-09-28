@@ -170,9 +170,9 @@ function renderShell() {
   document.querySelector('#course-label').textContent = t('S3 · 金屬','S3 · METALS');
   document.querySelector('#side-heading').innerHTML = `<span>UNIT 04</span><b>${t('金屬','Metals')}</b><small>08</small>`;
   document.querySelector('#brand-link').href = homeUrl;
-  document.querySelector('#previous-unit-link').href = `../periodic-table/?lang=${language}`;
-  document.querySelector('#previous-unit-link').textContent = t('← 返回元素週期表','← Back to Periodic Table');
-  document.querySelector('#lesson-nav').innerHTML = lessons.map((lesson,i)=>`<a href="${lessonUrl(lesson.id)}" ${activeLesson?.id===lesson.id?'aria-current="page"':''}><span>${String(i+1).padStart(2,'0')}</span><b>${en?lesson.en:lesson.zh}</b><i>${lesson.ref}</i></a>`).join('');
+  document.querySelector('#previous-unit-link').href = `../?lang=${language}`;
+  document.querySelector('#previous-unit-link').textContent = t('← 返回單元總覽','← All units');
+  document.querySelector('#lesson-nav').innerHTML = `<a class="classroom-home-link" href="./?lang=${language}" ${!activeLesson?'aria-current="page"':''}><svg aria-hidden="true"><use href="../classroom-icons.svg#home"/></svg><b>${t('課題目錄','All lessons')}</b></a>` + lessons.map((lesson,i)=>`<a href="${lessonUrl(lesson.id)}" ${activeLesson?.id===lesson.id?'aria-current="page"':''}><span>${String(i+1).padStart(2,'0')}</span><b>${en?lesson.en:lesson.zh}</b><i>${lesson.ref}</i></a>`).join('');
   document.querySelectorAll('[data-language]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.language===language)));
   document.querySelector('#main').innerHTML = activeLesson ? lessonMarkup(activeLesson) : renderHome();
   let viewed=[]; try { viewed=JSON.parse(localStorage.getItem('metals-viewed')||'[]'); } catch { viewed=[]; }

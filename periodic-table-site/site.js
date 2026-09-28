@@ -181,9 +181,9 @@ function renderShell() {
   document.querySelector('#course-label').textContent = t('S3 · 元素週期表', 'S3 · PERIODIC TABLE');
   document.querySelector('#side-heading').innerHTML = `<span>UNIT 03</span><b>${t('元素週期表', 'Periodic Table')}</b><small>07</small>`;
   document.querySelector('#brand-link').href = homeUrl;
-  document.querySelector('#previous-unit-link').href = `../atomic-structure/?lang=${language}`;
-  document.querySelector('#previous-unit-link').textContent = t('← 返回原子結構', '← Back to Atomic Structure');
-  document.querySelector('#lesson-nav').innerHTML = lessons.map((lesson, index) => `<a href="${lessonUrl(lesson.id)}" ${activeLesson?.id === lesson.id ? 'aria-current="page"' : ''}><span>${String(index + 1).padStart(2, '0')}</span><b>${en ? lesson.en : lesson.zh}</b><i>${lesson.ref}</i></a>`).join('');
+  document.querySelector('#previous-unit-link').href = `../?lang=${language}`;
+  document.querySelector('#previous-unit-link').textContent = t('← 返回單元總覽', '← All units');
+  document.querySelector('#lesson-nav').innerHTML = `<a class="classroom-home-link" href="./?lang=${language}" ${!activeLesson?'aria-current="page"':''}><svg aria-hidden="true"><use href="../classroom-icons.svg#home"/></svg><b>${t('課題目錄','All lessons')}</b></a>` + lessons.map((lesson, index) => `<a href="${lessonUrl(lesson.id)}" ${activeLesson?.id === lesson.id ? 'aria-current="page"' : ''}><span>${String(index + 1).padStart(2, '0')}</span><b>${en ? lesson.en : lesson.zh}</b><i>${lesson.ref}</i></a>`).join('');
   document.querySelectorAll('[data-language]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.language === language)));
   document.querySelector('#main').innerHTML = activeLesson ? lessonMarkup(activeLesson) : renderHome();
   const viewed = new Set(JSON.parse(localStorage.getItem('periodic-table-viewed') || '[]'));

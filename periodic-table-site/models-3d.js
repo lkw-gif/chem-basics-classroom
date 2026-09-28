@@ -146,11 +146,11 @@ export function modelMarkup(id, kind, en) {
     <div class="scene-heading"><b>3D ${t('模型', 'MODEL')}</b><span data-scene-phase aria-live="polite"></span></div>
     <canvas class="scene-canvas" tabindex="0" role="img" aria-label="${t('可旋轉三維模型。拖曳或用方向鍵旋轉，使用下方按鈕縮放。', 'Rotatable 3D model. Drag or use arrow keys to rotate; zoom with the controls below.')}">${t('三維教學模型；文字觀察列在模型旁。', '3D teaching model; the observation is also described beside the model.')}</canvas>
     <div class="scene-toolbar"><span>${t('拖曳旋轉', 'Drag to rotate')}</span><div>
-      <button type="button" data-view="left" aria-label="${t('向左旋轉模型', 'Rotate model left')}">↶</button>
-      <button type="button" data-view="right" aria-label="${t('向右旋轉模型', 'Rotate model right')}">↷</button>
-      <button type="button" data-view="out" aria-label="${t('縮小模型', 'Zoom out')}">−</button>
-      <button type="button" data-view="in" aria-label="${t('放大模型', 'Zoom in')}">＋</button>
-      <button type="button" data-view="reset" aria-label="${t('重設視角', 'Reset view')}">⟲</button>
+      <button type="button" data-view="left" aria-label="${t('向左旋轉模型', 'Rotate model left')}"><svg aria-hidden="true"><use href="../classroom-icons.svg#rotate-left"/></svg></button>
+      <button type="button" data-view="right" aria-label="${t('向右旋轉模型', 'Rotate model right')}"><svg aria-hidden="true"><use href="../classroom-icons.svg#rotate-right"/></svg></button>
+      <button type="button" data-view="out" aria-label="${t('縮小模型', 'Zoom out')}"><svg aria-hidden="true"><use href="../classroom-icons.svg#zoom-out"/></svg></button>
+      <button type="button" data-view="in" aria-label="${t('放大模型', 'Zoom in')}"><svg aria-hidden="true"><use href="../classroom-icons.svg#zoom-in"/></svg></button>
+      <button type="button" data-view="reset" aria-label="${t('重設視角', 'Reset view')}"><svg aria-hidden="true"><use href="../classroom-icons.svg#reset"/></svg></button>
     </div></div>
     <div class="scene-playback"><button type="button" class="scene-play" data-play></button>${reaction ? `<button type="button" data-restart>${t('重新開始', 'Restart')}</button><label class="scene-timeline"><span>${t('反應進度', 'Reaction progress')}</span><input type="range" min="0" max="100" value="0" step="1" data-progress /></label>` : `<span class="particle-caption">${t('一個球代表一個原子', 'One sphere represents one atom')}</span>`}</div>
     <p class="scene-note">${reaction ? t('簡化觀察模型；顏色與速度只作示意。', 'Simplified observation model; colours and speeds are illustrative.') : t('粒子的顏色、大小和距離只作示意。', 'Particle colours, sizes and distances are illustrative.')}</p>

@@ -152,7 +152,7 @@ function setLanguage(language, updateUrl = true) {
     button.setAttribute('aria-pressed', String(button.dataset.language === language));
   });
   localStorage.setItem('atomic-structure-language', language);
-  document.querySelector('.back-link').href = `../?lang=${language}#start`;
+  document.querySelector('.back-link').href = `../?lang=${language}`;
   document.querySelector('.brand').href = `./?lang=${language}#top`;
   document.querySelector('.mobile-menu').setAttribute('aria-label', language === 'en' ? 'Open lesson contents' : '開啟課堂目錄');
   document.querySelector('.nav-backdrop').setAttribute('aria-label', language === 'en' ? 'Close lesson contents' : '關閉課堂目錄');
@@ -615,6 +615,8 @@ function setupProgress() {
     document.querySelectorAll('[data-session-card]').forEach((card) => card.classList.toggle('done', viewed.has(card.dataset.sessionCard)));
   };
   fill();
+  const directoryLink=document.querySelector('.classroom-home-link');
+  if(!active)directoryLink.setAttribute('aria-current','page');
   topics.forEach((topic) => topic.classList.toggle('active', topic.id === active));
 }
 
