@@ -44,3 +44,54 @@
  .main-content .shell-view{grid-template-columns:1fr}.main-content .shell-info{padding:0 12px 18px}.main-content .shell-info p{font-size:18px}.main-content .builder-count-grid>div{font-size:16px;flex-wrap:wrap}.main-content .builder-summary-text{font-size:18px}
  .copper-lab .discovery-buttons{padding:14px;gap:8px}.copper-lab .discovery-buttons button{min-width:0;flex-basis:100%;font-size:17px}.copper-canvas{height:295px}.copper-scene-heading{padding:16px 16px 0;font-size:16px}.copper-toolbar{flex-wrap:wrap;padding:8px 16px 18px}.copper-toolbar>span{width:100%}.copper-caption{padding:18px}.copper-caption p{font-size:19px}
 }
+
+/* Diagram labels need their own scale and flexible space around larger lesson text. */
+.main-content .isotope-compare{grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);gap:12px}
+.main-content .isotope-card{min-width:0;grid-template-columns:minmax(112px,.8fr) minmax(0,1fr);gap:16px;padding:20px 16px}
+.main-content .isotope-heading{grid-row:auto;min-width:0;font-size:34px;column-gap:8px}
+.main-content .isotope-heading small{font-size:14px;line-height:1.5;letter-spacing:0;white-space:nowrap}
+.main-content .isotope-count{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding-top:12px}
+.main-content .isotope-count span{font-size:15px;line-height:1.5}
+.main-content .isotope-count b{font-size:24px}
+.main-content .same-mark,.main-content .different-mark{flex:none}
+.main-content .average-panel{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
+.main-content .average-visual,.main-content .average-work{min-width:0}
+.main-content .isotope-bar{height:auto;min-height:68px;margin:18px 0 12px}
+.main-content .isotope-bar>i{box-sizing:border-box;min-height:68px;padding:8px 10px;font-size:18px;line-height:1.4;flex-shrink:0}
+.main-content .isotope-bar b{font-size:15px;line-height:1.5}
+.main-content .mass-labels{gap:16px}
+.main-content .mass-labels>span{font-size:14px;line-height:1.5;font-weight:400;max-width:48%}
+.main-content .mass-labels>span:last-child{text-align:right}
+.main-content .mass-labels b{font-size:22px}
+.main-content .average-label{font-size:14px;letter-spacing:.04em}
+.main-content .average-work>div{font-size:18px;line-height:1.6}
+@media(max-width:1100px){
+ .main-content .builder-inspector,.main-content .number-practice-layout,.main-content .isotope-lab-layout{grid-template-columns:minmax(0,1fr)}
+ .main-content .liquid-examples{grid-template-columns:minmax(0,1fr)}
+ .main-content .worked-example{flex-direction:column;align-items:stretch;gap:16px}
+ .main-content .working{grid-template-columns:minmax(0,1fr)}
+ .main-content .session-grid{grid-template-columns:minmax(0,1fr)}
+ .main-content .hero{grid-template-columns:minmax(0,1fr);gap:26px}
+ .main-content .hero-art{position:relative;right:auto;top:auto;transform:none;margin:0;opacity:1;max-width:100%}
+ .main-content .hero h1{font-size:clamp(36px,5vw,54px)}
+ .main-content .hero-lead{max-width:100%}
+ .main-content .isotope-card{grid-template-columns:minmax(0,1fr)}
+ .main-content .average-panel{grid-template-columns:minmax(0,1fr)}
+ .main-content .dot-cross-panel{grid-template-columns:minmax(0,1fr) 190px;gap:16px}
+ .main-content .dot-cross-arrangement{grid-column:2;text-align:center}
+}
+@media(min-width:761px) and (max-width:900px){
+ .main-content .isotope-compare{grid-template-columns:minmax(0,1fr)}
+ .main-content .isotope-card{grid-template-columns:minmax(112px,.8fr) minmax(0,1fr)}
+ .main-content .isotope-middle{display:flex;justify-content:center;align-items:center;gap:16px;padding:4px}
+}
+@media(max-width:600px){
+ .main-content .pager-actions{flex-wrap:wrap}
+ .main-content .hero-art{transform:scale(.85);margin:-15px 0 4px}
+ .main-content .isotope-compare{grid-template-columns:minmax(0,1fr);gap:10px}
+ .main-content .isotope-card{grid-template-columns:minmax(112px,.8fr) minmax(0,1fr)}
+ .main-content .isotope-middle{display:flex;justify-content:center;align-items:center;gap:16px;padding:4px}
+ .main-content .isotope-middle span{font-size:14px}
+ .main-content .dot-cross-panel{grid-template-columns:minmax(0,1fr) 112px;gap:9px}
+ .main-content .periodic-grid{min-width:866px}
+}

@@ -68,3 +68,34 @@ strong.key-blue,b.key-blue{color:#245fa5;background:#edf4ff}strong.key-red,b.key
  body .element-picker{grid-template-columns:repeat(4,minmax(0,1fr));padding:16px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Let compact teaching controls reflow instead of clipping their enlarged copy. */
+body .element-picker{grid-template-columns:repeat(auto-fit,minmax(85px,1fr))}
+body .element-picker button{min-width:0;padding:8px 5px}
+body .element-picker button small{font-size:12px;line-height:1.4}
+body .shell-facts p{flex-wrap:wrap;min-width:0}
+body .crust-bars>div{grid-template-columns:82px minmax(0,1fr) 55px}
+body .breadcrumb-count{white-space:nowrap;flex:none}
+@media(min-width:761px) and (max-width:1250px){
+ body .unit-one-hero{grid-template-columns:minmax(0,1fr)}
+ body .unit-one-hero-art{min-height:185px}
+ body .metal-hero>div{width:58px;height:58px;font-size:22px}
+ body .metal-hero{gap:12px}
+}
+@media(max-width:760px){
+ body .use-card{grid-template-columns:120px minmax(0,1fr);min-height:160px}
+ body .use-art{min-height:160px}
+ body .neon-art{font-size:32px;letter-spacing:.08em}
+ body .app .periodic-grid{min-width:866px}
+ body .periodic-toolbar>label{flex-wrap:wrap}
+}
+@media(max-width:400px){
+ body .unit-one-hero{grid-template-columns:minmax(0,1fr)}
+ body .unit-one-hero-art{min-width:0;gap:6px;padding-left:8px;padding-right:8px}
+ body .u1-atom,body .u1-molecule i{width:32px;height:32px;font-size:15px}
+ body .u1-atom.oxygen,body .u1-molecule i:nth-child(2){width:39px;height:39px}
+ body .metal-hero{min-width:0;gap:8px;padding-left:10px;padding-right:10px}
+ body .metal-hero>div{width:48px;height:48px}
+ body .circuit .particle-box{gap:8px;padding-left:10px;padding-right:10px}
+ body .circuit .particle{width:28px;height:28px;font-size:16px}
+}
