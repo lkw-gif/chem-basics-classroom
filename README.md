@@ -1,8 +1,8 @@
 # CHEM Explore
 
-A beginner-friendly, bilingual Form 3 chemistry classroom. The root page is a four-unit course directory. Switch between Traditional Chinese and English without leaving the current lesson.
+A beginner-friendly, bilingual Form 3 chemistry classroom. The root page is a six-unit course directory. Switch between Traditional Chinese and English without leaving the current lesson.
 
-All four units share `public/classroom.css`, the CHEM atom mark and a common model-control icon set. The shared theme keeps lesson navigation, readable typography, cards and interactive controls consistent. Unit 2 adds larger key statements, colour emphasis and labelled arrows for atomic notation. Its copper model moves from a rotatable copper piece to many atoms and then one atom, with touch, keyboard and zoom controls.
+All six units share `public/classroom.css`, the CHEM atom mark and a common model-control icon set. The shared theme keeps lesson navigation, readable typography, cards and interactive controls consistent. Unit 2 adds larger key statements, colour emphasis and labelled arrows for atomic notation. Its copper model moves from a rotatable copper piece to many atoms and then one atom, with touch, keyboard and zoom controls.
 
 ## Introducing Chemistry website
 
@@ -50,7 +50,7 @@ npm run build
 npm run build:github
 ```
 
-`build` produces the existing Sites deployment. `build:github` creates a four-unit course hub and copies the Unit 1–4 websites to `github-dist/`, including one generated route for each session. It needs no server, account, API key or database.
+`build` produces the existing Sites deployment. `build:github` creates a six-unit course hub and copies the Unit 1–6 websites to `github-dist/`, including one generated route for each session. It needs no server, account, API key or database.
 
 ## GitHub Pages
 
@@ -65,3 +65,9 @@ Teaching scope is adapted from the supplied *2324 S3 Introducing Chemistry stude
 Photo creators, source links and individual licences are listed in `app/photos.json` and inside the website. Wikimedia Commons GHS pictograms are public domain. Keep these attributions when reusing the site. The periodic table's factual references are in `app/periodic-sources.json`; its primary reference is [IUPAC](https://iupac.org/what-we-do/periodic-table-of-elements/).
 
 Third-party photographs keep their stated licences. Dependencies and bundled UI components retain their upstream licences.
+
+## Ionic and Covalent Bonding websites
+
+Units 5 and 6 are built from `bonding-site/` into `/ionic-bonds/` (eight lessons) and `/covalent-bonds/` (six lessons). Every lesson has a dedicated URL, an interactive practice panel and three bilingual checkpoint questions. Students can construct electron shells, form ions, transfer electrons, balance 31 ion pairs, predict conductivity, identify ion and flame colours, predict ion migration, draw shared and lone pairs, build molecular formulae and solve 17 relative-mass examples. Viewing an example does not count as independent practice. No student data leaves the browser.
+
+The supplied Unit 5 and 6 PDFs define the scope; they are not published. Teaching notes clarify the limits of the octet rule, ionic lattices versus molecules, identical electrons in dot-and-cross models, aqueous conductivity exceptions, mercury(I) as Hg2(2+), and colour observations only for actual solutions. Noble gases are described as separate atoms; mass values match the notes and are dimensionless. Lab illustrations are virtual observations, not unsupervised experimental instructions.

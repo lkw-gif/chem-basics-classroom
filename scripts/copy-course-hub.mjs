@@ -9,7 +9,7 @@ const unitOne=resolve(dist,'introducing-chemistry');
 if(!unitOne.startsWith(dist+sep))throw new Error('Unit 1 output must stay inside github-dist');
 
 // Vite's root page contains the original Unit 1 React app. Give that app
-// direct lesson URLs, then put the four-unit course hub at the root.
+// direct lesson URLs, then put the six-unit course hub at the root.
 const builtUnitOne=await readFile(resolve(dist,'index.html'),'utf8');
 await rm(unitOne,{recursive:true,force:true});
 await mkdir(unitOne,{recursive:true});
@@ -31,4 +31,4 @@ const hub=(await readFile(resolve(source,'index.html'),'utf8'))
   .replace('href="./course-hub.css"',`href="./course-hub.css?v=${version(css)}"`)
   .replace('src="./course-hub.js"',`src="./course-hub.js?v=${version(js)}"`);
 await writeFile(resolve(dist,'index.html'),hub);
-console.log('Created the four-unit course hub and eight direct Unit 1 lesson pages.');
+console.log('Created the six-unit course hub and eight direct Unit 1 lesson pages.');

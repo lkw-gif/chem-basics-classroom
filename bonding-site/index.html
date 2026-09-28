@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hant-HK">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="theme-color" content="#f5f8fb"/>
+  <meta name="description" content="Bilingual interactive chemistry lessons: build electron diagrams, practise ionic and covalent bonding, and check your reasoning."/>
+  <title>Chemical bonding · CHEM Explore</title>
+  <link rel="icon" href="../favicon.svg"/>
+  <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="../classroom.css"/>
+  <link rel="stylesheet" href="./bonding.css"/>
+  <script type="module" src="./site.js"></script>
+</head>
+<body data-unit="5">
+  <a class="skip-link" href="#main" id="skip-link">跳到課堂內容</a>
+  <header class="topbar">
+    <button class="menu-button" id="menu-button" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="開啟課題目錄"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <a class="brand" id="brand-link" href="./"><span class="brand-mark" aria-hidden="true"></span><b>CHEM <span>Explore</span></b></a>
+    <span class="course-label" id="course-label"></span>
+    <div class="language-switch" role="group" aria-label="Language / 語言"><button type="button" data-language="zh" aria-pressed="true">繁中</button><button type="button" data-language="en" aria-pressed="false">EN</button></div>
+  </header>
+  <button class="nav-backdrop" id="nav-backdrop" type="button" aria-label="關閉課題目錄" hidden></button>
+  <div class="page-layout">
+    <aside class="sidebar" id="sidebar" aria-label="Lesson contents">
+      <div class="side-heading" id="side-heading"></div><nav class="lesson-nav" id="lesson-nav"></nav>
+      <div class="sidebar-bottom"><div class="progress-copy"><span id="progress-label"></span><b id="progress-count"></b></div><div class="progress-track"><span id="progress-fill"></span></div><a class="back-link" id="all-units" href="../"></a></div>
+    </aside>
+    <main class="main-content" id="main" tabindex="-1"></main>
+  </div>
+  <noscript>請啟用 JavaScript 以使用互動教材。Enable JavaScript to use these interactive lessons.</noscript>
+</body>
+</html>
