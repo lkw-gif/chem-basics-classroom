@@ -19,7 +19,7 @@ export function I18nProvider({children}:{children:ReactNode}){
  const [language,setLanguage]=useState<Language>('zh');
  useEffect(()=>{try{const requested=new URLSearchParams(location.search).get('lang'),saved=localStorage.getItem('chem-language');if(requested==='en'||requested==='zh')setLanguage(requested);else if(saved==='en'||saved==='zh')setLanguage(saved);}catch{}},[]);
  const selectLanguage=useCallback((lang:Language)=>{setLanguage(lang);try{localStorage.setItem('chem-language',lang);const url=new URL(location.href);url.searchParams.set('lang',lang);history.replaceState(null,'',url);}catch{}},[]);
- useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hant-HK':'en';document.title=language==='zh'?'CHEM 初探｜中三化學教室':'CHEM Basics | Form 3 Chemistry';},[language]);
+ useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hant-HK':'en';document.title=language==='zh'?'CHEM Explore｜中三化學教室':'CHEM Explore | Form 3 Chemistry';},[language]);
  return <LanguageContext.Provider value={{language,setLanguage:selectLanguage}}>{children}</LanguageContext.Provider>;
 }
 export function useLanguage(){return useContext(LanguageContext);}

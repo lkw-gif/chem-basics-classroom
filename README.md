@@ -1,6 +1,10 @@
-# CHEM Basics / CHEM 初探
+# CHEM Explore
 
-A beginner-friendly, bilingual Form 3 chemistry classroom. Switch between Traditional Chinese and English without leaving the current lesson.
+A beginner-friendly, bilingual Form 3 chemistry classroom. The root page is a four-unit course directory. Switch between Traditional Chinese and English without leaving the current lesson.
+
+## Introducing Chemistry website
+
+Unit 1 now has its own lesson directory at `/introducing-chemistry/`, followed by eight direct lesson URLs under `/introducing-chemistry/sessions/`. The original visuals, 3D models and lesson content remain in each lesson. Existing root links such as `?lang=en#formula` redirect to the matching Unit 1 lesson.
 
 ## Learn
 
@@ -44,13 +48,13 @@ npm run build
 npm run build:github
 ```
 
-`build` produces the existing Sites deployment. `build:github` builds the existing classroom and copies the Atomic Structure, Periodic Table and Metals websites to `github-dist/`, including one generated route for each session. It needs no server, account, API key or database.
+`build` produces the existing Sites deployment. `build:github` creates a four-unit course hub and copies the Unit 1–4 websites to `github-dist/`, including one generated route for each session. It needs no server, account, API key or database.
 
 ## GitHub Pages
 
 The included `.github/workflows/pages.yml` publishes after a push to `main`. Repository Settings → Pages → Source should be **GitHub Actions**.
 
-Direct links to Atomic Structure lessons use `/atomic-structure/sessions/earth/` through `/atomic-structure/sessions/shells/`; Periodic Table lessons use `/periodic-table/sessions/map/` through `/periodic-table/sessions/noble/`; Metals lessons use `/metals/sessions/properties/` through `/metals/sessions/protect/`. Add `?lang=en` or `?lang=zh` to select a language. The main CHEM site also supports links such as `?lang=en#elements` or `?lang=zh#formula`. Language is remembered only in the current browser. No student accounts or analytics are used.
+Direct links to Introducing Chemistry lessons use `/introducing-chemistry/sessions/start/` through `/introducing-chemistry/sessions/review/`; Atomic Structure lessons use `/atomic-structure/sessions/earth/` through `/atomic-structure/sessions/shells/`; Periodic Table lessons use `/periodic-table/sessions/map/` through `/periodic-table/sessions/noble/`; Metals lessons use `/metals/sessions/properties/` through `/metals/sessions/protect/`. Add `?lang=en` or `?lang=zh` to select a language. Language is remembered only in the current browser. No student accounts or analytics are used.
 
 ## Material and image credits
 
