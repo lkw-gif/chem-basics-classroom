@@ -230,7 +230,7 @@ async function setupMap() {
     const groupHeading = (roman, column) => '<div class="table-axis-group" style="grid-column:' + column + ';grid-row:1" aria-hidden="true"><span>' + t('\u65cf', 'Group') + '</span><b>' + roman + '</b></div>';
     const groupHeadings = [
       groupHeading('I', 2), groupHeading('II', 3),
-      '<div class="table-axis-transition" style="grid-column:4 / span 10;grid-row:1" aria-hidden="true">' + t('\u904e\u6e21\u91d1\u5c6c', 'Transition metals') + '</div>',
+      '<div class="table-axis-transition" style="grid-column:4 / span 10;grid-row:4" aria-hidden="true">' + t('\u904e\u6e21\u91d1\u5c6c', 'Transition metals') + '</div>',
       groupHeading('III', 14), groupHeading('IV', 15), groupHeading('V', 16),
       groupHeading('VI', 17), groupHeading('VII', 18), groupHeading('0', 19),
     ];
