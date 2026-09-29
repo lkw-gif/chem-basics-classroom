@@ -223,7 +223,22 @@ async function setupMap() {
     const response = await fetch('./periodic-elements.json');
     if (!response.ok) throw new Error('Periodic element data unavailable');
     const elements = (await response.json()).filter((element) => element.atomicNumber <= 36);
-    grid.innerHTML = elements.map((element) => `<button type="button" class="element-cell ${element.symbol === 'H' ? 'element-hydrogen' : ''} ${element.category === 'metalloid' ? 'cat-metalloid' : element.category === 'metal' ? 'cat-metal' : 'cat-nonmetal'}" style="grid-column:${element.symbol === 'H' ? 9 : element.column};grid-row:${element.period}" data-element="${element.atomicNumber}" aria-pressed="false" aria-label="${element.atomicNumber} ${element.symbol} ${en ? element.nameEn : `${element.nameZh} ${element.nameEn}`}"><small>${element.atomicNumber}</small><strong>${element.symbol}</strong><span>${en ? element.nameEn : element.nameZh}</span></button>`).join('');
+    const groupHeading = (roman, column) => '<div class="table-axis-group" style="grid-column:' + column + ';grid-row:1" aria-hidden="true"><span>' + t('\u65cf', 'Group') + '</span><b>' + roman + '</b></div>';
+    const groupHeadings = [
+      groupHeading('I', 2), groupHeading('II', 3),
+      '<div class="table-axis-transition" style="grid-column:4 / span 10;grid-row:1" aria-hidden="true">' + t('\u904e\u6e21\u91d1\u5c6c', 'Transition metals') + '</div>',
+      groupHeading('III', 14), groupHeading('IV', 15), groupHeading('V', 16),
+      groupHeading('VI', 17), groupHeading('VII', 18), groupHeading('0', 19),
+    ];
+    const periodHeadings = Array.from({ length: 7 }, (_, index) => {
+      const period = index + 1;
+      return '<div class="table-axis-period" style="grid-column:1;grid-row:' + (period + 1) + '" aria-hidden="true"><span>' + t('\u9031\u671f', 'Period') + '</span><b>' + period + '</b></div>';
+    });
+    const elementCells = elements.map((element) => {
+      const column = element.symbol === 'H' ? 10 : element.column + 1;
+      return '<button type="button" class="element-cell ' + (element.symbol === 'H' ? 'element-hydrogen ' : '') + (element.category === 'metalloid' ? 'cat-metalloid' : element.category === 'metal' ? 'cat-metal' : 'cat-nonmetal') + '" style="grid-column:' + column + ';grid-row:' + (element.period + 1) + '" data-element="' + element.atomicNumber + '" aria-pressed="false" aria-label="' + element.atomicNumber + ' ' + element.symbol + ' ' + (en ? element.nameEn : element.nameZh + ' ' + element.nameEn) + '"><small>' + element.atomicNumber + '</small><strong>' + element.symbol + '</strong><span>' + (en ? element.nameEn : element.nameZh) + '</span></button>';
+    });
+    grid.innerHTML = [...groupHeadings, ...periodHeadings, ...elementCells].join('');
     const show = (number) => {
       const element = elements.find((item) => item.atomicNumber === number);
       if (!element) return;
