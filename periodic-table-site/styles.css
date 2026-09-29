@@ -59,3 +59,30 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 .group-map>div{gap:7px;padding:17px 18px;background:#f7fbf9;border-top:3px solid var(--green)}.group-map>div:nth-child(2){background:#f5f8fc;border-top-color:#3876a6}.group-map>div:nth-child(3){background:#fff8f1;border-top-color:#c36b37}.group-map>div:nth-child(4){background:#f6f6fb;border-top-color:#6c6ba8}.group-map strong{font-size:23px;line-height:1.3;letter-spacing:.015em}.group-map>div:nth-child(2) strong{color:#286b96}.group-map>div:nth-child(3) strong{color:#a7512e}.group-map>div:nth-child(4) strong{color:#5c5c98}.group-map span{font-size:17px;line-height:1.5}@media(max-width:520px){.group-map>div{padding:12px 10px}.group-map strong{font-size:20px}.group-map span{font-size:15px}}
 
 .periodic-grid{grid-template-columns:64px repeat(18,minmax(45px,1fr));grid-template-rows:40px repeat(7,69px);min-width:1020px}.table-axis-group{display:grid;align-content:center;justify-items:center;gap:2px;min-width:0;color:#496477;font-size:12px;line-height:1.1}.table-axis-group b{color:var(--green);font-size:15px}.table-axis-transition{display:grid;place-items:center;align-self:center;margin:0 16px;padding:4px 10px;border-bottom:2px solid #8bb9a8;color:#226d5b;font-size:16px;font-weight:700;text-align:center}.table-axis-period{position:sticky;left:0;z-index:2;background:#fff;display:flex;align-items:center;justify-content:center;gap:3px;color:#496477;font-size:12px;line-height:1.2}.table-axis-period b{color:#06745c;font-size:14px}@media(max-width:520px){.periodic-grid{min-width:1020px}.table-axis-group{font-size:12px}.table-axis-group b{font-size:14px}.table-axis-transition{font-size:15px}}
+
+
+/* Room-temperature state map. The orange frame calls out liquids and gases. */
+.state-periodic-panel{margin:20px 0;overflow:hidden}
+.state-periodic-grid,.state-series-grid{grid-template-columns:64px repeat(18,minmax(45px,1fr));min-width:1020px}
+.state-periodic-grid{grid-template-rows:40px repeat(7,69px)}
+.state-periodic-grid .state-element-cell{position:relative}
+.state-periodic-grid .state-outline{border:3px solid #dc8428;box-shadow:0 0 0 2px #f5ddb9;z-index:1}
+.state-periodic-grid .state-outline[aria-pressed=true]{outline:3px solid var(--green);outline-offset:1px}
+.state-periodic-grid .state-element-cell>.state-cell-marker{position:absolute;top:3px;right:4px;justify-self:auto;margin:0;color:#a35a14;font-size:9px;font-weight:800;line-height:1}
+.state-series-grid{display:grid;grid-template-rows:69px 69px;gap:5px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.state-series-label,.periodic-series-placeholder{display:grid;align-content:center;justify-items:center;gap:2px;min-width:0;border:1px dashed #b9cfc5;border-radius:7px;background:#f3f7f5;color:#536f7d;text-align:center;line-height:1.2}
+.state-series-label{grid-column:1 / span 3!important}
+.state-series-label b,.periodic-series-placeholder b{font-size:13px}
+.state-series-label span,.periodic-series-placeholder span{font-size:10px}
+.state-periodic-grid .same-series{box-shadow:inset 0 0 0 2px #70a6c4}
+.state-table-legend{align-items:center;padding-top:14px;padding-bottom:14px;font-size:13px}
+.state-table-legend .state-outline-swatch{width:17px;height:17px;border:3px solid #dc8428;border-radius:4px;background:transparent}
+.state-key-mark{display:grid;place-items:center;width:19px;height:19px;border-radius:5px;background:#fff0dc;color:#a35a14;font-size:11px}
+.state-periodic-detail{background:#fff}
+.state-detail-symbol{border-color:#e2a85f;background:#fff3e2;color:#a35a14}
+.state-element-facts{min-width:0}
+.state-element-facts h3{font-size:22px}
+.state-element-facts p{margin:5px 0;color:#536f7e;font-size:14px}
+.state-detail-tags{display:flex;align-items:center;gap:9px;margin-top:8px}
+.state-category-label{color:var(--muted);font-size:14px}
+@media(max-width:760px){.state-table-legend{padding:11px 14px}}

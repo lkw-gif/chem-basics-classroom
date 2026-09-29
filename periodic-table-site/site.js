@@ -134,7 +134,11 @@ function renderStates() {
     ['W', '−189', '−186', 'gas', 'gas'], ['X', '−110', '−40', 'gas', 'liquid'],
     ['Y', '−7', '58', 'liquid', 'solid'], ['Z', '650', '1120', 'solid', 'solid'],
   ];
-  return `<div class="two-photo-grid">${picture('../images/mercury-example.png', 'Shiny drops of liquid mercury', `<b>Hg · ${t('汞', 'Mercury')}</b><span>${t('室溫下的液體金屬', 'A liquid metal at room temperature')}</span>`)}${picture('../images/bromine-example.png', 'Reddish-brown liquid bromine in a glass ampoule', `<b>Br · ${t('溴', 'Bromine')}</b><span>${t('室溫下的液體非金屬', 'A liquid non-metal at room temperature')}</span>`)}</div><div class="panel simple-panel"><h2>${t('室溫約 25 °C', 'About 25 °C')}</h2><div class="state-summary"><div>${phaseBadge('liquid')}<p>${t('兩種液體元素：汞、溴。', 'Two liquid elements: mercury and bromine.')}</p></div><div>${phaseBadge('gas')}<p>${t('五種氣體元素：氫、氮、氧、氟、氯；再加六種貴氣體。', 'Five gaseous elements: hydrogen, nitrogen, oxygen, fluorine and chlorine; plus six noble gases.')}</p></div><div>${phaseBadge('solid')}<p>${t('其餘天然元素一般是固體。', 'The other naturally occurring elements are generally solids.')}</p></div></div></div><section class="panel table-panel"><div class="panel-heading"><h2>${t('比較溫度與熔點、沸點', 'Compare temperature with melting and boiling points')}</h2><span>${t('notes 第 3 頁的 W、X、Y、Z 例子', 'W, X, Y and Z from notes page 3')}</span></div><div class="phase-rule"><span>${t('低於熔點', 'Below melting')}</span><b>${t('固體', 'Solid')}</b><i>→</i><span>${t('兩點之間', 'Between points')}</span><b>${t('液體', 'Liquid')}</b><i>→</i><span>${t('高於沸點', 'Above boiling')}</span><b>${t('氣體', 'Gas')}</b></div><div class="table-scroll"><table class="data-table"><thead><tr><th scope="col">${t('元素', 'Element')}</th><th scope="col">${t('熔點 °C', 'Melting °C')}</th><th scope="col">${t('沸點 °C', 'Boiling °C')}</th><th scope="col">25 °C</th><th scope="col">−70 °C</th></tr></thead><tbody>${rows.map(([name, melt, boil, room, cold]) => `<tr><th scope="row">${name}</th><td>${melt}</td><td>${boil}</td><td>${phaseBadge(room)}</td><td>${phaseBadge(cold)}</td></tr>`).join('')}</tbody></table></div><p class="worked-example"><b>X</b>${t('−110 °C ＜ −70 °C ＜ −40 °C，所以 X 在 −70 °C 是液體。', '−110 °C < −70 °C < −40 °C, so X is liquid at −70 °C.')}</p></section><p class="teaching-note">${t('判斷前先看溫度。恰好在熔點或沸點時，兩種狀態可以同時存在；以上比較假設氣壓不變。', 'Check the temperature first. At the exact melting or boiling point, two states can coexist; this comparison assumes constant pressure.')}</p>`;
+  return `<div class="two-photo-grid">${picture('../images/mercury-example.png', 'Shiny drops of liquid mercury', `<b>Hg · ${t('汞', 'Mercury')}</b><span>${t('室溫下的液體金屬', 'A liquid metal at room temperature')}</span>`)}${picture('../images/bromine-example.png', 'Reddish-brown liquid bromine in a glass ampoule', `<b>Br · ${t('溴', 'Bromine')}</b><span>${t('室溫下的液體非金屬', 'A liquid non-metal at room temperature')}</span>`)}</div><div class="panel simple-panel"><h2>${t('室溫約 25 °C', 'About 25 °C')}</h2><div class="state-summary"><div>${phaseBadge('liquid')}<p>${t('兩種液體元素：汞、溴。', 'Two liquid elements: mercury and bromine.')}</p></div><div>${phaseBadge('gas')}<p>${t('五種氣體元素：氫、氮、氧、氟、氯；再加六種貴氣體。', 'Five gaseous elements: hydrogen, nitrogen, oxygen, fluorine and chlorine; plus six noble gases.')}</p></div><div>${phaseBadge('solid')}<p>${t('其餘天然元素一般是固體。', 'The other naturally occurring elements are generally solids.')}</p></div></div></div>${renderRoomStateTable()}<section class="panel table-panel"><div class="panel-heading"><h2>${t('比較溫度與熔點、沸點', 'Compare temperature with melting and boiling points')}</h2><span>${t('notes 第 3 頁的 W、X、Y、Z 例子', 'W, X, Y and Z from notes page 3')}</span></div><div class="phase-rule"><span>${t('低於熔點', 'Below melting')}</span><b>${t('固體', 'Solid')}</b><i>→</i><span>${t('兩點之間', 'Between points')}</span><b>${t('液體', 'Liquid')}</b><i>→</i><span>${t('高於沸點', 'Above boiling')}</span><b>${t('氣體', 'Gas')}</b></div><div class="table-scroll"><table class="data-table"><thead><tr><th scope="col">${t('元素', 'Element')}</th><th scope="col">${t('熔點 °C', 'Melting °C')}</th><th scope="col">${t('沸點 °C', 'Boiling °C')}</th><th scope="col">25 °C</th><th scope="col">−70 °C</th></tr></thead><tbody>${rows.map(([name, melt, boil, room, cold]) => `<tr><th scope="row">${name}</th><td>${melt}</td><td>${boil}</td><td>${phaseBadge(room)}</td><td>${phaseBadge(cold)}</td></tr>`).join('')}</tbody></table></div><p class="worked-example"><b>X</b>${t('−110 °C ＜ −70 °C ＜ −40 °C，所以 X 在 −70 °C 是液體。', '−110 °C < −70 °C < −40 °C, so X is liquid at −70 °C.')}</p></section><p class="teaching-note">${t('判斷前先看溫度。恰好在熔點或沸點時，兩種狀態可以同時存在；以上比較假設氣壓不變。', 'Check the temperature first. At the exact melting or boiling point, two states can coexist; this comparison assumes constant pressure.')}</p>`;
+}
+
+function renderRoomStateTable() {
+  return `<section class="panel table-panel state-periodic-panel"><div class="panel-heading"><h2>${t('室溫元素週期表', 'Periodic table at room temperature')}</h2><span>${t('橙色框標示液體或氣體；選一格查看狀態', 'Orange outlines mark liquids or gases. Select an element to see its state.')}</span></div><div class="periodic-scroll state-periodic-scroll" role="region" tabindex="0" aria-label="${t('室溫下的元素週期表', 'Periodic table of elements at room temperature')}"><div class="periodic-grid state-periodic-grid" id="state-periodic-grid"><p>${t('正在載入週期表…', 'Loading periodic table…')}</p></div><div class="state-series-grid" id="state-series-grid" aria-label="${t('鑭系與錒系元素', 'Lanthanides and actinides')}"></div></div><div class="map-legend state-table-legend"><span><i class="metal"></i>${t('金屬', 'Metal')}</span><span><i class="metalloid"></i>${t('類金屬', 'Metalloid')}</span><span><i class="nonmetal"></i>${t('非金屬', 'Non-metal')}</span><span><i class="state-outline-swatch"></i>${t('橙色框：室溫下為液體或氣體', 'Orange outline: liquid or gas at room temperature')}</span><span><b class="state-key-mark">L</b>${t('液體', 'Liquid')}</span><span><b class="state-key-mark">G</b>${t('氣體', 'Gas')}</span></div><div class="periodic-detail state-periodic-detail" id="state-periodic-detail" aria-live="polite"></div></section><p class="teaching-note">${t('其餘天然元素一般為固體；超重元素的室溫狀態尚未能直接測定。', 'Most other naturally occurring elements are solids; the room-temperature states of superheavy elements have not been directly measured.')}</p>`;
 }
 
 function groupNumber(element) {
@@ -259,6 +263,76 @@ async function setupMap() {
   }
 }
 
+async function setupStateTable() {
+  const grid = document.querySelector('#state-periodic-grid');
+  if (!grid) return;
+  const seriesGrid = document.querySelector('#state-series-grid');
+  const detail = document.querySelector('#state-periodic-detail');
+  const liquidElements = new Set(['Br', 'Hg']);
+  const gasElements = new Set(['H', 'He', 'N', 'O', 'F', 'Ne', 'Cl', 'Ar', 'Kr', 'Xe', 'Rn']);
+  const stateFor = (element) => liquidElements.has(element.symbol) ? 'liquid' : gasElements.has(element.symbol) ? 'gas' : element.atomicNumber >= 104 ? 'unknown' : 'solid';
+  const stateLabels = { solid: ['固體', 'Solid'], liquid: ['液體', 'Liquid'], gas: ['氣體', 'Gas'], unknown: ['尚未確定', 'Not confirmed'] };
+  const categoryLabels = { metal: ['金屬', 'Metal'], metalloid: ['類金屬', 'Metalloid'], nonmetal: ['非金屬', 'Non-metal'] };
+  const seriesFor = (element) => element.atomicNumber >= 57 && element.atomicNumber <= 71 ? 'lanthanide' : element.atomicNumber >= 89 && element.atomicNumber <= 103 ? 'actinide' : '';
+  try {
+    const response = await fetch('./periodic-elements.json');
+    if (!response.ok) throw new Error('Periodic element data unavailable');
+    const elements = await response.json();
+    const groupHeading = (roman, column) => '<div class="table-axis-group" style="grid-column:' + column + ';grid-row:1" aria-hidden="true"><span>' + t('\u65cf', 'Group') + '</span><b>' + roman + '</b></div>';
+    const groupHeadings = [groupHeading('I', 2), groupHeading('II', 3), '<div class="table-axis-transition" style="grid-column:4 / span 10;grid-row:1" aria-hidden="true">' + t('\u904e\u6e21\u91d1\u5c6c', 'Transition metals') + '</div>', groupHeading('III', 14), groupHeading('IV', 15), groupHeading('V', 16), groupHeading('VI', 17), groupHeading('VII', 18), groupHeading('0', 19)];
+    const periodHeadings = Array.from({ length: 7 }, (_, index) => {
+      const period = index + 1;
+      return '<div class="table-axis-period" style="grid-column:1;grid-row:' + (period + 1) + '" aria-hidden="true"><span>' + t('\u9031\u671f', 'Period') + '</span><b>' + period + '</b></div>';
+    });
+    const buttonMarkup = (element, column, row) => {
+      const state = stateFor(element);
+      const stateClass = state === 'liquid' || state === 'gas' ? ' state-outline state-' + state : '';
+      const mark = state === 'liquid' ? (en ? 'L' : '液') : state === 'gas' ? (en ? 'G' : '氣') : '';
+      const accessibleState = t(...stateLabels[state]);
+      const accessibleName = en ? element.nameEn : element.nameZh + ' ' + element.nameEn;
+      const accessibleTemperature = en ? accessibleState + ' at about 25 degrees Celsius' : '室溫約 25 °C 時為' + accessibleState;
+      return '<button type="button" class="element-cell state-element-cell ' + (element.symbol === 'H' ? 'element-hydrogen ' : '') + (element.category === 'metalloid' ? 'cat-metalloid' : element.category === 'metal' ? 'cat-metal' : 'cat-nonmetal') + stateClass + '" style="grid-column:' + column + ';grid-row:' + row + '" data-element="' + element.atomicNumber + '" aria-pressed="false" aria-label="' + element.atomicNumber + ' ' + element.symbol + ' ' + accessibleName + ', ' + accessibleTemperature + '"><small>' + element.atomicNumber + '</small>' + (mark ? '<small class="state-cell-marker">' + mark + '</small>' : '') + '<strong>' + element.symbol + '</strong><span>' + (en ? element.nameEn : element.nameZh) + '</span></button>';
+    };
+    const inFBlock = (element) => Boolean(seriesFor(element));
+    const mainElements = elements.filter((element) => !inFBlock(element));
+    const mainCells = mainElements.map((element) => buttonMarkup(element, element.symbol === 'H' ? 10 : element.column + 1, element.period + 1));
+    const placeholders = [
+      '<div class="periodic-series-placeholder" style="grid-column:4;grid-row:7" aria-hidden="true"><b>57–71</b><span>' + t('\u946d\u7cfb', 'Lanthanides') + '</span></div>',
+      '<div class="periodic-series-placeholder" style="grid-column:4;grid-row:8" aria-hidden="true"><b>89–103</b><span>' + t('\u9312\u7cfb', 'Actinides') + '</span></div>',
+    ];
+    grid.innerHTML = [...groupHeadings, ...periodHeadings, ...placeholders, ...mainCells].join('');
+    const seriesLabels = [
+      '<div class="state-series-label" style="grid-column:1 / span 3;grid-row:1"><b>' + t('\u946d\u7cfb', 'Lanthanides') + '</b><span>57–71</span></div>',
+      '<div class="state-series-label" style="grid-column:1 / span 3;grid-row:2"><b>' + t('\u9312\u7cfb', 'Actinides') + '</b><span>89–103</span></div>',
+    ];
+    const seriesCells = elements.filter(inFBlock).map((element) => buttonMarkup(element, seriesFor(element) === 'lanthanide' ? element.atomicNumber - 53 : element.atomicNumber - 85, seriesFor(element) === 'lanthanide' ? 1 : 2));
+    seriesGrid.innerHTML = [...seriesLabels, ...seriesCells].join('');
+    const allButtons = [...grid.querySelectorAll('button'), ...seriesGrid.querySelectorAll('button')];
+    const show = (number) => {
+      const element = elements.find((item) => item.atomicNumber === number);
+      if (!element) return;
+      const series = seriesFor(element);
+      allButtons.forEach((button) => {
+        const item = elements.find((candidate) => candidate.atomicNumber === Number(button.dataset.element));
+        button.setAttribute('aria-pressed', String(item === element));
+        button.classList.toggle('same-group', Boolean(element.group && item.group === element.group && item !== element));
+        button.classList.toggle('same-period', item.period === element.period && item !== element);
+        button.classList.toggle('same-series', Boolean(series && seriesFor(item) === series && item !== element));
+      });
+      const oldGroup = element.group === 18 ? '0' : element.group === 1 ? 'I' : element.group === 2 ? 'II' : element.group === 13 ? 'III' : element.group === 14 ? 'IV' : element.group === 15 ? 'V' : element.group === 16 ? 'VI' : element.group === 17 ? 'VII' : '';
+      const groupText = element.group ? (oldGroup ? oldGroup + ' / ' + element.group : String(element.group)) : t(series === 'lanthanide' ? '\u946d\u7cfb' : '\u9312\u7cfb', series === 'lanthanide' ? 'Lanthanide series' : 'Actinide series');
+      const state = stateFor(element);
+      const stateLabel = t(...stateLabels[state]);
+      const categoryLabel = t(...categoryLabels[element.category]);
+      detail.innerHTML = '<div class="detail-symbol ' + (state === 'liquid' || state === 'gas' ? 'state-detail-symbol' : '') + '"><small>' + element.atomicNumber + '</small><strong>' + element.symbol + '</strong></div><div class="state-element-facts"><h3>' + (en ? element.nameEn : element.nameZh + ' · ' + element.nameEn) + '</h3><p>' + t('原子序', 'Atomic number') + ' <b>' + element.atomicNumber + '</b> · ' + t('第', 'Period') + ' <b>' + element.period + '</b> ' + t('週期', '') + ' · ' + t('族', 'Group') + ' <b>' + groupText + '</b></p><div class="state-detail-tags"><span class="state-badge ' + (state === 'unknown' ? 'solid' : state) + '">' + stateLabel + '</span><span class="state-category-label">' + categoryLabel + '</span></div></div>';
+    };
+    allButtons.forEach((button) => button.addEventListener('click', () => show(Number(button.dataset.element))));
+    show(80);
+  } catch {
+    grid.innerHTML = '<p class="load-error">' + t('\u9031\u671f\u8868\u66ab\u6642\u672a\u80fd\u8f09\u5165\u3002', 'The periodic table could not be loaded.') + '</p>';
+  }
+}
+
 function showShell(symbol, target) {
   const item = shellExamples.find((element) => element[0] === symbol);
   const [short, nameZh, nameEn, shells, number] = item;
@@ -364,6 +438,7 @@ renderShell();
 setupNavigation();
 setupQuiz();
 void setupMap();
+void setupStateTable();
 setupPosition();
 setupGroupOne();
 setupGroupTwo();
