@@ -223,7 +223,7 @@ async function setupMap() {
     const response = await fetch('./periodic-elements.json');
     if (!response.ok) throw new Error('Periodic element data unavailable');
     const elements = (await response.json()).filter((element) => element.atomicNumber <= 36);
-    grid.innerHTML = elements.map((element) => `<button type="button" class="element-cell ${element.category === 'metalloid' ? 'cat-metalloid' : element.category === 'metal' ? 'cat-metal' : 'cat-nonmetal'}" style="grid-column:${element.column};grid-row:${element.period}" data-element="${element.atomicNumber}" aria-pressed="false" aria-label="${element.atomicNumber} ${element.symbol} ${en ? element.nameEn : `${element.nameZh} ${element.nameEn}`}"><small>${element.atomicNumber}</small><strong>${element.symbol}</strong><span>${en ? element.nameEn : element.nameZh}</span></button>`).join('');
+    grid.innerHTML = elements.map((element) => `<button type="button" class="element-cell ${element.symbol === 'H' ? 'element-hydrogen' : ''} ${element.category === 'metalloid' ? 'cat-metalloid' : element.category === 'metal' ? 'cat-metal' : 'cat-nonmetal'}" style="grid-column:${element.symbol === 'H' ? 9 : element.column};grid-row:${element.period}" data-element="${element.atomicNumber}" aria-pressed="false" aria-label="${element.atomicNumber} ${element.symbol} ${en ? element.nameEn : `${element.nameZh} ${element.nameEn}`}"><small>${element.atomicNumber}</small><strong>${element.symbol}</strong><span>${en ? element.nameEn : element.nameZh}</span></button>`).join('');
     const show = (number) => {
       const element = elements.find((item) => item.atomicNumber === number);
       if (!element) return;
