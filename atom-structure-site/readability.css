@@ -95,3 +95,14 @@
  .main-content .dot-cross-panel{grid-template-columns:minmax(0,1fr) 112px;gap:9px}
  .main-content .periodic-grid{min-width:866px}
 }
+.main-content .origin-column{padding:14px;border:2px solid;border-radius:12px;align-items:flex-start}
+.main-content .origin-natural{border-color:#e49b35;background:#fff8ed}
+.main-content .origin-made{border-color:#397cc9;background:#eef5ff}
+.main-content .element-cell.origin-natural-example{border:3px solid #e49b35;box-shadow:inset 0 0 0 1px #fff}
+.main-content .element-cell.origin-made-example{border:3px solid #397cc9;box-shadow:inset 0 0 0 1px #fff}
+.main-content .element-gallery:last-child .gallery-images{grid-template-columns:repeat(2,minmax(0,1fr))}
+.main-content .isotope-heading{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.main-content .isotope-symbol{position:relative;padding-left:25px;font-size:40px;line-height:1.2}
+.main-content .isotope-symbol sup{position:absolute;left:0;top:0;font-size:19px;line-height:1;color:#bb4b35;font-weight:700}
+.main-content .mass-number-callout{font:600 14px/1.5 var(--classroom-font);color:#bb4b35}
+.main-content .shell-facts .shell-capacity-formula{font-size:clamp(34px,4vw,44px);line-height:1.2;font-weight:700;color:var(--green)}

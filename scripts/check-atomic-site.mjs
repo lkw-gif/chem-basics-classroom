@@ -30,7 +30,7 @@ assert.match(script, /const firstTwenty = \[/);
 assert.match(script, /renderIsotopeModels\(\);/);
 assert.match(html, /id="atomic-periodic-grid"/);
 assert.match(html, /id="highlight-first20" checked/);
-assert.equal((html.match(/<figure(?: class="gallery-feature")?>/g) || []).length, 9, 'Metals, non-metals and metalloids should each show three examples.');
+assert.equal((html.match(/<figure(?: class="gallery-feature")?>/g) || []).length, 8, 'The example galleries should retain three metals, three non-metals and two metalloid uses.');
 assert.equal((html.match(/class="liquid-art (?:mercury|bromine)-art"/g) || []).length, 2, 'Mercury and bromine should each have a visual example.');
 assert.match(html, /室溫約 20–25 °C[\s\S]*只有汞（Hg）和溴（Br）/);
 assert.match(html, /class="phase-table"/);
@@ -39,7 +39,7 @@ assert.match(html, /<th scope="row">Y<\/th><td>−110<\/td><td>−40<\/td>/);
 assert.match(html, /<th scope="row">Z<\/th><td>−60<\/td><td>−5<\/td>/);
 assert.equal((html.match(/class="phase-bar"/g) || []).length, 3, 'Each example should have a temperature bar.');
 assert.doesNotMatch(html, /id="state-temperature"|id="state-particle-canvas"/, 'The temperature lesson should be a static worked example.');
-assert.match(html, /silicon-chip-example\.png[\s\S]*borosilicate-glass-example\.png[\s\S]*silicon-solar-example\.png/);
+assert.match(html, /silicon-chip-example\.png[\s\S]*borosilicate-glass-example\.png/);
 assert.match(html, /id="add-proton"/);
 assert.match(html, /id="builder-neutron-count"/);
 assert.match(html, /id="builder-proton-slider"/);
@@ -69,4 +69,4 @@ elements.forEach(([, number, symbol, , , mass, shellsText], index) => {
 
 const crustShares = [...html.matchAll(/style="--value:([\d.]+)%"/g)].map(([, value]) => Number(value));
 assert.ok(Math.abs(crustShares.reduce((sum, value) => sum + value, 0) - 100) < 1e-9, 'Crust-composition chart should add to 100%.');
-console.log('PASS: standalone bilingual site covers notes 2.1–2.8, with session quizzes, the 118-element table, nine visual examples, a static phase guide, proton builder, isotope counts and a balanced crust chart.');
+console.log('PASS: standalone bilingual site covers notes 2.1–2.8, with session quizzes, the 118-element table, eight visual examples, a static phase guide, proton builder, isotope counts and a balanced crust chart.');
