@@ -106,3 +106,5 @@
 .main-content .isotope-symbol sup{position:absolute;left:0;top:0;font-size:19px;line-height:1;color:#bb4b35;font-weight:700}
 .main-content .mass-number-callout{font:600 14px/1.5 var(--classroom-font);color:#bb4b35}
 .main-content .shell-facts .shell-capacity-formula{font-size:clamp(34px,4vw,44px);line-height:1.2;font-weight:700;color:var(--green)}
+.main-content .metalloid-gallery .gallery-images{grid-template-columns:repeat(2,minmax(0,360px));max-width:734px;gap:14px}
+.main-content .metalloid-gallery .gallery-images img{height:118px;object-position:center}
