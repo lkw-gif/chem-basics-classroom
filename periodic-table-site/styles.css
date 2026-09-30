@@ -141,3 +141,14 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 .halogen-highlight>span{color:var(--muted);font-size:11px;line-height:1.3}
 .halogen-highlight>b{display:flex;align-items:center;gap:7px;color:var(--halogen-ink);font-size:15px}
 @media(max-width:760px){.halogen-highlights{gap:6px}.halogen-detail .halogen-highlight{padding:8px}.halogen-highlight>b{font-size:14px}}
+
+/* Give each halogen symbol, name and colour/state label a clear lane. */
+.halogen-choice{grid-template-columns:42px minmax(0,1fr);column-gap:14px;row-gap:5px;padding:9px 12px}
+.halogen-choice>strong{justify-self:center;align-self:center;line-height:1.1}
+.halogen-choice>small{min-width:0;align-self:end;padding-left:1px;line-height:1.2}
+.halogen-choice-meta{min-width:0;align-self:start;gap:7px;font-size:12px;line-height:1.35}
+@media(max-width:520px){.halogen-choice{grid-template-columns:34px minmax(0,1fr);column-gap:10px;row-gap:5px;min-width:0;flex-basis:calc(50% - 4px);padding:8px 9px}.halogen-choice-meta{gap:6px;font-size:11px}}
+.selector-row button.halogen-choice{column-gap:14px;row-gap:5px;padding:9px 12px}
+.selector-row button.halogen-choice>small{font-size:14px;line-height:1.2}
+.selector-row button.halogen-choice .halogen-choice-meta{gap:7px;font-size:12px;line-height:1.35}
+@media(max-width:520px){.selector-row button.halogen-choice{column-gap:10px;row-gap:5px;min-width:0;padding:8px 9px}.selector-row button.halogen-choice>small{font-size:13px}.selector-row button.halogen-choice .halogen-choice-meta{gap:6px;font-size:11px}}
