@@ -227,7 +227,7 @@ function lessonMarkup(lesson) {
 
 function renderShell() {
   document.documentElement.lang = en ? 'en' : 'zh-Hant-HK';
-  document.title = activeLesson ? `${en ? activeLesson.en : activeLesson.zh} · ${t('元素週期表', 'Periodic Table')}` : `${t('元素週期表', 'Periodic Table')} · CHEM Explore`;
+  document.title = activeLesson ? `${en ? activeLesson.en : activeLesson.zh} · ${t('元素週期表', 'Periodic Table')}` : `${t('元素週期表', 'Periodic Table')} · F.3 CHEM`;
   localStorage.setItem('periodic-table-language', language);
   document.querySelector('#skip-link').textContent = t('跳到課堂內容', 'Skip to lesson');
   document.querySelector('#skip-link').href = `${location.pathname}${location.search}#main`;

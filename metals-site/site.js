@@ -158,12 +158,12 @@ const renderers = {
 };
 function lessonMarkup(lesson) {
   const index = lessons.indexOf(lesson);
-  return `<div class="breadcrumb"><a href="${homeUrl}">${t('中三化學','Form 3 Chemistry')}</a><span>/</span><b>${en ? lesson.en : lesson.zh}</b><span class="breadcrumb-count">${String(index+1).padStart(2,'0')} / 08</span></div><div class="lesson-heading">${tag(lesson.ref + ' · 金屬',lesson.ref + ' · METALS')}<h1>${en ? lesson.en : lesson.zh}</h1><p>${en ? lesson.leadEn : lesson.leadZh}</p></div>${renderers[lesson.id]()}${quizMarkup(lesson.id)}<nav class="lesson-pager" aria-label="${t('課題導覽','Lesson navigation')}">${index===0?`<a href="${homeUrl}">← ${t('所有課題','All lessons')}</a>`:`<a href="${lessonUrl(lessons[index-1].id)}">← ${t('上一課','Previous')}</a>`}${index===lessons.length-1?`<a class="next-link" href="${homeUrl}">${t('所有課題','All lessons')} →</a>`:`<a class="next-link" href="${lessonUrl(lessons[index+1].id)}">${t('下一課','Next')} →</a>`}</nav><footer class="site-footer"><span>${t('根據 Unit 4 Metals 學生筆記整理','Based on the Unit 4 Metals student notes')}</span><a href="${homeUrl}">CHEM Explore</a></footer>`;
+  return `<div class="breadcrumb"><a href="${homeUrl}">${t('中三化學','Form 3 Chemistry')}</a><span>/</span><b>${en ? lesson.en : lesson.zh}</b><span class="breadcrumb-count">${String(index+1).padStart(2,'0')} / 08</span></div><div class="lesson-heading">${tag(lesson.ref + ' · 金屬',lesson.ref + ' · METALS')}<h1>${en ? lesson.en : lesson.zh}</h1><p>${en ? lesson.leadEn : lesson.leadZh}</p></div>${renderers[lesson.id]()}${quizMarkup(lesson.id)}<nav class="lesson-pager" aria-label="${t('課題導覽','Lesson navigation')}">${index===0?`<a href="${homeUrl}">← ${t('所有課題','All lessons')}</a>`:`<a href="${lessonUrl(lessons[index-1].id)}">← ${t('上一課','Previous')}</a>`}${index===lessons.length-1?`<a class="next-link" href="${homeUrl}">${t('所有課題','All lessons')} →</a>`:`<a class="next-link" href="${lessonUrl(lessons[index+1].id)}">${t('下一課','Next')} →</a>`}</nav><footer class="site-footer"><span>${t('根據 Unit 4 Metals 學生筆記整理','Based on the Unit 4 Metals student notes')}</span><a href="${homeUrl}">F.3 CHEM</a></footer>`;
 }
 
 function renderShell() {
   document.documentElement.lang = en ? 'en' : 'zh-Hant-HK';
-  document.title = activeLesson ? `${en ? activeLesson.en : activeLesson.zh} · ${t('金屬','Metals')}` : `${t('金屬','Metals')} · CHEM Explore`;
+  document.title = activeLesson ? `${en ? activeLesson.en : activeLesson.zh} · ${t('金屬','Metals')}` : `${t('金屬','Metals')} · F.3 CHEM`;
   localStorage.setItem('metals-language',language);
   document.querySelector('#skip-link').textContent = t('跳到課堂內容','Skip to lesson');
   document.querySelector('#skip-link').href = `${location.pathname}${location.search}#main`;

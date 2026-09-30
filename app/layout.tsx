@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import '../public/classroom.css';
-export const metadata:Metadata={title:'CHEM Explore｜中三化學教室',description:'由一滴水認識化學。用圖片與可旋轉的 3D 模型，學習元素、化學式、純物質與混合物。'};
+export const metadata:Metadata={title:'F.3 CHEM｜中三化學教室',description:'由一滴水認識化學。用圖片與可旋轉的 3D 模型，學習元素、化學式、純物質與混合物。'};
 export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="zh-Hant-HK"><body>{children}</body></html>}

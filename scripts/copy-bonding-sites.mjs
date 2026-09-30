@@ -16,7 +16,7 @@ for(const [unit,chapter] of Object.entries(chapters)){
   code=code.replace(/from '\.\/([\w-]+\.js)'/g,(match,file)=>versions[file]?`from './${file}?v=${versions[file]}'`:match);
   versions[name]=version(code);await writeFile(resolve(out,name),code);
  }
- let html=(await readFile(resolve(out,'index.html'),'utf8')).replace('data-unit="5"',`data-unit="${unit}"`).replace('Chemical bonding · CHEM Explore',`${chapter.title[0]} · CHEM Explore`);
+ let html=(await readFile(resolve(out,'index.html'),'utf8')).replace('data-unit="5"',`data-unit="${unit}"`).replace('Chemical bonding · F.3 CHEM',`${chapter.title[0]} · F.3 CHEM`);
  for(const name of ['styles.css','bonding.css','site.js'])html=html.replace(`./${name}"`,`./${name}?v=${version(await readFile(resolve(out,name)))}"`);
  await writeFile(resolve(out,'index.html'),html);
  for(const lesson of chapter.lessons){const folder=resolve(out,'sessions',lesson.id);await mkdir(folder,{recursive:true});await writeFile(resolve(folder,'index.html'),html.replace('<head>','<head>\n<base href="../../"/>'));}
