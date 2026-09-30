@@ -34,3 +34,5 @@
 .app .all-units-link{display:block;padding-top:4px;color:#4e6d7f;font-size:13px}.app .all-units-link:hover{color:#06745c}
 @media(max-width:1100px){.app .topbar .course-label{display:none}}
 @media(max-width:680px){.app .topbar{overflow-x:clip}.app .topbar .brand-icon{display:grid;width:38px;height:38px;border-radius:10px}.app .teacher-toggle>span:not([data-slot]){display:none}.app .course-nav{padding-left:10px;padding-right:10px}}
+
+.note .one-substance-emphasis{font-size:1.25em;font-weight:800;color:#08765c;white-space:nowrap}

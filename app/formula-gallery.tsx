@@ -76,7 +76,6 @@ export function FormulaGallery({ teacher }: { teacher: boolean }) {
             <summary>
               notes 還有這些化學式 <ChevronDown size={18} />
             </summary>
-            <p>有些物質不是由一個個獨立小分子組成。現在只需認得它們包含哪些元素。</p>
             <div className="table-wrap">
               <table>
                 <thead>
@@ -94,7 +93,6 @@ export function FormulaGallery({ teacher }: { teacher: boolean }) {
                 </tbody>
               </table>
             </div>
-            <p>例如 NaCl：鈉和氯的數目比例是 1：1；不是一個獨立的「NaCl 小分子」。</p>
           </details>
         </>
       )}
