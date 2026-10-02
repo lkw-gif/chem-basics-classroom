@@ -14,11 +14,13 @@ for(const unit of ['introducing-chemistry','atomic-structure','periodic-table','
 }
 const home=await read('introducing-chemistry/index.html');
 if(!home.includes('<base href="../" />'))throw new Error('Unit 1 home has the wrong asset base');
-for(const lesson of ['start','elements','formula','classify','compare','changes','lab','review']){
+for(const lesson of ['start','elements','formula','classify','compare','changes','review']){
   const page=await read(`introducing-chemistry/sessions/${lesson}/index.html`);
   if(!page.includes('<base href="../../../" />'))throw new Error(`Unit 1 ${lesson} has the wrong asset base`);
   if(!hubScript.includes(`'${lesson}'`))throw new Error(`Legacy ${lesson} link cannot redirect`);
 }
+const formerLab=await read('introducing-chemistry/sessions/lab/index.html');
+if(!formerLab.includes("location.replace('../changes/'"))throw new Error('Former laboratory link does not redirect to lesson 06');
 for(const [unit,sessions] of Object.entries({'ionic-bonds':['shells','ions','transfer','formula','conductivity','names','colours','lab'],'covalent-bonds':['sharing','bonds','molecules','compounds','formulae','mass']})){
  for(const session of sessions){const page=await read(`${unit}/sessions/${session}/index.html`);if(!page.includes('<base href="../../"/>'))throw new Error(`Incorrect asset base in ${unit}/${session}`);}
 }

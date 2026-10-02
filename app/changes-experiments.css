@@ -1,0 +1,11 @@
+.changes-experiments{margin-top:32px}
+.changes-experiments .experiment{margin-top:28px}
+.changes-experiments .experiment>.section-label{margin-top:0}
+.substance-test-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.substance-test{min-width:0;padding:20px}
+.substance-test h3{margin-top:3px}
+.substance-test p{margin-top:10px}
+.substance-test .test-result{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.substance-test b{color:#08664f}
+.test-formula{font-size:1.3rem;font-weight:700;color:#08765c}
+@media(max-width:680px){.substance-test-grid{grid-template-columns:1fr}}

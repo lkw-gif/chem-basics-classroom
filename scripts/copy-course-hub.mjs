@@ -14,12 +14,16 @@ const builtUnitOne=await readFile(resolve(dist,'index.html'),'utf8');
 await rm(unitOne,{recursive:true,force:true});
 await mkdir(unitOne,{recursive:true});
 await writeFile(resolve(unitOne,'index.html'),builtUnitOne.replace('<head>','<head><base href="../" />'));
-const lessons=['start','elements','formula','classify','compare','changes','lab','review'];
+const lessons=['start','elements','formula','classify','compare','changes','review'];
 for(const lesson of lessons){
   const directory=resolve(unitOne,'sessions',lesson);
   await mkdir(directory,{recursive:true});
   await writeFile(resolve(directory,'index.html'),builtUnitOne.replace('<head>','<head><base href="../../../" />'));
 }
+// Preserve bookmarks for the former lesson without keeping it in the course.
+const formerLab=resolve(unitOne,'sessions','lab');
+await mkdir(formerLab,{recursive:true});
+await writeFile(resolve(formerLab,'index.html'),`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Lesson moved</title><meta http-equiv="refresh" content="0;url=../changes/"></head><body><script>location.replace('../changes/'+location.search+location.hash)</script><a href="../changes/">Open Properties & changes</a></body></html>`);
 
 const source=resolve(root,'course-hub-site');
 await cp(resolve(source,'course-hub.css'),resolve(dist,'course-hub.css'));
@@ -31,4 +35,4 @@ const hub=(await readFile(resolve(source,'index.html'),'utf8'))
   .replace('href="./course-hub.css"',`href="./course-hub.css?v=${version(css)}"`)
   .replace('src="./course-hub.js"',`src="./course-hub.js?v=${version(js)}"`);
 await writeFile(resolve(dist,'index.html'),hub);
-console.log('Created the six-unit course hub and eight direct Unit 1 lesson pages.');
+console.log('Created the six-unit course hub and seven direct Unit 1 lesson pages.');

@@ -1,5 +1,5 @@
 const units = [
-  { id:'introducing-chemistry', zh:'基礎化學', en:'Basic chemistry', leadZh:'由原子、元素和化學式，開始認識物質。', leadEn:'Begin with atoms, elements, formulae and matter.', lessons:8, symbols:['H','O','H₂O'] },
+  { id:'introducing-chemistry', zh:'基礎化學', en:'Basic chemistry', leadZh:'由原子、元素和化學式，開始認識物質。', leadEn:'Begin with atoms, elements, formulae and matter.', lessons:7, symbols:['H','O','H₂O'] },
   { id:'atomic-structure', zh:'原子結構', en:'Atomic structure', leadZh:'看看質子、中子和電子如何組成原子。', leadEn:'See how protons, neutrons and electrons make an atom.', lessons:8, symbols:['p⁺','n⁰','e⁻'] },
   { id:'periodic-table', zh:'元素週期表', en:'Periodic table', leadZh:'用元素的位置和電子，找出週期表的規律。', leadEn:'Find patterns in element positions and electrons.', lessons:7, symbols:['Li','Na','K'] },
   { id:'metals', zh:'金屬', en:'Metals', leadZh:'從金屬的用途，學到提取與防鏽。', leadEn:'Explore metal uses, extraction and rust prevention.', lessons:8, symbols:['Cu','Fe','Al'] },
@@ -11,7 +11,7 @@ const requested = new URL(location.href).searchParams.get('lang');
 let language = requested==='zh'||requested==='en' ? requested : (localStorage.getItem('chem-hub-language')==='en'?'en':'zh');
 const oldLesson = location.hash.slice(1);
 if (['start','elements','formula','classify','compare','changes','lab','review'].includes(oldLesson)) {
-  location.replace(`./introducing-chemistry/sessions/${oldLesson}/?lang=${language}`);
+  location.replace(`./introducing-chemistry/sessions/${oldLesson==='lab'?'changes':oldLesson}/?lang=${language}`);
 } else {
   render();
   setupNavigation();
