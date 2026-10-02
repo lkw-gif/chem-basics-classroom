@@ -1,5 +1,6 @@
 .changes-experiments{margin-top:32px}
 .changes-experiments .experiment{margin-top:28px}
+.changes-experiments .experiment:first-child{margin-top:0}
 .changes-experiments .experiment>.section-label{margin-top:0}
 .substance-test-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .substance-test{min-width:0;padding:20px}

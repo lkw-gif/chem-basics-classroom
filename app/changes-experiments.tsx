@@ -1,7 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import {ArrowRight, FlaskConical, Lightbulb, RotateCcw, ShieldCheck} from 'lucide-react';
+import {ArrowRight, FlaskConical, Lightbulb, RotateCcw} from 'lucide-react';
 import {useLanguage} from './i18n';
 import Model from './model';
 import './changes-experiments.css';
@@ -21,9 +21,6 @@ export default function ChangesExperiments(){
   const [iron,setIron]=useState(false);
 
   return <div className="changes-experiments" data-keep-language>
-    <div className="section-label"><h2>{en?'See chemical changes in 3D':'用 3D 模型觀察化學變化'}</h2></div>
-    <div className="safety-banner"><ShieldCheck size={23}/><p>{en?'These are classroom models. Your teacher must supervise heating, gases and chemical tests; do not try them at home.':'以下是課堂模型。加熱、氣體和化學品測試須由老師指導，不要在家自行嘗試。'}</p></div>
-
     <section className="experiment">
       <div className="section-label"><h2><span className="step-number">1</span> {en?'Can water be decomposed?':'水可以分解嗎？'}</h2><span>{en?'Electrolysis of water':'電解水'}</span></div>
       <p>{en?'Passing electricity through water causes a chemical change, forming hydrogen and oxygen. A little dilute sulphuric acid helps the liquid conduct electricity.':'通電可使水發生化學變化，形成氫氣和氧氣。加入少量稀硫酸，可讓液體較容易導電。'}</p>
