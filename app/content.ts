@@ -26,7 +26,8 @@ export const samples=[
  {id:'hydrogen',zh:'氫氣',en:'Hydrogen',image:'',pure:true,why:'這題指純氫氣：只有氫氣這一種物質，全部都是 H₂。',see:'全部都是氫分子 H₂',legend:['H']},
  {id:'carbon',zh:'碳',en:'Carbon',image:'',pure:true,why:'這裏以純石墨為例：只有碳這一種元素，結構中全部都是 C 原子。',see:'全部都是碳原子 C',legend:['C']}
 ];
-export const questions=[
+export type ReviewQuestion={q:string;choices:string[];answer:number;why:string;group?:'model'|'matter'|'property';model?:string;modelFormula?:string};
+export const questions:ReviewQuestion[]=[
  {q:'H₂ 有兩個原子，所以它是……',choices:['元素','化合物','混合物'],answer:0,why:'兩個原子都是氫。只有一種元素，所以氫氣是元素。'},
  {q:'一個 H₂O 分子總共有多少個原子？',choices:['1 個','2 個','3 個'],answer:2,why:'2 個 H ＋ 1 個 O ＝ 3 個原子。O 後面沒有小數字，代表 1。'},
  {q:'哪個是混合物？',choices:['純氫氣','牛奶','蒸餾水（純水）'],answer:1,why:'牛奶含有水、脂肪、糖等。看起來均勻，也可以是混合物。'},
@@ -34,6 +35,15 @@ export const questions=[
  {q:'哪句描述化學性質？',choices:['銅可以導電','氧氣沒有顏色','鐵會生鏽'],answer:2,why:'鐵生鏽會形成新物質；導電性和顏色是物理性質。'},
  {q:'氧氣可以使哪種木條復燃？',choices:['帶餘燼的木條','濕木條','完全冷卻的木條'],answer:0,why:'帶餘燼的木條在氧氣中重新燃燒，是氧氣的測試。'},
  {q:'H₂ 和 O₂ 混在一起，就是水嗎？',choices:['是，因為有氫和氧','不是，還要發生化學反應'],answer:1,why:'混在一起時仍然是 H₂ 和 O₂。水裏的原子則組成 H₂O。'},
- {q:'哪一個元素符號寫法正確？',choices:['NA','na','Na'],answer:2,why:'第一個字母大寫，第二個字母（如有）小寫。Na 是鈉。'}
+ {q:'哪一個元素符號寫法正確？',choices:['NA','na','Na'],answer:2,why:'第一個字母大寫，第二個字母（如有）小寫。Na 是鈉。'},
+ {q:'模型展示純氮氣中的 N₂ 分子。純氮氣是甚麼？',choices:['元素','化合物','混合物'],answer:0,why:'每個分子只有氮原子；兩個氮原子連在一起，仍然只有一種元素。',group:'model',model:'N2',modelFormula:'N₂'},
+ {q:'模型展示純水中的 H₂O 分子。純水是甚麼？',choices:['元素','化合物','混合物'],answer:1,why:'每個水分子都由氫和氧兩種元素化學結合而成，所以純水是化合物。',group:'model',model:'H2O',modelFormula:'H₂O'},
+ {q:'觀察模型：H₂ 和 O₂ 分子一起存在，但沒有結合。這是甚麼？',choices:['元素','化合物','混合物'],answer:2,why:'H₂ 和 O₂ 是兩種不同物質；只放在一起而沒有反應，是混合物。',group:'model',model:'sample:elements',modelFormula:'H₂ + O₂'},
+ {q:'哪一項是元素的特點？',choices:['不能用化學方法分解成更簡單物質','可用物理方法分開不同成分','一定由不同元素化學結合'],answer:0,why:'元素只有一種原子，不能用化學方法分解成更簡單的物質。',group:'matter'},
+ {q:'化合物的性質通常與組成它的元素相比，會怎樣？',choices:['完全相同','不同','一定介乎兩者之間'],answer:1,why:'元素經化學反應結合後，形成有不同性質的新物質。',group:'matter'},
+ {q:'把鐵粉和硫粉混合後、加熱反應前，兩者的性質會怎樣？',choices:['各自保留原有性質','已變成硫化鐵的性質','全部變成鐵的性質'],answer:0,why:'混合物中的成分仍保留各自的性質；此時可用磁鐵吸出鐵粉。',group:'matter'},
+ {q:'銅容易讓電流通過，屬於哪種性質？',choices:['物理性質','化學性質'],answer:0,why:'導電時不需要形成新物質，所以導電性是物理性質。',group:'property'},
+ {q:'硫呈黃色，屬於哪種性質？',choices:['物理性質','化學性質'],answer:0,why:'觀察顏色不會形成新物質，所以顏色是物理性質。',group:'property'},
+ {q:'碳能在氧氣中燃燒，屬於哪種性質？',choices:['物理性質','化學性質'],answer:1,why:'燃燒時碳與氧氣反應，形成新物質，所以這是化學性質。',group:'property'}
 ];
 export const glossary=[['Chemistry','化學'],['Atom','原子'],['Molecule','分子'],['Chemical symbol','元素符號'],['Chemical formula','化學式'],['Matter','物質'],['Pure substance','純物質'],['Mixture','混合物'],['Element','元素'],['Compound','化合物'],['Physical property','物理性質'],['Chemical property','化學性質'],['Melting point','熔點'],['Boiling point','沸點'],['Hardness','硬度'],['Density','密度'],['Solubility','溶解度'],['Ductility','延性'],['Malleability','展性'],['Electrical conductivity','導電性'],['Heat conductivity','導熱性'],['Physical change','物理變化'],['Chemical change','化學變化'],['Gas','氣體'],['Solid','固體'],['Liquid','液體'],['Sublimation','昇華'],['Condensation','凝結'],['Freezing','凝固'],['Melting','熔化'],['Boiling','沸騰'],['Laboratory safety','實驗室安全'],['Hazard warning label','危險警告標籤'],['Harmful','有害'],['Irritant','刺激性'],['Corrosive','腐蝕性'],['Explosive','爆炸性'],['Flammable','易燃'],['Oxidizing','氧化性'],['Carcinogenic','致癌'],['Toxic','有毒'],['Glowing splint','帶餘燼的木條'],['Limewater','石灰水'],['Cobalt(II) chloride paper','氯化鈷(II)試紙'],['Copper(II) sulphate','硫酸銅(II)']];

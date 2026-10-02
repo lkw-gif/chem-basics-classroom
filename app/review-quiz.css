@@ -1,0 +1,10 @@
+.review-progress{margin-top:0}
+.review-question-group{margin-top:30px}
+.review-question-group>.section-label{margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.review-group-intro{margin:0 0 18px;font-size:.95rem}
+.review-model{max-width:520px;margin:18px 0 6px;overflow:hidden}
+.review-model .model-heading{padding:16px 20px}
+.review-model .model-heading span:last-child{font-size:1rem}
+.review-model .compact canvas{height:205px}
+.review-model .model-tools{padding:4px 18px 14px}
+@media(max-width:680px){.review-model{max-width:100%}.review-model .compact canvas{height:185px}.review-question-group{margin-top:25px}}

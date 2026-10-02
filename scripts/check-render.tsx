@@ -3,6 +3,7 @@ import {LanguageContext} from '../app/i18n';
 import {Classroom} from '../app/page';
 import {Elements,Classification,Comparison,Changes,Review,Credits} from '../app/lessons';
 import {FormulaGallery} from '../app/formula-gallery';
+import {questions} from '../app/content';
 import fs from 'node:fs';
 const components={start:<Classroom/>,elements:<Elements/>,formulae:<FormulaGallery teacher={false}/>,formulaeTeacher:<FormulaGallery teacher={true}/>,classification:<Classification teacher={false}/>,comparison:<Comparison/>,changes:<Changes/>,review:<Review teacher={false}/>,credits:<Credits/>};
 const results:Record<string,string>={};
@@ -19,5 +20,8 @@ for(const language of ['zh','en'] as const){
  if(changes.includes('property-diagram'))throw new Error(`Physical property diagrams remain in lesson 06 (${language})`);
  const review=results[`review-${language}`];
  if(review.includes('review-summary')||review.includes('glossary-grid')||review.includes('details-card'))throw new Error(`Removed review sections remain (${language})`);
+ if((review.match(/class="question card"/g)||[]).length!==questions.length)throw new Error(`Review question count is wrong (${language})`);
+ if((review.match(/class="intro-model review-model"/g)||[]).length!==3)throw new Error(`Review must include three 3D model questions (${language})`);
+ if(!review.includes(language==='en'?'Classify the 3D models':'看 3D 模型分類'))throw new Error(`Review groups are not translated (${language})`);
 }
 console.log('Rendered all lesson units, credits, and teacher formulae view in both languages.');
