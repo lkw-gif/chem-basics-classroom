@@ -4,7 +4,7 @@ export function renderReactivityGuide(en) {
   const t = (zh, english) => copy(en, zh, english);
   return `<section class="panel reactivity-guide" aria-labelledby="reactivity-title">
     <div class="panel-heading"><h2 id="reactivity-title">${t('先看活潑程度，再選提取方法','Reactivity predicts the extraction method')}</h2><span>${t('由較難到較易','HARDER → EASIER')}</span></div>
-    <p class="reactivity-intro">${t('金屬越活潑，通常與氧結合得越牢，氧化物越難還原。先比較金屬和碳的活潑程度。','The more reactive a metal, the more strongly it usually holds oxygen and the harder its oxide is to reduce. Compare the metal with carbon first.')}</p>
+    <p class="reactivity-intro">${t('金屬越活潑，通常與氧結合得越牢，氧化物越難還原。先比較金屬和碳的活潑程度。','More reactive metal → oxide is usually harder to reduce. Compare the metal with carbon to choose a method.')}</p>
     <div class="reactivity-track" role="list">
       <div role="listitem" class="reactivity-step strong"><b>K · Na · Ca · Mg · Al</b><span>${t('高活潑度 · 碳不能提取','Highly reactive · carbon cannot extract')}</span><strong>${t('電解或其他熔融鹽方法','Electrolysis or another molten-salt process')}</strong></div>
       <div role="listitem" class="reactivity-step carbon"><b>C ${t('（分界）','(reference)')} → Zn · Fe · Pb · Cu</b><span>${t('金屬比碳較不活潑','Metals less reactive than carbon')}</span><strong>${t('用碳／一氧化碳還原氧化物','Reduce the oxide with carbon / carbon monoxide')}</strong></div>
@@ -48,7 +48,7 @@ const wordEquations = [
 export function renderEquationExplorer(en) {
   const t = (zh, english) => copy(en, zh, english);
   return `<section class="panel equation-explorer" aria-labelledby="equations-title">
-    <div class="panel-heading"><h2 id="equations-title">${t('重點：寫出文字方程式','Focus: write the word equation')}</h2><span>${t('選金屬 → 預測 → 揭曉','CHOOSE → PREDICT → REVEAL')}</span></div>
+    <div class="panel-heading"><h2 id="equations-title"><span class="section-number">01</span>${t('重點：寫出文字方程式','Focus: write the word equation')}</h2><span>${t('選金屬 → 預測 → 揭曉','CHOOSE → PREDICT → REVEAL')}</span></div>
     <div class="equation-picker" role="group" aria-label="${t('選擇金屬氧化物','Choose a metal oxide')}">${wordEquations.map((item) => `<button type="button" data-equation="${item.id}" aria-pressed="false"><b>${item.symbol}</b><span>${en ? item.metalEn : item.metalZh}</span></button>`).join('')}</div>
     <div class="equation-workspace"><p class="equation-question">${t('如果氧被碳或一氧化碳帶走，會產生甚麼金屬和含碳產物？','If carbon or carbon monoxide takes the oxygen, what metal and carbon-containing product form?')}</p><p class="equation-reactants" id="equation-reactants"></p><button type="button" class="equation-reveal" id="equation-reveal" aria-expanded="false">${t('顯示產物','Reveal products')}</button><div id="equation-answer" class="equation-answer" aria-live="polite" hidden></div></div>
     <p class="equation-footnote">${t('產生 CO 還是 CO₂ 取決於反應條件；鐵的高爐例子主要用 CO。','Whether CO or CO₂ forms depends on conditions. The blast-furnace iron example mainly uses CO.')}</p>
@@ -76,7 +76,7 @@ export function setupEquationExplorer(en) {
     answer.hidden = !visible;
     reveal.setAttribute('aria-expanded', String(visible));
     reveal.textContent = visible ? t('收起答案', 'Hide answer') : t('顯示產物', 'Reveal products');
-    if (visible) answer.innerHTML = `<p><b>${en ? selected.reactantsEn : selected.reactantsZh}</b><span aria-hidden="true"> → </span><strong>${en ? selected.productsEn : selected.productsZh}</strong></p><code>${selected.formula}</code><small>${en ? selected.noteEn : selected.noteZh}</small>`;
+    if (visible) answer.innerHTML = `<p><b>${en ? selected.reactantsEn : selected.reactantsZh}</b><span aria-hidden="true"> → </span><strong>${en ? selected.productsEn : selected.productsZh}</strong></p><details><summary>${t("符號方程式（延伸）", "Symbol equation (extension)")}</summary><code>${selected.formula}</code></details><small>${en ? selected.noteEn : selected.noteZh}</small>`;
   });
   show(selected.id);
 }

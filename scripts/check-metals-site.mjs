@@ -3,6 +3,8 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { runInNewContext } from 'node:vm';
 import { renderMetalAtlas, renderOreGallery } from '../metals-site/extraction-content.js';
+import { processLessons, renderProcessDemo, renderProcessScene, renderRustTubes } from '../metals-site/lesson-demos.js';
+import { renderExamNote } from '../metals-site/lesson-notes.js';
 
 const root = resolve(import.meta.dirname, '..');
 const source = await readFile(resolve(root, 'metals-site', 'site.js'), 'utf8');
@@ -28,7 +30,20 @@ assert.match(source, /水和氧氣要同時存在/, 'Rusting conditions need to 
 assert.match(source, /鋁是地殼中含量最高的金屬元素/, 'Crust abundance distinction needs to be explicit');
 assert.match(source, /width:45%/, 'Crust chart should follow the Unit 4 notes: oxygen 45%');
 assert.match(source, /width:8%/, 'Crust chart should follow the Unit 4 notes: aluminium 8%');
-assert.match(interactive, /Carbon removes oxygen from copper oxide/, 'Carbon-reduction explanation needs to be present');
+assert.match(renderProcessDemo('carbon', true), /oxygen is still combined with copper/i, 'The initial state should explain why mixing alone does not extract copper');
+assert.doesNotMatch(source, /metal-hero|createExtractionModels/, 'The old hero and distracting 3D controls must be removed');
+for (const en of [false, true]) {
+  for (const [kind, lesson] of Object.entries(processLessons)) {
+    assert.equal(lesson.steps.length, 3, `${kind} needs three clear steps`);
+    const scenes = lesson.steps.map((_, step) => renderProcessScene(kind, step, en));
+    assert.equal(new Set(scenes).size, 3, `${kind} must show a different observation at every step`);
+    for (const scene of scenes) assert.doesNotMatch(scene, /undefined|NaN/, `${kind} needs complete bilingual labels`);
+    assert.match(renderProcessDemo(kind, en), /aria-pressed="true"/, 'One step should be selected initially');
+  }
+  for (const lesson of data.lessons) assert.doesNotMatch(renderExamNote(lesson.id, en), /undefined/, 'Every lesson needs a bilingual short-answer prompt');
+  assert.equal((renderRustTubes(en, true).match(/rust-positive/g) || []).length, 1, 'Only the tube with water and oxygen should rust');
+  assert.equal((renderRustTubes(en, false).match(/rust-positive/g) || []).length, 0, 'All nails must be clean at the start');
+}
 assert.match(extraction, /Bauxite → alumina/, 'Ore explanation must distinguish bauxite from alumina');
 assert.match(extraction, /actual cinnabar HgS/, 'Mercury oxide comparison needs the real-ore caveat');
 const atlas = renderMetalAtlas(true);
