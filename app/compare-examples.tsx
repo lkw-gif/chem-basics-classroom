@@ -28,7 +28,7 @@ export default function CompareExamples(){
    <div className="comparison-head"><span>0{i+1}</span><h2>{en?group.en:group.zh}</h2><span className="type-tag">{i<2?(en?'Pure substance':'純物質'):(en?'Several substances':'多種物質')}</span></div>
    <div style={{gridColumn:'1 / -1',padding:'12px 14px'}}><Tabs value={String(choices[i])} onValueChange={v=>setChoices(old=>old.map((n,j)=>i===j?Number(v):n))}><TabsList className="pill-list" aria-label={en?group.en+' examples':group.zh+'例子'}>{group.items.map((option,j)=><TabsTrigger value={String(j)} key={option[0]}>{option[0]}</TabsTrigger>)}</TabsList></Tabs></div>
    <Model kind={'sample:'+item[3]} compact angle={angle} onAngleChange={setAngle} label={en?item[5]:item[4]}/>
-   <div className="comparison-body"><b className="compare-formula">{item[0]}</b><h3>{en?item[2]:item[1]}</h3><p><strong>{en?group.ruleEn:group.ruleZh}</strong></p><p>{en?item[5]:item[4]}</p></div>
+   <div className="comparison-body"><b className="compare-formula">{item[0]}</b><h3>{en?item[2]:item[1]}</h3><p><strong className={`keyword keyword-${i===2?'green':'blue'}`}>{en?group.ruleEn:group.ruleZh}</strong></p><p>{en?item[5]:item[4]}</p></div>
   </article>})}</div>
   <div className="note"><p>{en?'One atom type → element. Different atom types joined → compound.':'一種原子 → 元素；不同種類的原子連在一起 → 化合物。'}</p></div>
   <div className="table-wrap comparison-table"><table><thead><tr>{(en?['Compare','Element','Compound','Mixture']:['比較','元素','化合物','混合物']).map(t=><th key={t}>{t}</th>)}</tr></thead><tbody>{(en?[

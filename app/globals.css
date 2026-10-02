@@ -36,3 +36,9 @@
 @media(max-width:680px){.app .topbar{overflow-x:clip}.app .topbar .brand-icon{display:grid;width:38px;height:38px;border-radius:10px}.app .teacher-toggle>span:not([data-slot]){display:none}.app .course-nav{padding-left:10px;padding-right:10px}}
 
 .note .one-substance-emphasis{font-size:1.25em;font-weight:800;color:#08765c;white-space:nowrap}
+
+/* Brief concept cues shared with the periodic-table lessons. */
+.lesson-main .keyword{padding:.06em .14em;margin:0 -.08em;border-radius:4px;font-weight:700;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.lesson-main .keyword-green{background:#e3f3e9;color:#08654d}
+.lesson-main .keyword-blue{background:#e7effc;color:#24558e}
+.lesson-main .keyword-orange{background:#fff0d9;color:#945318}

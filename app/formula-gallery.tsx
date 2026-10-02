@@ -25,7 +25,7 @@ export function FormulaGallery({ teacher }: { teacher: boolean }) {
           02 / CHEMICAL FORMULAE <span className="notes-ref">NOTES 4, 6</span>
         </span>
         <h1>看懂化學式</h1>
-        <p>字母表示原子種類；右下角數字表示數目。</p>
+        <p>{language === 'en' ? <>Letters show <strong className="keyword keyword-blue">atom types</strong>; small numbers show <strong className="keyword keyword-blue">how many</strong>.</> : <>字母表示<strong className="keyword keyword-blue">原子種類</strong>；右下角數字表示<strong className="keyword keyword-blue">數目</strong>。</>}</p>
       </header>
 
       {teacher && !formulaVisible && (

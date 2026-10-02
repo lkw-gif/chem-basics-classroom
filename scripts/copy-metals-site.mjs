@@ -13,10 +13,23 @@ await cp(source, output, { recursive: true });
 const version = (bytes) => createHash('sha256').update(bytes).digest('hex').slice(0, 12);
 const css = await readFile(resolve(output, 'styles.css'));
 const metalCss = await readFile(resolve(output, 'metals.css'));
-const js = await readFile(resolve(output, 'site.js'));
+const extractionCss = await readFile(resolve(output, 'extraction-content.css'));
+const modelCss = await readFile(resolve(output, 'models-3d.css'));
+const extractionJs = await readFile(resolve(output, 'extraction-content.js'));
+const modelJs = await readFile(resolve(output, 'models-3d.js'));
+const interactiveJs = (await readFile(resolve(output, 'interactive-pages.js'), 'utf8'))
+  .replace("from './models-3d.js'", `from './models-3d.js?v=${version(modelJs)}'`);
+await writeFile(resolve(output, 'interactive-pages.js'), interactiveJs);
+const js = (await readFile(resolve(output, 'site.js'), 'utf8'))
+  .replace("from './extraction-content.js'", `from './extraction-content.js?v=${version(extractionJs)}'`)
+  .replace("from './interactive-pages.js'", `from './interactive-pages.js?v=${version(interactiveJs)}'`)
+  .replace("from './models-3d.js'", `from './models-3d.js?v=${version(modelJs)}'`);
+await writeFile(resolve(output, 'site.js'), js);
 const page = (await readFile(resolve(output, 'index.html'), 'utf8'))
   .replace('href="./styles.css"', `href="./styles.css?v=${version(css)}"`)
   .replace('href="./metals.css"', `href="./metals.css?v=${version(metalCss)}"`)
+  .replace('href="./extraction-content.css"', `href="./extraction-content.css?v=${version(extractionCss)}"`)
+  .replace('href="./models-3d.css"', `href="./models-3d.css?v=${version(modelCss)}"`)
   .replace('src="./site.js"', `src="./site.js?v=${version(js)}"`);
 await writeFile(resolve(output, 'index.html'), page);
 

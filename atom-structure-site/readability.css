@@ -1,4 +1,8 @@
 /* Unit 2: readable teaching copy and purposeful visual emphasis. */
+.main-content .keyword{padding:.06em .14em;margin:0 -.08em;border-radius:4px;font-weight:700;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.main-content .keyword-green{background:#e3f3e9;color:#08654d}
+.main-content .keyword-blue{background:#e7effc;color:#24558e}
+.main-content .keyword-orange{background:#fff0d9;color:#945318}
 .main-content .section-kicker,.main-content .panel-eyebrow,.main-content .panel-top,.main-content .panel-top .zh,.main-content .panel-top .en,.main-content .diagram-label{font-family:var(--classroom-font);font-size:15px;line-height:1.5;letter-spacing:.035em}
 .main-content .idea-strip{padding:22px 24px;margin:20px 0 28px;border-left:4px solid #06745c;border-radius:12px;gap:17px}
 .main-content .idea-strip p{font:400 21px/1.7 var(--classroom-font);color:#29495c}.main-content .idea-strip b{font-weight:750;color:#06745c}
