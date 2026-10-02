@@ -74,7 +74,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 .state-series-label{grid-column:1 / span 3!important}
 .state-series-label b,.periodic-series-placeholder b{font-size:13px}
 .state-series-label span,.periodic-series-placeholder span{font-size:10px}
-.state-periodic-grid .same-series{box-shadow:inset 0 0 0 2px #70a6c4}
+.state-detail-empty{color:var(--muted);font-size:15px}
 .state-table-legend{align-items:center;padding-top:14px;padding-bottom:14px;font-size:13px}
 .state-table-legend .state-outline-swatch{width:17px;height:17px;border:3px solid #dc8428;border-radius:4px;background:transparent}
 .state-key-mark{display:grid;place-items:center;width:19px;height:19px;border-radius:5px;background:#fff0dc;color:#a35a14;font-size:11px}

@@ -362,11 +362,7 @@ async function setupStateTable() {
       if (!element) return;
       const series = seriesFor(element);
       allButtons.forEach((button) => {
-        const item = elements.find((candidate) => candidate.atomicNumber === Number(button.dataset.element));
-        button.setAttribute('aria-pressed', String(item === element));
-        button.classList.toggle('same-group', Boolean(element.group && item.group === element.group && item !== element));
-        button.classList.toggle('same-period', item.period === element.period && item !== element);
-        button.classList.toggle('same-series', Boolean(series && seriesFor(item) === series && item !== element));
+        button.setAttribute('aria-pressed', String(Number(button.dataset.element) === number));
       });
       const oldGroup = element.group === 18 ? '0' : element.group === 1 ? 'I' : element.group === 2 ? 'II' : element.group === 13 ? 'III' : element.group === 14 ? 'IV' : element.group === 15 ? 'V' : element.group === 16 ? 'VI' : element.group === 17 ? 'VII' : '';
       const groupText = element.group ? (oldGroup ? oldGroup + ' / ' + element.group : String(element.group)) : t(series === 'lanthanide' ? '\u946d\u7cfb' : '\u9312\u7cfb', series === 'lanthanide' ? 'Lanthanide series' : 'Actinide series');
@@ -376,7 +372,7 @@ async function setupStateTable() {
       detail.innerHTML = '<div class="detail-symbol ' + (state === 'liquid' || state === 'gas' ? 'state-detail-symbol' : '') + '"><small>' + element.atomicNumber + '</small><strong>' + element.symbol + '</strong></div><div class="state-element-facts"><h3>' + (en ? element.nameEn : element.nameZh + ' · ' + element.nameEn) + '</h3><p>' + t('原子序', 'Atomic number') + ' <b>' + element.atomicNumber + '</b> · ' + t('第', 'Period') + ' <b>' + element.period + '</b> ' + t('週期', '') + ' · ' + t('族', 'Group') + ' <b>' + groupText + '</b></p><div class="state-detail-tags"><span class="state-badge ' + (state === 'unknown' ? 'solid' : state) + '">' + stateLabel + '</span><span class="state-category-label">' + categoryLabel + '</span></div></div>';
     };
     allButtons.forEach((button) => button.addEventListener('click', () => show(Number(button.dataset.element))));
-    show(80);
+    detail.innerHTML = '<p class="state-detail-empty">' + t('點選一種元素，查看它在室溫下的狀態。', 'Select an element to see its state at room temperature.') + '</p>';
   } catch {
     grid.innerHTML = '<p class="load-error">' + t('\u9031\u671f\u8868\u66ab\u6642\u672a\u80fd\u8f09\u5165\u3002', 'The periodic table could not be loaded.') + '</p>';
   }
