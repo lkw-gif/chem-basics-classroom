@@ -75,6 +75,10 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 .state-series-label b,.periodic-series-placeholder b{font-size:13px}
 .state-series-label span,.periodic-series-placeholder span{font-size:10px}
 .state-detail-empty{color:var(--muted);font-size:15px}
+.keyword{padding:.06em .14em;margin:0 -.08em;border-radius:4px;font-weight:700;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.keyword-green{background:#e3f3e9;color:#08654d}
+.keyword-blue{background:#e7effc;color:#24558e}
+.keyword-orange{background:#fff0d9;color:#945318}
 .state-table-legend{align-items:center;padding-top:14px;padding-bottom:14px;font-size:13px}
 .state-table-legend .state-outline-swatch{width:17px;height:17px;border:3px solid #dc8428;border-radius:4px;background:transparent}
 .state-key-mark{display:grid;place-items:center;width:19px;height:19px;border-radius:5px;background:#fff0dc;color:#a35a14;font-size:11px}
