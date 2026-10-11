@@ -6,13 +6,13 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vinext dev",
-    "build": "vinext build",
+    "dev": "node scripts/copy-acids-site.mjs --public && vinext dev",
+    "build": "node scripts/copy-acids-site.mjs --public && vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt",
-    "build:github": "vite build --config vite.github.config.ts && node scripts/copy-atomic-site.mjs && node scripts/copy-periodic-site.mjs && node scripts/copy-metals-site.mjs && node scripts/copy-bonding-sites.mjs && node scripts/copy-course-hub.mjs && node scripts/version-classroom-theme.mjs && node scripts/check-course-navigation.mjs",
-    "check": "tsc --noEmit && node scripts/check-content.mjs && node scripts/check-render.mjs && node scripts/check-atomic-site.mjs && node scripts/check-periodic-models.mjs && node scripts/check-metals-site.mjs && node scripts/check-bonding.mjs"
+    "build:github": "vite build --config vite.github.config.ts && node scripts/copy-atomic-site.mjs && node scripts/copy-periodic-site.mjs && node scripts/copy-metals-site.mjs && node scripts/copy-bonding-sites.mjs && node scripts/copy-course-hub.mjs && node scripts/copy-acids-site.mjs && node scripts/version-classroom-theme.mjs && node scripts/check-course-navigation.mjs && node scripts/check-acids-site.mjs --built",
+    "check": "tsc --noEmit && node scripts/check-content.mjs && node scripts/check-render.mjs && node scripts/check-atomic-site.mjs && node scripts/check-periodic-models.mjs && node scripts/check-metals-site.mjs && node scripts/check-bonding.mjs && node scripts/check-acids-site.mjs"
   },
   "dependencies": {
     "react": "19.2.6",
