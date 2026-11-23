@@ -55,6 +55,32 @@
 .element-slot-mark { right: 4px; }
 .element-practice [data-mark="good"] { background: var(--practice-mint); border-color: #419578; }
 .element-practice [data-mark="bad"] { background: #fff1ed; border-color: #b75843; }
+.element-tiles [data-element], .element-tiles [data-filled] {
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.element-tiles .is-drag-source { opacity: .45; cursor: grabbing; }
+.element-tiles .is-drop-target, .element-tiles.is-drop-target {
+  outline: 2px solid var(--practice-green);
+  outline-offset: 2px;
+}
+.element-drag-tile {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 120;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 48px;
+  border-radius: 8px;
+  background: var(--practice-green);
+  color: white;
+  box-shadow: 0 5px 16px #172c4050;
+  font-size: 20px;
+}
 .element-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .element-status { min-height: 1.6em; margin: 10px 0 0; font-weight: 700; }
 .element-recall { max-width: 32rem; margin: 0 auto; }

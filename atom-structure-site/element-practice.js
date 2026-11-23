@@ -37,13 +37,14 @@ export function setupElementPractice(root, elements, getLanguage) {
     </div>
     <div class="element-work">
       <div data-view="order">
-        <p class="element-instruction">${bilingual('先點元素，再點原子序格。未選元素時，點已填的格可把元素移回元素區。', 'Tap an element, then its atomic number. Tap a filled slot with nothing selected to return the element to the bank.')}</p>
+        <p class="element-instruction">${bilingual('拖動元素到對應的原子序格，或先點元素再點格。拖回元素區，或直接點已填的格，便可移除。', 'Drag an element to its atomic number, or tap the element and then the slot. Drag it back to the bank or tap its filled slot to remove it.')}</p>
         <div class="element-boards">
           <div><h3>${bilingual('元素區', 'Element bank')}</h3><div class="element-tiles" data-bank></div></div>
           <div><h3>${bilingual('原子序 1–20', 'Atomic numbers 1–20')}</h3><div class="element-tiles" data-slots>
             ${elements.map(({n}) => `<button type="button" data-slot="${n}"><small>${n}</small><b></b><span class="element-slot-mark" aria-hidden="true"></span></button>`).join('')}
           </div></div>
         </div>
+        <b class="element-drag-tile" aria-hidden="true" hidden></b>
         <div class="element-actions">${action('check-order', '核對排序', 'Check order', true)}${action('reset-order', '重新排序', 'Reset order')}</div>
         <p class="element-status" data-order-status role="status"></p>
       </div>
@@ -83,6 +84,7 @@ export function setupElementPractice(root, elements, getLanguage) {
       const element = byNumber(slots[index]);
       const state = orderChecked ? (element?.n === index + 1 ? 'good' : 'bad') : '';
       button.dataset.mark = state;
+      button.toggleAttribute('data-filled', Boolean(element));
       button.querySelector('b').textContent = element?.s || '';
       button.querySelector('.element-slot-mark').textContent = marks[state] || '';
       button.setAttribute('aria-label', [
@@ -104,6 +106,100 @@ export function setupElementPractice(root, elements, getLanguage) {
     bank.innerHTML = shuffled().map(({n, s}) => `<button type="button" data-element="${n}"><b>${s}</b></button>`).join('');
     updateOrder();
   }
+
+  function placeElement(number, slot) {
+    const oldSlot = slots.indexOf(number);
+    if (oldSlot !== -1) slots[oldSlot] = null;
+    if (slot !== null) slots[slot] = number;
+    selected = null;
+    orderChecked = false;
+    updateOrder();
+  }
+
+  const boards = root.querySelector('.element-boards');
+  const dragTile = root.querySelector('.element-drag-tile');
+  let drag = null;
+  let ignoreDragClick = false;
+
+  function highlightDropTarget() {
+    const hit = document.elementFromPoint(drag.x, drag.y)?.closest('[data-slot], [data-bank]');
+    const target = hit && boards.contains(hit) ? hit : null;
+    if (target === drag.target) return;
+    drag.target?.classList.remove('is-drop-target');
+    target?.classList.add('is-drop-target');
+    drag.target = target;
+  }
+
+  function scrollDuringDrag(now) {
+    const edge = 72;
+    const speed = Math.max(0, edge - (innerHeight - drag.y)) - Math.max(0, edge - drag.y);
+    if (speed) {
+      window.scrollBy({ top: speed * Math.min(now - drag.time, 32) / 72, behavior: 'instant' });
+      highlightDropTarget();
+    }
+    drag.time = now;
+    drag.frame = requestAnimationFrame(scrollDuringDrag);
+  }
+
+  function endDrag(event, drop = false) {
+    if (!drag || (event.pointerId !== undefined && event.pointerId !== drag.id)) return;
+    if (drop && drag.moved) {
+      drag.x = event.clientX;
+      drag.y = event.clientY;
+      highlightDropTarget();
+    }
+    const { id, source, number, moved, target, frame } = drag;
+    drag = null;
+    cancelAnimationFrame(frame);
+    source.classList.remove('is-drag-source');
+    target?.classList.remove('is-drop-target');
+    dragTile.hidden = true;
+    if (source.hasPointerCapture(id)) source.releasePointerCapture(id);
+    if (!drop || !moved || !target) return;
+    const slot = target.hasAttribute('data-slot') ? Number(target.dataset.slot) - 1 : null;
+    placeElement(number, slot);
+    const symbol = byNumber(number).s;
+    orderStatus.textContent = slot === null
+      ? t(`已將 ${symbol} 放回元素區。`, `${symbol} returned to the bank.`)
+      : t(`已將 ${symbol} 放入第 ${slot + 1} 格。`, `${symbol} placed in slot ${slot + 1}.`);
+  }
+
+  boards.addEventListener('pointerdown', (event) => {
+    if (!event.isPrimary || event.button !== 0 || drag) return;
+    ignoreDragClick = false;
+    const source = event.target.closest('[data-element], [data-slot][data-filled]');
+    if (!source) return;
+    const number = source.dataset.element ? Number(source.dataset.element) : slots[Number(source.dataset.slot) - 1];
+    drag = { id: event.pointerId, source, number, startX: event.clientX, startY: event.clientY, target: null };
+    source.setPointerCapture(event.pointerId);
+  });
+  boards.addEventListener('pointermove', (event) => {
+    if (drag?.id !== event.pointerId) return;
+    const { clientX: x, clientY: y } = event;
+    if (!drag.moved) {
+      if (Math.hypot(x - drag.startX, y - drag.startY) < 6) return;
+      drag.moved = true;
+      ignoreDragClick = true;
+      drag.source.classList.add('is-drag-source');
+      dragTile.textContent = byNumber(drag.number).s;
+      dragTile.hidden = false;
+      drag.time = performance.now();
+      drag.frame = requestAnimationFrame(scrollDuringDrag);
+    }
+    drag.x = x;
+    drag.y = y;
+    dragTile.style.transform = `translate(${x}px, ${y}px) translate(-50%, -75%)`;
+    highlightDropTarget();
+  });
+  boards.addEventListener('pointerup', (event) => endDrag(event, true));
+  boards.addEventListener('pointercancel', (event) => endDrag(event));
+  boards.addEventListener('lostpointercapture', (event) => endDrag(event));
+  boards.addEventListener('contextmenu', (event) => {
+    if (event.target.closest('[data-element], [data-slot][data-filled]')) event.preventDefault();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') endDrag(event);
+  });
 
   const recall = Object.fromEntries(['symbol', 'name'].map((type) => {
     const form = root.querySelector(`[data-view="${type}"]`);
@@ -151,6 +247,7 @@ export function setupElementPractice(root, elements, getLanguage) {
     const button = event.target.closest('button');
     if (!button) return;
     const { mode, action, element, slot } = button.dataset;
+    if ((element || slot) && event.detail > 0 && ignoreDragClick) return;
     if (mode) {
       root.querySelectorAll('[data-mode]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
       root.querySelectorAll('[data-view]').forEach((view) => { view.hidden = view.dataset.view !== mode; });
@@ -158,13 +255,7 @@ export function setupElementPractice(root, elements, getLanguage) {
       selected = selected === Number(element) ? null : Number(element);
       updateOrder();
     } else if (slot) {
-      const index = Number(slot) - 1;
-      const previous = slots.indexOf(selected);
-      if (selected && previous !== -1) slots[previous] = null;
-      slots[index] = selected;
-      selected = null;
-      orderChecked = false;
-      updateOrder();
+      placeElement(selected, Number(slot) - 1);
     } else if (action === 'check-order') {
       orderChecked = true;
       updateOrder();
