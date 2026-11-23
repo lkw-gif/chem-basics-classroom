@@ -1,4 +1,5 @@
 import { setupLearningLabs } from './learning-labs.js';
+import { setupElementPractice } from './element-practice.js';
 
 const bi = (zh, en) => `<span class="zh">${zh}</span><span class="en">${en}</span>`;
 const quizzes = {
@@ -90,7 +91,9 @@ let builderElectrons = 1;
 let builderRenderedAtomicNumber = 0;
 let builderLastChange = 'preset';
 let refreshLearningLabs = () => {};
-const sessionIds = ['earth', 'atom', 'types', 'structure', 'numbers', 'isotopes', 'average', 'shells'];
+let refreshElementPractice = () => {};
+const sessionIds = ['earth', 'atom', 'types', 'structure', 'numbers', 'isotopes', 'average', 'shells', 'elementquiz'];
+const sessionTotal = String(sessionIds.length).padStart(2, '0');
 const sessionUrl = (id, language = getLanguage()) => `./sessions/${id}/?lang=${language}`;
 
 function setupPage() {
@@ -127,9 +130,9 @@ function createPager(current, isTop) {
     ? `<a class="pager-button pager-next" data-session-link="${next}" href="${sessionUrl(next)}"><span>${bi('下一課', 'Next lesson')}</span><span aria-hidden="true">→</span></a>`
     : `<a class="pager-button pager-next" data-home-link href="./?lang=${getLanguage()}#sessions"><span>${bi('完成 · 回課程目錄', 'Finish · all lessons')}</span><span aria-hidden="true">✓</span></a>`;
   if (isTop) {
-    return `<div class="lesson-breadcrumb"><a data-home-link href="./?lang=${getLanguage()}#sessions">${bi('中三化學', 'Form 3 Chemistry')}</a><span aria-hidden="true">/</span><b>${title}</b><span class="breadcrumb-count">${String(index + 1).padStart(2, '0')} / 08</span></div>`;
+    return `<div class="lesson-breadcrumb"><a data-home-link href="./?lang=${getLanguage()}#sessions">${bi('中三化學', 'Form 3 Chemistry')}</a><span aria-hidden="true">/</span><b>${title}</b><span class="breadcrumb-count">${String(index + 1).padStart(2, '0')} / ${sessionTotal}</span></div>`;
   }
-  return `<div class="pager-current"><small>${bi(`第 ${String(index + 1).padStart(2, '0')} 課`, `SESSION ${String(index + 1).padStart(2, '0')} / 08`)}</small></div>
+  return `<div class="pager-current"><small>${bi(`第 ${String(index + 1).padStart(2, '0')} 課`, `SESSION ${String(index + 1).padStart(2, '0')} / ${sessionTotal}`)}</small></div>
     <div class="pager-actions">${previousLink}${nextLink}</div>`;
 }
 
@@ -177,6 +180,7 @@ function setLanguage(language, updateUrl = true) {
   renderPeriodicTable(language);
   renderProtonBuilder();
   refreshLearningLabs();
+  refreshElementPractice();
 }
 
 function renderQuiz(id, data) {
@@ -606,8 +610,8 @@ function setupProgress() {
   }
   const fill = () => {
     const count = viewed.size;
-    document.querySelector('#progress-count').textContent = `${count} / 8`;
-    document.querySelector('#progress-fill').style.width = `${count / 8 * 100}%`;
+    document.querySelector('#progress-count').textContent = `${count} / ${sessionIds.length}`;
+    document.querySelector('#progress-fill').style.width = `${count / sessionIds.length * 100}%`;
     document.querySelectorAll('.lesson-nav a[data-session]').forEach((link) => {
       link.classList.toggle('done', viewed.has(link.dataset.session));
       link.classList.toggle('current', link.dataset.session === active);
@@ -618,9 +622,13 @@ function setupProgress() {
   const directoryLink=document.querySelector('.classroom-home-link');
   if(!active)directoryLink.setAttribute('aria-current','page');
   topics.forEach((topic) => topic.classList.toggle('active', topic.id === active));
+  document.querySelector(`[data-session="${active}"]`)?.setAttribute('aria-current', 'page');
 }
 
 setupPage();
+if (document.body.dataset.activeSession === 'elementquiz') {
+  refreshElementPractice = setupElementPractice(document.querySelector('[data-element-practice]'), firstTwenty, getLanguage);
+}
 const menuButton = document.querySelector('.mobile-menu');
 const navBackdrop = document.querySelector('.nav-backdrop');
 const closeLessonMenu = () => {

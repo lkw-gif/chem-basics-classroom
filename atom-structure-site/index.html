@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./learning-labs.css" />
     <link rel="stylesheet" href="../classroom.css" />
     <link rel="stylesheet" href="./readability.css" />
+    <link rel="stylesheet" href="./element-practice.css" />
     <script type="module" src="./site.js"></script>
   </head>
   <body>
@@ -28,7 +29,7 @@
     <button class="nav-backdrop" type="button" aria-label="關閉課堂目錄" hidden></button>
     <div class="page-layout" id="top">
       <aside class="sidebar" aria-label="Lesson contents">
-        <div class="side-heading"><span class="unit-code">UNIT 02</span><span class="zh">原子結構</span><span class="en">Atomic Structure</span><span class="topic-total">08</span></div>
+        <div class="side-heading"><span class="unit-code">UNIT 02</span><span class="zh">原子結構</span><span class="en">Atomic Structure</span><span class="topic-total">09</span></div>
         <nav class="lesson-nav">
           <a class="classroom-home-link" data-home-link href="./?lang=zh"><svg aria-hidden="true"><use href="../classroom-icons.svg#home"/></svg><span class="zh">課題目錄</span><span class="en">All lessons</span></a>
           <a data-session="earth" href="./sessions/earth/"><span>01</span><span class="zh">地球上的元素</span><span class="en">Elements on Earth</span></a>
@@ -39,8 +40,9 @@
           <a data-session="isotopes" href="./sessions/isotopes/"><span>06</span><span class="zh">同位素</span><span class="en">Isotopes</span></a>
           <a data-session="average" href="./sessions/average/"><span>07</span><span class="zh">相對原子質量</span><span class="en">Relative atomic mass</span></a>
           <a data-session="shells" href="./sessions/shells/"><span>08</span><span class="zh">電子排佈</span><span class="en">Electron arrangement</span></a>
+          <a data-session="elementquiz" href="./sessions/elementquiz/"><span>09</span><span class="zh">首 20 種元素小測</span><span class="en">First 20 elements quiz</span></a>
         </nav>
-        <div class="side-progress"><div class="progress-copy"><span class="zh">已學習</span><span class="en">Topics viewed</span><b id="progress-count">0 / 8</b></div><div class="progress-track"><span id="progress-fill"></span></div></div>
+        <div class="side-progress"><div class="progress-copy"><span class="zh">已學習</span><span class="en">Topics viewed</span><b id="progress-count">0 / 9</b></div><div class="progress-track"><span id="progress-fill"></span></div></div>
         <a class="back-link" href="../?lang=zh#start"><span aria-hidden="true">←</span><span class="zh">返回單元總覽</span><span class="en">All units</span></a>
       </aside>
 
@@ -51,7 +53,7 @@
             <h1 id="hero-title"><span class="zh">走進原子的<br /><em>小小世界。</em></span><span class="en">Step inside<br /><em>the atom.</em></span></h1>
             <p class="hero-lead"><span class="zh">元素、原子粒子、同位素和電子排佈。跟着八個小課題，逐步看懂原子結構。</span><span class="en">Meet elements, subatomic particles, isotopes and electron shells. Eight short topics make atomic structure easier to understand.</span></p>
             <a class="primary-link" href="#sessions"><span class="zh">選擇小課題</span><span class="en">Choose a topic</span><span aria-hidden="true">↘</span></a>
-            <div class="hero-facts"><div><b>08</b><span class="zh">小課題</span><span class="en">topics</span></div><div><b>24</b><span class="zh">道選擇題</span><span class="en">MC questions</span></div><div><b>01–20</b><span class="zh">首二十種元素</span><span class="en">first elements</span></div></div>
+            <div class="hero-facts"><div><b>09</b><span class="zh">小課題</span><span class="en">topics</span></div><div><b>24</b><span class="zh">道選擇題</span><span class="en">MC questions</span></div><div><b>01–20</b><span class="zh">首二十種元素</span><span class="en">first elements</span></div></div>
           </div>
           <div class="hero-art" aria-label="Simplified atom illustration">
             <div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-orbit orbit-c"></div>
@@ -62,7 +64,7 @@
         </section>
 
         <section class="session-catalog" id="sessions" aria-labelledby="sessions-title">
-          <div class="catalog-heading"><div><span class="section-kicker"><span class="zh">八個獨立小課堂</span><span class="en">EIGHT SHORT LESSONS</span></span><h2 id="sessions-title"><span class="zh">選一課開始學習</span><span class="en">Choose a lesson</span></h2></div><span class="catalog-count">08 <span class="zh">課</span><span class="en">TOPICS</span></span></div>
+          <div class="catalog-heading"><div><h2 id="sessions-title"><span class="zh">選一課開始學習</span><span class="en">Choose a lesson</span></h2></div><span class="catalog-count">09 <span class="zh">個課題</span><span class="en">TOPICS</span></span></div>
           <div class="session-grid">
             <a class="session-card" data-session-card="earth" href="./sessions/earth/"><span class="session-card-number">01</span><span class="session-card-copy"><b><span class="zh">地球上的元素</span><span class="en">Elements on Earth</span></b><small><span class="zh">認識地殼中的常見元素</span><span class="en">Common elements in Earth’s crust</span></small></span><span class="session-card-meta"><span>03 <span class="zh">題</span><span class="en">QUESTIONS</span></span><i>↗</i></span></a>
             <a class="session-card" data-session-card="atom" href="./sessions/atom/"><span class="session-card-number">02</span><span class="session-card-copy"><b><span class="zh">元素由原子組成</span><span class="en">Atoms and elements</span></b><small><span class="zh">物質和元素的基本粒子</span><span class="en">The building blocks of matter</span></small></span><span class="session-card-meta"><span>03 <span class="zh">題</span><span class="en">QUESTIONS</span></span><i>↗</i></span></a>
@@ -72,6 +74,7 @@
             <a class="session-card" data-session-card="isotopes" href="./sessions/isotopes/"><span class="session-card-number">06</span><span class="session-card-copy"><b><span class="zh">同位素</span><span class="en">Isotopes</span></b><small><span class="zh">相同元素，不同中子數</span><span class="en">Same element, different neutrons</span></small></span><span class="session-card-meta"><span>03 <span class="zh">題</span><span class="en">QUESTIONS</span></span><i>↗</i></span></a>
             <a class="session-card" data-session-card="average" href="./sessions/average/"><span class="session-card-number">07</span><span class="session-card-copy"><b><span class="zh">相對原子質量</span><span class="en">Relative atomic mass</span></b><small><span class="zh">從同位素比例計算平均值</span><span class="en">Calculate an average from isotopes</span></small></span><span class="session-card-meta"><span>03 <span class="zh">題</span><span class="en">QUESTIONS</span></span><i>↗</i></span></a>
             <a class="session-card" data-session-card="shells" href="./sessions/shells/"><span class="session-card-number">08</span><span class="session-card-copy"><b><span class="zh">電子排佈</span><span class="en">Electron arrangement</span></b><small><span class="zh">電子如何排列在電子層</span><span class="en">How electrons fill their shells</span></small></span><span class="session-card-meta"><span>03 <span class="zh">題</span><span class="en">QUESTIONS</span></span><i>↗</i></span></a>
+            <a class="session-card" data-session-card="elementquiz" href="./sessions/elementquiz/"><span class="session-card-number">09</span><span class="session-card-copy"><b><span class="zh">首 20 種元素小測</span><span class="en">First 20 elements quiz</span></b><small><span class="zh">練習原子序、英文名稱及符號</span><span class="en">Practise atomic numbers, names and symbols</span></small></span><span class="session-card-meta"><span class="zh">4 種練習</span><span class="en">4 MODES</span><i>↗</i></span></a>
           </div>
         </section>
 
@@ -247,6 +250,14 @@
           <div class="review-banner"><div><span class="section-kicker">UNIT 02 <span class="zh">學習回顧</span><span class="en">RECAP</span></span><h2><span class="zh">用八句話，記住原子結構。</span><span class="en">Eight ideas to remember.</span></h2></div><span class="review-star">✳</span></div>
           <div class="recap-grid"><p><b>01</b><span class="zh">地殼中，氧最多；鋁是最多的金屬。</span><span class="en">Oxygen is most abundant in the crust; aluminium is the most abundant metal.</span></p><p><b>02</b><span class="zh">物質由原子組成；元素只有一種原子。</span><span class="en">Matter is made of atoms; an element contains one type of atom.</span></p><p><b>03</b><span class="zh">元素可分為金屬、非金屬和類金屬。</span><span class="en">Elements can be metals, non-metals or metalloids.</span></p><p><b>04</b><span class="zh">原子由質子、中子和電子組成。</span><span class="en">Atoms contain protons, neutrons and electrons.</span></p><p><b>05</b><span class="zh">原子序＝質子數；質量數＝質子＋中子。</span><span class="en">Atomic number = protons; mass number = protons + neutrons.</span></p><p><b>06</b><span class="zh">同位素有相同質子數、不同中子數。</span><span class="en">Isotopes have the same number of protons but different numbers of neutrons.</span></p><p><b>07</b><span class="zh">相對原子質量是同位素質量的加權平均。</span><span class="en">Relative atomic mass is a weighted average of isotope masses.</span></p><p><b>08</b><span class="zh">電子由內至外排列在電子層。</span><span class="en">Electrons are arranged in shells from the inside out.</span></p></div>
           <div class="finish-card"><span class="finish-icon">✓</span><div><h3><span class="zh">完成本課</span><span class="en">Lesson complete</span></h3><p><span class="zh">完成各小課題的 Checkpoint，確定自己掌握每個概念。</span><span class="en">Try each checkpoint to see which ideas you have mastered.</span></p></div><a href="#top" class="back-top"><span class="zh">回到頂部 ↑</span><span class="en">Back to top ↑</span></a></div>
+        </section>
+
+        <section class="lesson-section" id="elementquiz" aria-labelledby="elementquiz-title">
+          <div class="section-head"><span class="section-number">09</span><div>
+            <h2 id="elementquiz-title"><span class="zh">首 20 種元素小測</span><span class="en">First 20 elements quiz</span></h2>
+            <p><span class="zh">試試你記得多少個原子序、英文名稱和元素符號。</span><span class="en">Test your recall of atomic numbers, English names and element symbols.</span></p>
+          </div></div>
+          <div class="element-practice" data-element-practice></div>
         </section>
 
         <footer class="site-footer"><span><b>ATOMIC STRUCTURE</b> · S3 CHEMISTRY</span><span><span class="zh">根據 2022–23 Unit 2 學生筆記編寫，並以淺白語言整理。</span><span class="en">Based on the 2022–23 Unit 2 student notes, rewritten in clear language.</span></span><a href="https://iupac.org/what-we-do/periodic-table-of-elements/" target="_blank" rel="noreferrer">IUPAC periodic table ↗</a></footer>
