@@ -1,7 +1,7 @@
 const samples = [
-  { tube:'A', symbol:'Ca', name:['鈣','Calcium'], product:['氯化鈣','calcium chloride'], reacts:true, bubbles:22 },
-  { tube:'B', symbol:'Mg', name:['鎂','Magnesium'], product:['氯化鎂','magnesium chloride'], reacts:true, bubbles:6 },
-  { tube:'C', symbol:'C', name:['碳','Carbon'], reacts:false, bubbles:0 },
+  { tube:'A', symbol:'Ca', name:['鈣','Calcium'], group:'II', product:['氯化鈣','calcium chloride'], reacts:true, bubbles:22 },
+  { tube:'B', symbol:'Mg', name:['鎂','Magnesium'], group:'II', product:['氯化鎂','magnesium chloride'], reacts:true, bubbles:6 },
+  { tube:'C', symbol:'C', name:['碳','Carbon'], group:'IV', reacts:false, bubbles:0 },
 ];
 
 const discussion = [
@@ -13,10 +13,11 @@ const discussion = [
 ];
 
 function tubeMarkup(sample, t) {
+  const groupLabel = t(`第 ${sample.group} 族`, `Group ${sample.group}`);
   const bubbles = Array.from({ length:sample.bubbles }, (_, index) =>
     `<i style="--x:${12 + (index * 29) % 76}%;--lag:${(index * 113) % 850}ms;--size:${4 + index % 5}px"></i>`).join('');
   return `<div class="acid-station" data-tube="${sample.tube}" data-stage="ready" data-reactive="${sample.reacts}">
-    <button type="button" class="acid-tube" data-select="${sample.tube}" aria-pressed="${sample.tube === 'A'}" aria-label="${t(`試管 ${sample.tube}，${sample.name[0]}`, `Tube ${sample.tube}, ${sample.name[1]}`)}">
+    <button type="button" class="acid-tube" data-select="${sample.tube}" aria-pressed="${sample.tube === 'A'}" aria-label="${t(`試管 ${sample.tube}，${sample.name[0]}，${groupLabel}`, `Tube ${sample.tube}, ${sample.name[1]}, ${groupLabel}`)}">
       <span class="acid-tube-id"><b>${sample.tube}</b><strong>${sample.symbol}</strong></span>
       <span class="acid-apparatus" aria-hidden="true">
         <span class="acid-splint"></span>
@@ -25,6 +26,7 @@ function tubeMarkup(sample, t) {
         <span class="acid-rack"></span>
       </span>
       <span class="acid-name">${t(...sample.name)}</span>
+      <span class="acid-group">${groupLabel}</span>
       <small data-tube-progress></small>
     </button>
   </div>`;
