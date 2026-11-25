@@ -35,8 +35,8 @@ export const outcomes = [
   outcome('c04',['compare-strength'],'提出並進行比較酸或鹼強度的實驗。','Suggest and perform experiments to compare the strength of acids or alkalis.'),
   outcome('d01',['neutralisation','ionic-equations'],'寫出中和反應的化學及離子方程式。','Write chemical and ionic equations for neutralisation.'),
   outcome('d02',['salts'],'列出常見鹽在水中的一般溶解性規則。','State the general rules of solubility for common salts in water.'),
-  outcome('d03',['precipitation','excess-solid','titration-salts'],'描述製備、分離及純化可溶與不溶性鹽的技術。','Describe the techniques used in the preparation, separation and purification of soluble and insoluble salts.'),
-  outcome('d04',['precipitation','excess-solid','titration-salts'],'為指定的鹽提出合適的製備方法。','Suggest a method for preparing a particular salt.'),
+  outcome('d03',['salt-methods','precipitation','excess-solid','titration-salts'],'描述製備、分離及純化可溶與不溶性鹽的技術。','Describe the techniques used in the preparation, separation and purification of soluble and insoluble salts.'),
+  outcome('d04',['salt-methods','precipitation','excess-solid','titration-salts'],'為指定的鹽提出合適的製備方法。','Suggest a method for preparing a particular salt.'),
   outcome('d05',['salts'],'命名由酸和鹼反應生成的常見鹽。','Name the common salts formed from the reaction of acids and alkalis.'),
   outcome('d06',['neutralisation'],'解釋中和反應的一些應用。','Explain some applications of neutralisation.'),
   outcome('e01',['concentration-units'],'把摩爾濃度換算為 g dm⁻³。','Convert the molar concentration of solutions to g dm⁻³.'),
@@ -53,7 +53,7 @@ export const units = [
   {id:'3',title:['強弱與濃稀','Strength and concentration'],lead:['先分清兩個概念，再設計公平比較。','Separate two ideas and design a fair comparison.'],lessons:['strength','compare-strength']},
   {id:'4',title:['溶液濃度計算','Concentration calculations'],lead:['把體積、物質的量與質量連起來。','Connect volume, amount of substance and mass.'],lessons:['molarity','concentration-units']},
   {id:'5',title:['強酸 pH 計算','Calculating strong-acid pH'],lead:['先求 H⁺ 濃度，再使用對數。','Find the H⁺ concentration before taking its logarithm.'],lessons:['ph-calculations']},
-  {id:'6',title:['中和與製鹽','Neutralisation and preparing salts'],lead:['認識鹽，選方法，理解每一步操作。','Identify salts, choose a method and explain each operation.'],lessons:['neutralisation','salts','precipitation','excess-solid','titration-salts']},
+  {id:'6',title:['中和與製鹽','Neutralisation and preparing salts'],lead:['認識鹽，選方法，理解每一步操作。','Identify salts, choose a method and explain each operation.'],lessons:['neutralisation','salts','salt-methods','precipitation','excess-solid','titration-salts']},
   {id:'7',title:['標準溶液與滴定','Standard solutions and titration'],lead:['由精確配製到數據、計算和報告。','From accurate preparation to data, calculations and reporting.'],lessons:['standard-solution','dilution','titration','titration-calculations','lab-report']},
 ];
 export const extensions = ['ion-tests','gas-lab'];

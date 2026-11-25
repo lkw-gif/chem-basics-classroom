@@ -20,9 +20,6 @@ const ammoniaDiagram = diagram('Ammonia generation and collection options',
 const sulphurDiagram = diagram('Three sulphur dioxide drying setups',
   '<rect x="52" y="84" width="142" height="53" rx="7"/><path d="M20 110L88 110M155 110L225 110"/><g fill="#d5dfe4"><circle cx="105" cy="100" r="8"/><circle cx="123" cy="116" r="8"/><circle cx="142" cy="101" r="8"/></g><path d="M285 65L285 155Q285 185 323 185Q361 185 361 155L361 65M299 65L299 155Q299 170 323 170Q347 170 347 155L347 65M259 49L292 49L292 90M354 90L354 49L390 49"/><path d="M505 90L473 190Q532 210 591 190L560 90M511 90L511 55L475 55M550 90L550 55L592 55M511 90L511 176"/><path d="M487 154L577 154" stroke="#60a5fa"/><g stroke="none" fill="#17324d" font-family="sans-serif" font-size="16"><text x="48" y="35">(1) Anhydrous CaCl2</text><text x="282" y="35">(2) CaO</text><text x="485" y="35">(3) Conc. H2SO4</text><text x="45" y="240">Gas flows left to right in every setup.</text></g>'
 );
-const hclDiagram = diagram('Four hydrogen chloride drying setups',
-  '<rect x="36" y="93" width="106" height="113" rx="10"/><path d="M39 154L140 154" stroke="#60a5fa"/><path d="M15 54L67 54L67 132M113 185L113 54L153 54"/><path d="M201 84L201 161Q201 200 241 200Q281 200 281 161L281 84M215 84L215 161Q215 185 241 185Q267 185 267 161L267 84M182 61L208 61L208 108M274 108L274 61L299 61"/><path d="M359 84L359 161Q359 200 399 200Q439 200 439 161L439 84M373 84L373 161Q373 185 399 185Q425 185 425 161L425 84M341 61L366 61L366 108M432 108L432 61L457 61"/><rect x="509" y="105" width="163" height="43" rx="8"/><path d="M480 126L530 126M650 126L705 126"/><g stroke="none" fill="#c8d8e5"><circle cx="232" cy="168" r="7"/><circle cx="246" cy="179" r="7"/><circle cx="255" cy="161" r="7"/><circle cx="388" cy="168" r="7"/><circle cx="404" cy="179" r="7"/><circle cx="413" cy="161" r="7"/><circle cx="564" cy="120" r="7"/><circle cx="580" cy="134" r="7"/><circle cx="600" cy="118" r="7"/></g><g stroke="none" fill="#17324d" font-family="sans-serif" font-size="15"><text x="32" y="32">A: Conc. H2SO4</text><text x="191" y="32">B: CaO</text><text x="350" y="32">C: CaCO3</text><text x="490" y="32">D: Anhydrous CaCl2</text><text x="25" y="237">A: HCl enters short tube.</text><text x="347" y="237">Gas flows left to right.</text></g>'
-);
 const coreQuestions = [
   make(41, 'Example', 'gas-lab', 'experiment',
     pair('加熱固體氯化銨和氧化鈣製取氨氣，裝置及收集選項如下。回答 (a)–(c)。', 'Ammonia is prepared by heating solid ammonium chloride and calcium oxide in the apparatus shown. Answer (a)–(c).'),
@@ -37,12 +34,21 @@ const coreQuestions = [
   make(43, 'Exam-type Q1', 'gas-lab', 'experiment',
     pair('哪些裝置可以乾燥潮濕的二氧化硫氣體？(1) 無水氯化鈣乾燥管；(2) 氧化鈣 U 形管；(3) 氣體從長管進入濃硫酸洗氣瓶。', 'Which setups dry moist sulphur dioxide? (1) anhydrous calcium chloride drying tube; (2) calcium oxide U-tube; (3) concentrated sulphuric acid with gas entering through the long tube.'),
     pair('B，只有 (1) 及 (3)。乾燥劑要吸水而不與氣體反應；鹼性氧化物 CaO 與 SO₂ 反應：CaO(s) + SO₂(g) → CaSO₃(s)。', 'B: (1) and (3) only. The agent must remove water without reacting with the gas. Basic CaO reacts with SO₂: CaO(s) + SO₂(g) → CaSO₃(s).'),
-    { advanced: true, choices: combinations, diagram: sulphurDiagram, hint: pair('SO₂ 是酸性氣體。', 'SO₂ is an acidic gas.') }
+    { advanced: true, choices: combinations, diagram: sulphurDiagram,
+      table: {
+        headers: [pair('乾燥劑','Drying agent'),pair('原題所用範圍','Range used in the source question')],
+        rows: [
+          [pair('無水 CaCl₂(s)','Anhydrous CaCl₂(s)'),pair('此題範圍內可乾燥一般氣體，NH₃ 除外。','Suitable for the gases considered here except NH₃.')],
+          [pair('CaO(s)','CaO(s)'),pair('相容的中性及鹼性氣體。','Compatible neutral and alkaline gases.')],
+          [pair('濃 H₂SO₄(l)','Concentrated H₂SO₄(l)'),pair('相容的中性及酸性氣體。','Compatible neutral and acidic gases.')],
+        ],
+      }, hint: pair('SO₂ 是酸性氣體。', 'SO₂ is an acidic gas.') }
   ),
   make(44, 'Exam-type Q2', 'gas-lab', 'experiment',
-    pair('哪個裝置可以乾燥氯化氫氣體？留意 A 的入氣管未浸入液體。', 'Which setup dries hydrogen chloride gas? Note that the inlet in A does not dip into the liquid.'),
+    pair('哪個裝置可以乾燥氯化氫氣體？', 'Which setup dries hydrogen chloride gas?'),
     pair('D。氣體接觸無水 CaCl₂。A 的入氣短管未浸入濃硫酸，不能使氣體鼓泡通過液體；B 和 C 與 HCl 反應。', 'D. Gas passes through anhydrous CaCl₂. In A the short inlet does not dip into sulphuric acid, so gas does not bubble through it. B and C react with HCl.'),
-    { advanced: true, choices: [pair('A. 濃硫酸，短管入氣', 'A. Concentrated sulphuric acid, short inlet'), pair('B. 氧化鈣 U 形管', 'B. Calcium oxide U-tube'), pair('C. 碳酸鈣 U 形管', 'C. Calcium carbonate U-tube'), pair('D. 無水氯化鈣乾燥管', 'D. Anhydrous calcium chloride drying tube')], diagram: hclDiagram,
+    { advanced: true, choices: [pair('A. 濃硫酸', 'A. Concentrated sulphuric acid'), pair('B. 氧化鈣', 'B. Calcium oxide'), pair('C. 碳酸鈣', 'C. Calcium carbonate'), pair('D. 無水氯化鈣', 'D. Anhydrous calcium chloride')],
+      figure: { file: 'hcl-drying-options.webp', page: 44, width: 930, height: 1120, alt: pair('原題 A 至 D 裝置，顯示入氣箭嘴、管口位置和乾燥劑。A 的氣流由左管進入；左管末端高於液面。','Original setups A to D, with flow arrows, tube ends and drying agents. In A gas enters through the left tube, whose end is above the liquid.') },
       hint: pair('乾燥劑不能消耗 HCl；液體乾燥劑的入氣管須浸入液面下。', 'The agent must not consume HCl; the inlet must dip below a liquid drying agent.') }
   ),
   make(46, 'Exam-type Q1', 'alkali-reactions', 'concept',
@@ -192,6 +198,11 @@ const saltQuestions = saltCases.map(([letter, salt, lesson, type, equations]) =>
     pair(method[0] + '\n可接受的反應例子：\n' + equations.join('\n') + (correction[0] ? '\n' + correction[0] : ''), method[1] + '\nAcceptable example reactions:\n' + equations.join('\n') + (correction[1] ? '\n' + correction[1] : '')),
     { hint: pair('先判斷產物溶解性，再檢查陽離子是否 Na⁺、K⁺ 或 NH₄⁺。', 'Check product solubility, then whether its cation is Na⁺, K⁺ or NH₄⁺.'),
       steps: [pair('用溶解性選方法，再選供應所需陰、陽離子的試劑。', 'Choose the method from solubility, then select reagents supplying the required ions.'), method, pair('核對方程式原子數及狀態符號。', 'Check atom balance and state symbols.')],
+      keywords: {
+        1: [pair('兩種可溶試劑','two soluble reagents'),pair('保留沉澱','retain the precipitate')],
+        2: [pair('過量固體試劑','excess solid reagent'),pair('保留濾液','retain the filtrate')],
+        3: [pair('按配平方程式決定比例','use the balanced mole ratio'),pair('若先用指示劑找體積，重做時省去指示劑','if indicator was used to find the volumes, repeat without it')],
+      }[type],
       advanced: letter === 'i' || letter === 'j'
     });
 });
