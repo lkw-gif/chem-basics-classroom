@@ -99,3 +99,25 @@ body .breadcrumb-count{white-space:nowrap;flex:none}
  body .circuit .particle-box{gap:8px;padding-left:10px;padding-right:10px}
  body .circuit .particle{width:28px;height:28px;font-size:16px}
 }
+
+/* The lab tables and element quiz use the whole iPad in portrait. */
+@media (max-width:1100px) and (orientation:portrait) {
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]) .page-layout { display:block; }
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]) .sidebar {
+    position:fixed; inset:80px auto 0 0; z-index:32; width:min(320px,87vw);
+    height:auto; transform:translateX(-105%); transition:transform .2s;
+  }
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]).menu-open .sidebar { transform:none; }
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]) .nav-backdrop { inset:80px 0 0; z-index:31; }
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]) .nav-backdrop:not([hidden]) { display:block; }
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]) :is(.mobile-menu,.menu-button) {
+    display:grid; place-items:center; width:44px; height:44px; padding:8px;
+    border:1px solid var(--classroom-border); border-radius:8px; color:var(--classroom-ink); background:white;
+  }
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]) :is(.mobile-menu,.menu-button) svg {
+    width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8;
+  }
+}
+@media (max-width:760px) {
+  body:is(.lab-table-page,.lab-experiment-page,[data-active-session="elementquiz"]) :is(.sidebar,.nav-backdrop) { top:68px; }
+}

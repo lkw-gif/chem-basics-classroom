@@ -631,22 +631,35 @@ if (document.body.dataset.activeSession === 'elementquiz') {
 }
 const menuButton = document.querySelector('.mobile-menu');
 const navBackdrop = document.querySelector('.nav-backdrop');
-const closeLessonMenu = () => {
+const lessonSidebar = document.querySelector('.sidebar');
+const narrowLesson = matchMedia(document.body.dataset.activeSession === 'elementquiz'
+  ? '(max-width: 760px), (max-width: 1100px) and (orientation: portrait)'
+  : '(max-width: 760px)');
+const syncLessonSidebar = () => {
+  lessonSidebar.inert = narrowLesson.matches && !document.body.classList.contains('menu-open');
+};
+const closeLessonMenu = (restoreFocus = false) => {
+  const wasOpen = document.body.classList.contains('menu-open');
   document.body.classList.remove('menu-open');
   menuButton.setAttribute('aria-expanded', 'false');
   navBackdrop.hidden = true;
+  syncLessonSidebar();
+  if (restoreFocus && wasOpen) menuButton.focus();
 };
 menuButton.addEventListener('click', () => {
   const open = menuButton.getAttribute('aria-expanded') !== 'true';
   document.body.classList.toggle('menu-open', open);
   menuButton.setAttribute('aria-expanded', String(open));
   navBackdrop.hidden = !open;
+  syncLessonSidebar();
 });
-navBackdrop.addEventListener('click', closeLessonMenu);
-document.querySelectorAll('.lesson-nav a').forEach((link) => link.addEventListener('click', closeLessonMenu));
+navBackdrop.addEventListener('click', () => closeLessonMenu(true));
+document.querySelectorAll('.lesson-nav a').forEach((link) => link.addEventListener('click', () => closeLessonMenu()));
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeLessonMenu();
+  if (event.key === 'Escape') closeLessonMenu(true);
 });
+narrowLesson.addEventListener('change', () => closeLessonMenu());
+syncLessonSidebar();
 document.querySelectorAll('[data-language]').forEach((button) => {
   button.addEventListener('click', () => setLanguage(button.dataset.language));
 });

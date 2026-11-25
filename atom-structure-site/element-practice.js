@@ -37,7 +37,7 @@ export function setupElementPractice(root, elements, getLanguage) {
     </div>
     <div class="element-work">
       <div data-view="order">
-        <p class="element-instruction">${bilingual('拖動元素到對應的原子序格，或先點元素再點格。拖回元素區，或直接點已填的格，便可移除。', 'Drag an element to its atomic number, or tap the element and then the slot. Drag it back to the bank or tap its filled slot to remove it.')}</p>
+        <p class="element-instruction">${bilingual('把元素拖到原子序格，或先點元素再點格。拖回元素區即可移除。', 'Drag an element to its atomic number, or tap the element and then the slot. Drag it back to the bank to remove it.')}</p>
         <div class="element-boards">
           <div><h3>${bilingual('元素區', 'Element bank')}</h3><div class="element-tiles" data-bank></div></div>
           <div><h3>${bilingual('原子序 1–20', 'Atomic numbers 1–20')}</h3><div class="element-tiles" data-slots>
@@ -82,7 +82,7 @@ export function setupElementPractice(root, elements, getLanguage) {
     });
     slotButtons.forEach((button, index) => {
       const element = byNumber(slots[index]);
-      const state = orderChecked ? (element?.n === index + 1 ? 'good' : 'bad') : '';
+      const state = orderChecked && element ? (element.n === index + 1 ? 'good' : 'bad') : '';
       button.dataset.mark = state;
       button.toggleAttribute('data-filled', Boolean(element));
       button.querySelector('b').textContent = element?.s || '';
@@ -94,8 +94,10 @@ export function setupElementPractice(root, elements, getLanguage) {
       ].filter(Boolean).join(', '));
     });
     const count = slots.filter((number, index) => number === index + 1).length;
+    const empty = slots.filter((number) => number === null).length;
     orderStatus.textContent = orderChecked
       ? t(`答對 ${count} / 20 格。`, `${count} of 20 slots correct.`)
+        + (empty ? t(`尚有 ${empty} 格未填。`, ` ${empty} slots are empty.`) : '')
       : selected ? t(`已選 ${byNumber(selected).s}，請點一個原子序格。`, `${byNumber(selected).s} selected. Tap an atomic number.`) : '';
   }
 

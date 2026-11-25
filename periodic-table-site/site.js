@@ -1,3 +1,5 @@
+import { alkaliDemoMarkup, setupAlkaliDemo } from './alkali-demo.js';
+import { acidLabMarkup, setupAcidLab } from './acid-lab.js';
 import { shellElectronPositions, modelMarkup, createClassroomModel } from './models-3d.js';
 
 const lessons = [
@@ -24,18 +26,6 @@ const shellExamples = [
   ['K', '鉀', 'Potassium', [2, 8, 8, 1], 19], ['Ca', '鈣', 'Calcium', [2, 8, 8, 2], 20],
 ];
 
-const groupOne = {
-  Li: { zh: '鋰', en: 'Lithium', bubbles: 6, noteZh: '在水面緩慢移動，冒出氣泡。', noteEn: 'Moves slowly on water and releases bubbles.', trend: '01' },
-  Na: { zh: '鈉', en: 'Sodium', bubbles: 12, noteZh: '在水面快速移動，反應比鋰強。', noteEn: 'Moves faster on water and reacts more strongly than lithium.', trend: '02' },
-  K: { zh: '鉀', en: 'Potassium', bubbles: 19, noteZh: '反應更猛烈，有時會燃起淡紫色火焰。', noteEn: 'Reacts more vigorously and may burn with a lilac flame.', trend: '03' },
-};
-
-const groupTwo = {
-  Mg: { zh: '鎂', en: 'Magnesium', bubbles: 7, noteZh: '出現氣泡；產生氫氣，試管可能變暖。', noteEn: 'Bubbles of hydrogen form; the tube may warm up.' },
-  Ca: { zh: '鈣', en: 'Calcium', bubbles: 16, noteZh: '氣泡較多、反應較快；也產生氫氣。', noteEn: 'More bubbles appear more quickly; hydrogen also forms.' },
-  C: { zh: '碳', en: 'Carbon', bubbles: 0, noteZh: '在這個比較中，沒有明顯氣泡。碳不屬於第 II 族。', noteEn: 'No obvious bubbles in this comparison. Carbon is not in Group II.' },
-};
-
 const halogenData = {
   F: { zh: '氟', en: 'Fluorine', stateZh: '氣體', stateEn: 'Gas', colourZh: '淡黃色', colourEn: 'Pale yellow', tone: 'fluorine', number: 9, melt: '−220', boil: '−190' },
   Cl: { zh: '氯', en: 'Chlorine', stateZh: '氣體', stateEn: 'Gas', colourZh: '黃綠色', colourEn: 'Greenish yellow', tone: 'chlorine', number: 17, melt: '−101', boil: '−34' },
@@ -60,7 +50,7 @@ const quizBank = {
     { zh: '鈉與鉀化學性質相似，主要因為甚麼？', en: 'Why do sodium and potassium have similar chemical properties?', optionsZh: ['最外層各有 1 粒電子', '原子序相同', '電子層數相同'], optionsEn: ['Both have one outer electron', 'Same atomic number', 'Same number of shells'], answer: 0, whyZh: '同族元素的最外層電子數相同。', whyEn: 'Elements in the same group have the same number of outer-shell electrons.' },
   ],
   group1: [
-    { zh: '鋰、鈉、鉀都要存放在哪裏，減少與空氣反應？', en: 'Where are lithium, sodium and potassium stored to limit reaction with air?', optionsZh: ['油中', '水中', '開口碟中'], optionsEn: ['Under oil', 'In water', 'In an open dish'], answer: 0, whyZh: '鹼金屬活潑，常存放在油中。', whyEn: 'Alkali metals are reactive and are commonly stored under oil.' },
+    { zh: '鋰、鈉、鉀都要存放在哪裏，減少與空氣反應？', en: 'Where are lithium, sodium and potassium stored to limit reaction with air?', optionsZh: ['石蠟油中', '水中', '開口碟中'], optionsEn: ['In paraffin oil', 'In water', 'In an open dish'], answer: 0, whyZh: '石蠟油隔絕空氣，防止鹼金屬與空氣反應。', whyEn: 'Paraffin oil keeps air away from the reactive metals.' },
     { zh: '鹼金屬與水反應會產生哪種氣體？', en: 'Which gas is released when an alkali metal reacts with water?', optionsZh: ['氫氣', '氧氣', '氯氣'], optionsEn: ['Hydrogen', 'Oxygen', 'Chlorine'], answer: 0, whyZh: '反應產生氫氣和鹼性溶液。', whyEn: 'The reaction produces hydrogen and an alkaline solution.' },
     { zh: '鋰、鈉、鉀之中，哪個與水反應最強？', en: 'Which reacts most strongly with water: lithium, sodium or potassium?', optionsZh: ['鉀', '鈉', '鋰'], optionsEn: ['Potassium', 'Sodium', 'Lithium'], answer: 0, whyZh: '第 I 族向下，活潑性增加：鋰 < 鈉 < 鉀。', whyEn: 'Reactivity rises down Group I: lithium < sodium < potassium.' },
   ],
@@ -202,11 +192,48 @@ async function setupGroupLocators() {
 }
 
 function renderGroupOne() {
-  return `<div class="group-intro-grid"><div class="panel simple-panel"><span class="eyebrow">Li · Na · K</span><h2>${t('它們有甚麼相同？', 'What do they share?')}</h2><div class="fact-list"><p>${highlight('最外層各有 1 粒電子', 'One electron in the outer shell', 'blue')}${t('。', '.')}</p><p>${t('質地較軟；剛切開時有銀色光澤。', 'Soft metals with a silvery shine when freshly cut.')}</p><p>${t('鋰、鈉、鉀密度低，可浮在水面。', 'Lithium, sodium and potassium are low-density and float on water.')}</p><p>${t('活潑，通常存放在油中。', 'Reactive, so usually stored under oil.')}</p></div>${renderGroupLocator('group1')}</div>${renderGroupTrend('group1')}</div><section class="panel reaction-panel"><div class="panel-heading"><h2>${t('3D 觀察：金屬加入水中', '3D observation: metal added to water')}</h2><span>${t('按元素比較現象', 'Select an element to compare')}</span></div><div class="selector-row" role="group" aria-label="${t('選擇鹼金屬', 'Choose an alkali metal')}">${Object.entries(groupOne).map(([symbol, item]) => `<button type="button" data-alkali="${symbol}" aria-pressed="${symbol === 'Li'}"><strong>${symbol}</strong><small>${t(item.zh, item.en)}</small></button>`).join('')}</div><div class="group-model-layout">${modelMarkup('water-model', 'water', en)}<div class="reaction-copy" id="water-copy" aria-live="polite"></div></div><div class="reaction-equation">${t('鹼金屬 ＋ 水 → 氫氣 ＋ 鹼性溶液', 'Alkali metal + water → hydrogen + alkaline solution')}</div></section><p class="teaching-note">${t('這是教學示意，並非可在家進行的實驗；鹼金屬與水的反應須由教師在合適設施示範。', 'This is a teaching model. Reactions of alkali metals with water require a properly equipped teacher demonstration.')}</p>`;
+  return `<div class="group-intro-grid"><div class="panel simple-panel"><span class="eyebrow">Li · Na · K</span><h2>${t('它們有甚麼相同？', 'What do they share?')}</h2><div class="fact-list"><p>${highlight('最外層各有 1 粒電子', 'One electron in the outer shell', 'blue')}${t('。', '.')}</p><p>${highlight('軟金屬','soft metals')}${t('可以用刀切開。新切面有銀色光澤，在空氣中很快失去光澤。', ' can be cut with a knife. A freshly cut surface has a silver lustre but tarnishes rapidly in air.')}</p><p>${t('鋰、鈉和鉀的','Lithium, sodium and potassium have ')}${highlight('密度低','low densities')}${t('，會浮在水面。',' and float on water.')}</p><p>${t('它們很活潑，存放在','They are highly reactive and stored in ')}${highlight('石蠟油','paraffin oil')}${t('中，以防與空氣反應。',' to prevent reaction with air.')}</p><p>${t('它們與水劇烈反應，生成','They react vigorously with water to give ')}${highlight('氫氣和鹼性溶液','hydrogen gas and an alkaline solution')}${t('。','.')}</p><p>${t('與某些非金屬反應會生成','They react with certain non-metals to form a ')}${highlight('鹽','salt')}${t('，例如鈉與氯生成',' such as ')}${highlight('氯化鈉','sodium chloride')}${t('。',' when sodium reacts with chlorine.')}</p></div>${renderGroupLocator('group1')}</div>${renderGroupTrend('group1')}</div><section class="panel reaction-panel" id="alkali-water"><div class="panel-heading"><h2>${t('觀察：鋰、鈉、鉀與水的反應', 'Observe lithium, sodium and potassium reacting with water')}</h2></div>${alkaliDemoMarkup(t)}<div class="reaction-equation">${t('鹼金屬 ＋ 水 → 氫氣 ＋ 鹼性溶液', 'Alkali metal + water → hydrogen + alkaline solution')}</div></section><p class="teaching-note">${t('這是教學示意。鹼金屬與水的反應由教師示範。', 'This is a teaching model for a teacher demonstration.')}</p>${alkaliAnswerMarkup()}`;
+}
+
+function alkaliAnswerMarkup() {
+  return `<section class="panel alkali-answer" aria-labelledby="alkali-answer-title">
+    <h2 id="alkali-answer-title">${t('觀察題答法','How to describe the observations')}</h2>
+    <ul>
+      <li>${t('金屬浮在水面，冒出氣泡。','The metal floats on the water surface and fizzes.')}</li>
+      <li>${t('鈉和鉀在水面快速移動。','Sodium and potassium move quickly on the water surface.')}</li>
+      <li>${t('鈉和鉀可熔成銀色小球。','Sodium and potassium can melt to form a silvery ball.')}</li>
+      <li>${t('有時可聽到嘶嘶聲。','A hissing sound may be heard.')}</li>
+      <li>${t('較劇烈的反應可見白煙。','White fumes may be seen during a more vigorous reaction.')}</li>
+      <li>${t('鈉若著火，會燃起','If sodium catches fire, it burns with a ')}<span class="flame-yellow">${t('金黃色火焰','golden yellow flame')}</span>${t('。','.')}</li>
+      <li>${t('鉀燃燒時呈','Potassium burns with a ')}<span class="flame-lilac">${t('淡紫色火焰','lilac flame')}</span>${t('。','.')}</li>
+    </ul>
+    <p>${t('答題只寫實際看到或聽到的現象。','Write only what you actually saw or heard.')}</p>
+    <details>
+      <summary>${t('教師示範的安全措施','Safety precautions for the teacher demonstration')}</summary>
+      <ul>
+        <li>${t('戴上安全護目鏡。','Wear safety goggles.')}</li>
+        <li>${t('戴上防護手套。','Wear protective gloves.')}</li>
+        <li>${t('用鑷子拿取金屬。','Use forceps to handle the metal.')}</li>
+        <li>${t('用防護屏隔開觀察者。','Place a protective screen between the demonstration and the observers.')}</li>
+        <li>${t('只用一小塊金屬。','Use only a small piece of metal.')}</li>
+      </ul>
+    </details>
+    <p class="teaching-note">${t('答題字眼參考教師版第 6 頁。','Answer wording adapted from the teacher notes, p. 6.')} <a href="https://edu.rsc.org/experiments/reactivity-trends-of-the-alkali-metals/731.article">${t('RSC 反應觀察','RSC demonstration observations')}</a></p>
+  </section>`;
 }
 
 function renderGroupTwo() {
-  return `<div class="group-intro-grid"><div class="panel simple-panel"><span class="eyebrow">Mg · Ca</span><h2>${t('同族的兩個例子', 'Two members of one group')}</h2><p>${t('鎂和鈣都在第 II 族，', 'Magnesium and calcium are in Group II, with ')}${highlight('最外層各有 2 粒電子', 'two outer electrons each', 'blue')}${t('。它們', '. ')}${t('與稀鹽酸反應，會', 'Both ')}${highlight('產生氫氣', 'release hydrogen')}${t('。', ' when reacting with dilute hydrochloric acid.')}</p><div class="number-cards"><div><b>Mg</b><span>2, 8, 2</span></div><div><b>Ca</b><span>2, 8, 8, 2</span></div></div>${renderGroupLocator('group2')}</div>${renderGroupTrend('group2')}</div><section class="panel reaction-panel"><div class="panel-heading"><h2>${t('3D 觀察：加入稀鹽酸', '3D observation: added to dilute acid')}</h2><span>${t('稀鹽酸相同，改變加入的元素', 'Same dilute acid, different elements')}</span></div><div class="selector-row" role="group" aria-label="${t('選擇試管中的元素', 'Choose the element in the tube')}">${Object.entries(groupTwo).map(([symbol, item]) => `<button type="button" data-acid="${symbol}" aria-pressed="${symbol === 'Mg'}"><strong>${symbol}</strong><small>${t(item.zh, item.en)}</small></button>`).join('')}</div><div class="group-model-layout">${modelMarkup('acid-model', 'acid', en)}<div class="reaction-copy" id="acid-copy" aria-live="polite"></div></div><div class="reaction-equation">${t('鎂／鈣 ＋ 稀鹽酸 → 氫氣 ＋ 新物質', 'Magnesium/calcium + dilute hydrochloric acid → hydrogen + a new substance')}</div></section><p class="teaching-note">${t('這是根據 notes 的實驗設計而成的觀察示意；酸與金屬操作須由教師指導。碳作對照，不代表所有非金屬都沒有反應。', 'This is a simplified model of the notes experiment. Acid and metal work needs teacher supervision. Carbon is a comparison here; it does not represent every non-metal.')}</p>`;
+  return `<a class="acid-lab-jump" href="${location.pathname}${location.search}#acid-lab">${t('直接開始虛擬實驗','Start the virtual lab')}</a>
+    <div class="group-intro-grid">
+      <div class="panel simple-panel"><h2>${t('同族的兩個例子','Two members of one group')}</h2>
+        <p>${t('鎂和鈣都在第 II 族，','Magnesium and calcium are in Group II, with ')}${highlight('最外層各有 2 粒電子','two outer electrons each','blue')}${t('。','.')}</p>
+        <div class="number-cards"><div><b>Mg</b><span>2, 8, 2</span></div><div><b>Ca</b><span>2, 8, 8, 2</span></div></div>
+        ${renderGroupLocator('group2')}
+      </div>
+      ${renderGroupTrend('group2')}
+    </div>
+    ${acidLabMarkup(t)}
+    <p class="teaching-note">${t('這是學生筆記第 5–6 頁的教學模擬。碳是本實驗的對照。','This simulation follows student notes pp. 5–6 and uses carbon for comparison.')} <a href="https://edu.rsc.org/experiments/the-reactivity-of-the-group-2-metals/409.article">${t('RSC 第 II 族參考','RSC Group II reference')}</a></p>`;
 }
 
 function renderHalogens() {
@@ -284,7 +311,7 @@ async function setupMap() {
       groupHeading('III', 14), groupHeading('IV', 15), groupHeading('V', 16),
       groupHeading('VI', 17), groupHeading('VII', 18), groupHeading('0', 19),
     ];
-    const periodHeadings = Array.from({ length: 7 }, (_, index) => {
+    const periodHeadings = Array.from({ length: 4 }, (_, index) => {
       const period = index + 1;
       return '<div class="table-axis-period" style="grid-column:1;grid-row:' + (period + 1) + '" aria-hidden="true"><span>' + t('\u9031\u671f', 'Period') + '</span><b>' + period + '</b></div>';
     });
@@ -303,7 +330,7 @@ async function setupMap() {
         button.classList.toggle('same-period', item.period === element.period && item !== element);
       });
       const oldGroup = element.column === 18 ? '0' : element.column <= 2 ? ['', 'I', 'II'][element.column] : element.column >= 13 ? ['III', 'IV', 'V', 'VI', 'VII'][element.column - 13] : '';
-      const groupText = oldGroup ? `${oldGroup} / ${element.column}` : `${element.column}`;
+      const groupText = oldGroup || element.column;
       document.querySelector('#periodic-detail').innerHTML = `<div class="detail-symbol"><small>${element.atomicNumber}</small><strong>${element.symbol}</strong></div><div><h3>${en ? element.nameEn : `${element.nameZh} · ${element.nameEn}`}</h3><p>${t('原子序', 'Atomic number')} <b>${element.atomicNumber}</b> · ${t('第', 'Period')} <b>${element.period}</b> ${t('週期', '')} · ${t('族', 'Group')} <b>${groupText}</b></p><small>${t('同色直行＝同族；同色橫行＝同週期。', 'Highlighted column = same group; highlighted row = same period.')}</small></div>`;
     };
     grid.querySelectorAll('button').forEach((button) => button.addEventListener('click', () => show(Number(button.dataset.element))));
@@ -396,34 +423,6 @@ function setupPosition() {
   select('Na');
 }
 
-function setupGroupOne() {
-  const root = document.querySelector('#water-model');
-  if (!root) return;
-  const model = createClassroomModel(root, 'Li', en);
-  const select = (symbol) => {
-    const item = groupOne[symbol];
-    document.querySelectorAll('[data-alkali]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.alkali === symbol)));
-    model.setElement(symbol);
-    document.querySelector('#water-copy').innerHTML = `<span class="eyebrow">${symbol} · ${t(item.zh, item.en)}</span><h3>${t('播放，觀察變化', 'Play and observe')}</h3><p>${t(item.noteZh, item.noteEn)}</p><div class="model-takeaway"><b>H₂ · ${t('氫氣', 'Hydrogen')}</b><p>${t('金屬逐漸消失，留下鹼性溶液。', 'The metal disappears, leaving an alkaline solution.')}</p></div><p class="model-prompt">${t('比較 Li、Na、K：哪個反應最快？', 'Compare Li, Na and K: which reacts fastest?')}</p>`;
-  };
-  document.querySelectorAll('[data-alkali]').forEach((button) => button.addEventListener('click', () => select(button.dataset.alkali)));
-  select('Li');
-}
-
-function setupGroupTwo() {
-  const root = document.querySelector('#acid-model');
-  if (!root) return;
-  const model = createClassroomModel(root, 'Mg', en);
-  const select = (symbol) => {
-    const item = groupTwo[symbol];
-    document.querySelectorAll('[data-acid]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.acid === symbol)));
-    model.setElement(symbol);
-    document.querySelector('#acid-copy').innerHTML = `<span class="eyebrow">${symbol} · ${t(item.zh, item.en)}</span><h3>${t('稀鹽酸中的變化', 'In dilute hydrochloric acid')}</h3><p>${t(item.noteZh, item.noteEn)}</p><div class="model-takeaway"><b>${symbol === 'C' ? t('碳作比較', 'Carbon for comparison') : `H₂ · ${t('氫氣', 'Hydrogen')}`}</b><p>${symbol === 'C' ? t('碳仍然留在試管中，沒有明顯氣泡。', 'Carbon remains in the tube with no obvious bubbles.') : t('金屬逐漸溶解，氣泡上升。', 'The metal dissolves as bubbles rise.')}</p></div><p class="model-prompt">${t('比較 Mg 和 Ca：哪個反應較快？', 'Compare Mg and Ca: which reacts faster?')}</p>`;
-  };
-  document.querySelectorAll('[data-acid]').forEach((button) => button.addEventListener('click', () => select(button.dataset.acid)));
-  select('Mg');
-}
-
 function setupHalogens() {
   const detail = document.querySelector('#halogen-detail');
   if (!detail) return;
@@ -454,14 +453,79 @@ function setupNoble() {
   select('Ne');
 }
 
+function setupTableView() {
+  const grid = document.querySelector('#periodic-grid, #state-periodic-grid');
+  if (!grid || typeof HTMLDialogElement === 'undefined') return;
+  document.body.classList.add('lab-table-page');
+  const panel = grid.closest('.table-panel');
+  const heading = panel.querySelector('.panel-heading');
+  const scroll = grid.closest('.periodic-scroll');
+  const content = document.createElement('div');
+  content.className = 'lab-table-body';
+  const hint = document.createElement('p');
+  hint.className = 'lab-table-hint';
+  hint.textContent = t('向左或向右捲動看其他族，或展開週期表。', 'Scroll sideways for more groups, or expand the table.');
+  scroll.before(content);
+  content.append(hint);
+  while (content.nextElementSibling) content.append(content.nextElementSibling);
+
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'lab-table-expand';
+  trigger.setAttribute('aria-haspopup', 'dialog');
+  trigger.textContent = t('展開全表', 'Expand table');
+  heading.append(trigger);
+
+  const dialog = document.createElement('dialog');
+  dialog.className = 'lab-table-dialog';
+  dialog.setAttribute('aria-labelledby', 'lab-table-title');
+  dialog.innerHTML = `<div class="lab-table-dialog-head">
+    <h2 id="lab-table-title">${heading.querySelector('h2').textContent}</h2>
+    <form method="dialog"><button class="lab-table-close" autofocus>${t('關閉全表', 'Close table')}</button></form>
+  </div>
+  <p class="lab-table-hint lab-table-expanded-hint">${t('點選元素查看資料，或左右捲動看其他族。', 'Select an element for details. Scroll sideways if needed.')}</p>`;
+  panel.after(dialog);
+
+  const resize = () => {
+    hint.hidden = dialog.open || scroll.scrollWidth <= scroll.clientWidth + 1;
+  };
+  new ResizeObserver(resize).observe(scroll);
+  trigger.addEventListener('click', () => {
+    const offset = scroll.scrollLeft;
+    // Safari does not focus a button on pointer click. Set the return target
+    // before opening so the dialog can restore focus on close.
+    trigger.focus({ preventScroll: true });
+    dialog.append(content);
+    dialog.showModal();
+    scroll.scrollLeft = 0;
+    dialog.scrollTop = 0;
+    resize();
+    dialog.addEventListener('close', () => {
+      panel.append(content);
+      scroll.scrollLeft = offset;
+      resize();
+    }, { once: true });
+  });
+}
+
 function setupNavigation() {
   const menu = document.querySelector('#menu-button');
   const backdrop = document.querySelector('#nav-backdrop');
-  const close = () => {
+  const sidebar = document.querySelector('.sidebar');
+  const narrow = matchMedia(document.body.matches('.lab-table-page, .lab-experiment-page')
+    ? '(max-width: 760px), (max-width: 1100px) and (orientation: portrait)'
+    : '(max-width: 760px)');
+  const syncSidebar = () => {
+    sidebar.inert = narrow.matches && !document.body.classList.contains('menu-open');
+  };
+  const close = (restoreFocus = false) => {
+    const wasOpen = document.body.classList.contains('menu-open');
     document.body.classList.remove('menu-open');
     menu.setAttribute('aria-expanded', 'false');
     menu.setAttribute('aria-label', t('開啟課堂目錄', 'Open lesson contents'));
     backdrop.hidden = true;
+    syncSidebar();
+    if (restoreFocus && wasOpen) menu.focus();
   };
   menu.setAttribute('aria-label', t('開啟課堂目錄', 'Open lesson contents'));
   backdrop.setAttribute('aria-label', t('關閉課堂目錄', 'Close lesson contents'));
@@ -471,9 +535,12 @@ function setupNavigation() {
     menu.setAttribute('aria-expanded', String(open));
     menu.setAttribute('aria-label', open ? t('關閉課堂目錄', 'Close lesson contents') : t('開啟課堂目錄', 'Open lesson contents'));
     backdrop.hidden = !open;
+    syncSidebar();
   });
-  backdrop.addEventListener('click', close);
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
+  backdrop.addEventListener('click', () => close(true));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(true); });
+  narrow.addEventListener('change', () => close());
+  syncSidebar();
   document.querySelectorAll('[data-language]').forEach((button) => button.addEventListener('click', () => {
     const url = new URL(location.href);
     url.searchParams.set('lang', button.dataset.language);
@@ -482,13 +549,15 @@ function setupNavigation() {
 }
 
 renderShell();
+setupTableView();
+document.body.classList.toggle('lab-experiment-page', ['group1', 'group2'].includes(activeLesson?.id));
 setupNavigation();
 setupQuiz();
 void setupMap();
 void setupStateTable();
 void setupGroupLocators();
 setupPosition();
-setupGroupOne();
-setupGroupTwo();
+setupAlkaliDemo(t);
+setupAcidLab(t);
 setupHalogens();
 setupNoble();

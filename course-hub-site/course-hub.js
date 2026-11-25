@@ -1,46 +1,72 @@
 const units = [
-  { id:'introducing-chemistry', zh:'基礎化學', en:'Basic chemistry', leadZh:'由原子、元素和化學式，開始認識物質。', leadEn:'Begin with atoms, elements, formulae and matter.', lessons:7, symbols:['H','O','H₂O'] },
-  { id:'atomic-structure', zh:'原子結構', en:'Atomic structure', leadZh:'看看質子、中子和電子如何組成原子。', leadEn:'See how protons, neutrons and electrons make an atom.', lessons:8, symbols:['p⁺','n⁰','e⁻'] },
-  { id:'periodic-table', zh:'元素週期表', en:'Periodic table', leadZh:'用元素的位置和電子，找出週期表的規律。', leadEn:'Find patterns in element positions and electrons.', lessons:7, symbols:['Li','Na','K'] },
-  { id:'metals', zh:'金屬', en:'Metals', leadZh:'從金屬的用途，學到提取與防鏽。', leadEn:'Explore metal uses, extraction and rust prevention.', lessons:8, symbols:['Cu','Fe','Al'] },
-  { id:'ionic-bonds', zh:'離子鍵', en:'Ionic bonds', leadZh:'移動電子、形成離子，配平電荷和化學式。', leadEn:'Transfer electrons, form ions and balance charges and formulae.', lessons:8, symbols:['Na⁺','Cl⁻','Mg²⁺'] },
-  { id:'covalent-bonds', zh:'共價鍵', en:'Covalent bonds', leadZh:'親手畫共享電子，建立分子與計算相對質量。', leadEn:'Build shared-electron diagrams, molecules and relative masses.', lessons:6, symbols:['H₂','O₂','H₂O'] },
+  { id:'introducing-chemistry', zh:'基礎化學', en:'Basic chemistry', leadZh:'分辨元素、化合物和混合物。', leadEn:'Tell elements, compounds and mixtures apart.', mark:'H₂O' },
+  { id:'atomic-structure', zh:'原子結構', en:'Atomic structure', leadZh:'數算粒子，讀懂原子序和電子排佈。', leadEn:'Count particles and read atomic numbers and electron arrangements.', mark:'e⁻' },
+  { id:'periodic-table', zh:'元素週期表', en:'Periodic table', leadZh:'從族和週期找出元素的規律。', leadEn:'Find patterns in groups and periods.', mark:'Na' },
+  { id:'metals', zh:'金屬', en:'Metals', leadZh:'比較金屬的用途、提取方法和防鏽方法。', leadEn:'Compare metal uses, extraction and rust prevention.', mark:'Fe' },
+  { id:'ionic-bonds', zh:'離子鍵', en:'Ionic bonds', leadZh:'追蹤電子轉移，用電荷寫化學式。', leadEn:'Follow electron transfer and use charges to write formulae.', mark:'Na⁺' },
+  { id:'covalent-bonds', zh:'共價鍵', en:'Covalent bonds', leadZh:'畫出共享電子對，讀懂分子結構。', leadEn:'Draw shared electron pairs to explain molecular structure.', mark:'H₂' },
 ];
 
 const requested = new URL(location.href).searchParams.get('lang');
-let language = requested==='zh'||requested==='en' ? requested : (localStorage.getItem('chem-hub-language')==='en'?'en':'zh');
+let language = requested === 'zh' || requested === 'en' ? requested : (localStorage.getItem('chem-hub-language') === 'en' ? 'en' : 'zh');
 const oldLesson = location.hash.slice(1);
 if (['start','elements','formula','classify','compare','changes','lab','review'].includes(oldLesson)) {
-  location.replace(`./introducing-chemistry/sessions/${oldLesson==='lab'?'changes':oldLesson}/?lang=${language}`);
+  location.replace(`./introducing-chemistry/sessions/${oldLesson === 'lab' ? 'changes' : oldLesson}/?lang=${language}`);
 } else {
   render();
-  setupNavigation();
+  document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => {
+    language = button.dataset.language;
+    const url = new URL(location.href);
+    url.searchParams.set('lang', language);
+    history.replaceState(null, '', url);
+    render();
+  }));
 }
 
-function t(zh,en){ return language==='en' ? en : zh; }
-function unitUrl(id){ return `./${id}/?lang=${language}`; }
-function render(){
-  document.documentElement.lang=language==='en'?'en':'zh-Hant-HK';
-  document.title=t('中三化學 · F.3 CHEM','Form 3 Chemistry · F.3 CHEM');
-  localStorage.setItem('chem-hub-language',language);
-  document.querySelector('#skip-link').textContent=t('跳到課程內容','Skip to course content');
-  document.querySelector('#course-label').textContent=t('S3 · 中三化學','S3 · CHEMISTRY');
-  document.querySelector('#brand-link').href=`./?lang=${language}`;
-  document.querySelector('#side-heading').innerHTML=`<span>S3</span><b>${t('化學課程','Chemistry')}</b><small>06</small>`;
-  document.querySelector('#unit-nav').innerHTML=units.map((unit,index)=>`<a href="${unitUrl(unit.id)}"><span>${String(index+1).padStart(2,'0')}</span><b>${t(unit.zh,unit.en)}</b><i>${String(unit.lessons).padStart(2,'0')}</i></a>`).join('');
-  document.querySelector('#sidebar-bottom').innerHTML=`<p>${t('六個單元 · 由淺入深','Six units · step by step')}</p><div class="sidebar-progress"><span></span></div><small>${t('選擇單元，開始學習','Choose a unit to begin')}</small>`;
-  document.querySelector('#main').innerHTML=`<div class="breadcrumb"><span>${t('中三化學','Form 3 Chemistry')}</span><span>/</span><b>${t('單元總覽','Course units')}</b><span class="breadcrumb-count">06 / 06</span></div><section class="home-hero"><div><span class="eyebrow">S3 CHEMISTRY · 6 UNITS</span><h1>${t('由小粒子出發，<br><em>一步步學化學。</em>','Start small.<br><em>Explore chemistry step by step.</em>')}</h1><p>${t('選擇一個單元。每個課題都有圖像、例子和檢查理解的小測。','Choose a unit. Each lesson has visuals, examples and a short check of understanding.')}</p><a class="primary-link" href="${unitUrl('introducing-chemistry')}">${t('由 Unit 1 開始','Start with Unit 1')} <span aria-hidden="true">→</span></a></div><div class="hero-art" aria-hidden="true"><span>H</span><span>O</span><span>Na</span><span>Fe</span><b>${t('從元素到身邊的材料','From elements to everyday materials')}</b></div></section><div class="catalog-heading"><div><span class="eyebrow">COURSE MAP / 06 UNITS</span><h2>${t('選一個單元','Choose a unit')}</h2></div><span>06 / 06</span></div><nav class="catalog-grid" aria-label="${t('中三化學單元','Form 3 chemistry units')}">${units.map((unit,index)=>`<a class="catalog-card" href="${unitUrl(unit.id)}"><span class="catalog-number">${String(index+1).padStart(2,'0')}</span><span class="catalog-copy"><small>UNIT ${String(index+1).padStart(2,'0')} · ${unit.lessons} ${t('課題','LESSONS')}</small><b>${t(unit.zh,unit.en)}</b><span>${t(unit.leadZh,unit.leadEn)}</span><span class="symbol-row" aria-hidden="true">${unit.symbols.map(s=>`<i>${s}</i>`).join('')}</span></span><span class="catalog-arrow" aria-hidden="true">↗</span></a>`).join('')}</nav><footer class="site-footer">F.3 CHEM · ${t('中三化學互動教材','Interactive Form 3 chemistry lessons')}</footer>`;
-  document.querySelector('#unit-nav').insertAdjacentHTML('beforeend',`<a href="${unitUrl('acids-and-bases')}"><span>DSE</span><b>${t('酸與鹼','Acids and bases')}</b></a>`);
-  document.querySelector('.site-footer').insertAdjacentHTML('beforebegin',`<section class="dse-course"><div class="catalog-heading"><div><span class="eyebrow">DSE CHEMISTRY · TOPIC IV</span><h2>${t('高中化學自學','Senior secondary self-study')}</h2></div></div><a class="catalog-card" href="${unitUrl('acids-and-bases')}"><span class="catalog-number">IV</span><span class="catalog-copy"><small>DSE · 7 ${t('單元','UNITS')}</small><b>${t('酸與鹼','Acids and bases')}</b><span>${t('36 項課程目標、雙語 Notes、逐步示範及參考答案自評練習。','36 learning outcomes, bilingual notes, worked examples and self-assessed practice.')}</span><span class="symbol-row" aria-hidden="true"><i>H⁺</i><i>OH⁻</i><i>pH</i></span></span><span class="catalog-arrow" aria-hidden="true">↗</span></a></section>`);
-  document.querySelectorAll('[data-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===language)));
-}
-function setupNavigation(){
-  const menu=document.querySelector('#menu-button'),backdrop=document.querySelector('#nav-backdrop');
-  const close=()=>{document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label',t('開啟單元目錄','Open unit menu'));backdrop.hidden=true;};
-  menu.setAttribute('aria-label',t('開啟單元目錄','Open unit menu'));
-  backdrop.setAttribute('aria-label',t('關閉單元目錄','Close unit menu'));
-  menu.addEventListener('click',()=>{const open=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?t('關閉單元目錄','Close unit menu'):t('開啟單元目錄','Open unit menu'));backdrop.hidden=!open;});
-  backdrop.addEventListener('click',close);
-  document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
-  document.querySelectorAll('[data-language]').forEach(button=>button.addEventListener('click',()=>{language=button.dataset.language;const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(null,'',url);render();close();}));
+function t(zh, en) { return language === 'en' ? en : zh; }
+function unitUrl(id) { return `./${id}/?lang=${language}`; }
+function render() {
+  document.documentElement.lang = t('zh-Hant-HK', 'en');
+  document.title = t('中三互動化學實驗簿 · F.3 CHEM', 'Form 3 interactive chemistry lab book · F.3 CHEM');
+  localStorage.setItem('chem-hub-language', language);
+  document.querySelector('#skip-link').textContent = t('跳到課程內容', 'Skip to course content');
+  document.querySelector('#brand-link').href = `./?lang=${language}`;
+  document.querySelector('#main').innerHTML = `
+    <section class="lab-intro" aria-labelledby="lab-title">
+      <div>
+        <h1 id="lab-title">${t('中三互動化學實驗簿', 'Form 3 chemistry lab book')}</h1>
+        <p>${t('由粒子模型到化學鍵，從圖解學概念，再動手做練習。', 'Explore particle models, the periodic table and chemical bonds. Try a diagram or activity, then check your understanding.')}</p>
+        <a class="lab-primary" href="#units">${t('選擇單元', 'Choose a unit')}</a>
+      </div>
+      <div class="lab-specimen" role="img" aria-label="${t('鈉-23：左上 23 是質量數，左下 11 是原子序。', 'Sodium-23. The upper-left 23 is the mass number. The lower-left 11 is the atomic number.')}">
+        <div class="specimen-content" aria-hidden="true">
+          <span class="specimen-mass">${t('質量數', 'Mass number')}</span><b>23</b>
+          <span class="specimen-atomic">${t('原子序', 'Atomic number')}</span><b>11</b>
+          <strong>Na</strong>
+        </div>
+      </div>
+    </section>
+    <section id="units" class="lab-units" aria-labelledby="unit-title" tabindex="-1">
+      <h2 id="unit-title">${t('中三化學單元', 'Form 3 units')}</h2>
+      <ol class="lab-unit-grid">${units.map((unit, index) => `
+        <li><a href="${unitUrl(unit.id)}" class="lab-unit">
+          <span class="lab-unit-number">${String(index + 1).padStart(2, '0')}</span>
+          <span class="lab-unit-copy"><b>${t(unit.zh, unit.en)}</b><span>${t(unit.leadZh, unit.leadEn)}</span></span>
+          <span class="lab-unit-mark" aria-hidden="true">${unit.mark}</span>
+        </a></li>`).join('')}</ol>
+    </section>
+    <section class="lab-paths" aria-label="${t('常用練習及高中化學', 'Quick practice and senior secondary chemistry')}">
+      <div>
+        <h2>${t('直接做練習', 'Go straight to practice')}</h2>
+        <a href="./atomic-structure/sessions/elementquiz/?lang=${language}">${t('首 20 種元素小測', 'First 20 elements quiz')}</a>
+        <a href="./periodic-table/sessions/map/?lang=${language}">${t('探索元素週期表', 'Explore the periodic table')}</a>
+      </div>
+      <div class="lab-dse">
+        <h2>${t('DSE 化學', 'DSE chemistry')}</h2>
+        <a href="${unitUrl('acids-and-bases')}">${t('酸與鹼自學', 'Acids and bases self-study')}</a>
+        <a href="./acids-and-bases/revision/?lang=${language}">${t('酸與鹼練習索引', 'Acids and bases question index')}</a>
+      </div>
+    </section>
+    <footer class="lab-footer">F.3 CHEM</footer>`;
+  document.querySelectorAll('[data-language]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.language === language)));
 }

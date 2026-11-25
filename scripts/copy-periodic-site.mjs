@@ -15,10 +15,17 @@ const version = (bytes) => createHash('sha256').update(bytes).digest('hex').slic
 const css = await readFile(resolve(output, 'styles.css'));
 const js = await readFile(resolve(output, 'site.js'));
 const models = await readFile(resolve(output, 'models-3d.js'));
-const versionedJs = js.toString().replace("from './models-3d.js'", `from './models-3d.js?v=${version(models)}'`);
+const lab = await readFile(resolve(output, 'acid-lab.js'));
+const labCss = await readFile(resolve(output, 'acid-lab.css'));
+const waterDemo = await readFile(resolve(output, 'alkali-demo.js'));
+const versionedJs = js.toString()
+  .replace("from './models-3d.js'", `from './models-3d.js?v=${version(models)}'`)
+  .replace("from './acid-lab.js'", `from './acid-lab.js?v=${version(lab)}'`)
+  .replace("from './alkali-demo.js'", `from './alkali-demo.js?v=${version(waterDemo)}'`);
 await writeFile(resolve(output, 'site.js'), versionedJs);
 const page = (await readFile(resolve(output, 'index.html'), 'utf8'))
   .replace('href="./styles.css"', `href="./styles.css?v=${version(css)}"`)
+  .replace('href="./acid-lab.css"', `href="./acid-lab.css?v=${version(labCss)}"`)
   .replace('src="./site.js"', `src="./site.js?v=${version(versionedJs)}"`);
 await writeFile(resolve(output, 'index.html'), page);
 
