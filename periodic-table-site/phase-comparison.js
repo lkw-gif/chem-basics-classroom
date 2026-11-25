@@ -4,6 +4,7 @@ const samples = [
   { name:'Y', melting:-7, boiling:58 },
   { name:'Z', melting:650, boiling:1120 },
 ];
+const initialTemperature = -70;
 
 const labels = {
   solid:['固體','Solid'], liquid:['液體','Liquid'], gas:['氣體','Gas'],
@@ -25,7 +26,7 @@ export function phaseComparisonMarkup(t) {
   return `<section class="panel phase-comparison" id="phase-comparison" aria-labelledby="phase-comparison-title">
     <div class="phase-comparison-head">
       <h2 id="phase-comparison-title">${t('從熔點和沸點判斷狀態','Use melting and boiling points to predict state')}</h2>
-      <p>${t('選一個元素，再比較溫度是低於熔點、介乎兩點之間，還是高於沸點。','Choose an element. Compare its temperature with the melting and boiling points.')}</p>
+      <p>${t('選一個元素，調校它的溫度，再跟熔點和沸點比較。每個元素各自記住上次設定的溫度。','Choose an element and compare its temperature with its melting and boiling points. Each element keeps its own temperature.')}</p>
     </div>
     <div class="phase-workspace">
       <div class="phase-controls">
@@ -40,8 +41,8 @@ export function phaseComparisonMarkup(t) {
         </div>
       </div>
       <label class="phase-slider">
-        <span>${t('拖動以改變溫度','Drag to change the temperature')} <output id="phase-temperature" for="phase-temperature-range">−70 °C</output></span>
-        <input id="phase-temperature-range" type="range" step="1" min="-200" max="100" value="-70" aria-valuetext="−70 °C">
+        <span><b id="phase-temperature-label"></b> <output id="phase-temperature" for="phase-temperature-range" aria-hidden="true"></output></span>
+        <input id="phase-temperature-range" type="range" step="1" min="-200" max="100" value="${initialTemperature}" aria-labelledby="phase-temperature-label">
       </label>
       <div class="phase-scale">
         <button type="button" data-phase-band="solid"><b>${t('固體','Solid')}</b><small>${t('低於熔點','Below melting point')}</small></button>
@@ -58,9 +59,9 @@ export function phaseComparisonMarkup(t) {
     </div>
     <div class="phase-comparison-data">
       <table>
-        <caption>${t('四個元素的狀態比較（氣壓不變）','Compare all four elements at constant pressure')}</caption>
-        <thead><tr><th scope="col">${t('元素','Element')}</th><th scope="col">${t('熔點','Melting point')}</th><th scope="col">${t('沸點','Boiling point')}</th><th scope="col" data-phase-column></th></tr></thead>
-        <tbody>${samples.map(sample => `<tr data-phase-row="${sample.name}"><th scope="row">${sample.name}</th><td>${degrees(sample.melting)}</td><td>${degrees(sample.boiling)}</td><td data-phase-result></td></tr>`).join('')}</tbody>
+        <caption>${t('各元素的溫度和狀態（氣壓不變）','Temperature and state of each element (constant pressure)')}</caption>
+        <thead><tr><th scope="col">${t('元素','Element')}</th><th scope="col">${t('熔點','Melting point')}</th><th scope="col">${t('沸點','Boiling point')}</th><th scope="col">${t('溫度與狀態','Temperature and state')}</th></tr></thead>
+        <tbody>${samples.map(sample => `<tr data-phase-row="${sample.name}"><th scope="row">${sample.name}</th><td>${degrees(sample.melting)}</td><td>${degrees(sample.boiling)}</td><td><div class="phase-table-reading"><span data-phase-row-temperature></span><strong data-phase-result></strong></div></td></tr>`).join('')}</tbody>
       </table>
       <p>${t('點一下固體、液體或氣體試一個例子。點熔點或沸點，看看剛好達到該溫度時的結果。','Tap Solid, Liquid or Gas to try an example. Tap either transition point to test that exact temperature.')}</p>
     </div>
@@ -71,6 +72,7 @@ export function setupPhaseComparison(t) {
   const root = document.querySelector('#phase-comparison');
   if (!root) return;
   const range = root.querySelector('input[type="range"]');
+  const rangeLabel = root.querySelector('#phase-temperature-label');
   const output = root.querySelector('#phase-temperature');
   const reading = root.querySelector('[data-phase-reading]');
   const sampleButtons = [...root.querySelectorAll('[data-phase-sample]')];
@@ -78,22 +80,24 @@ export function setupPhaseComparison(t) {
   const rows = [...root.querySelectorAll('[data-phase-row]')];
   const bands = [...root.querySelectorAll('[data-phase-band], [data-phase-edge]')];
   let selected = samples[1];
-  let temperature = -70;
+  const temperatures = new Map(samples.map(sample => [sample, initialTemperature]));
 
   function setRange() {
-    range.min = Math.min(-70, temperature, selected.melting - 12);
+    const temperature = temperatures.get(selected);
+    range.min = Math.min(initialTemperature, temperature, selected.melting - 12);
     range.max = Math.max(25, temperature, selected.boiling + 12);
   }
 
   function render() {
+    const temperature = temperatures.get(selected);
     const state = stateAt(selected, temperature);
     const point = degrees(temperature);
     range.value = String(temperature);
     range.setAttribute('aria-valuetext', point);
+    rangeLabel.textContent = t(`元素 ${selected.name} 的溫度`, `Temperature of element ${selected.name}`);
     output.textContent = point;
     root.querySelector('[data-melting-value]').textContent = degrees(selected.melting);
     root.querySelector('[data-boiling-value]').textContent = degrees(selected.boiling);
-    root.querySelector('[data-phase-column]').textContent = t(`${point} 的狀態`, `State at ${point}`);
     sampleButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.phaseSample === selected.name)));
     presetButtons.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.phasePreset) === temperature)));
     bands.forEach(band => {
@@ -104,8 +108,10 @@ export function setupPhaseComparison(t) {
     for (const [index, sample] of samples.entries()) {
       const row = rows[index];
       const result = row.querySelector('[data-phase-result]');
+      const sampleTemperature = temperatures.get(sample);
       row.classList.toggle('is-selected', sample === selected);
-      result.dataset.state = stateAt(sample, temperature);
+      row.querySelector('[data-phase-row-temperature]').textContent = degrees(sampleTemperature);
+      result.dataset.state = stateAt(sample, sampleTemperature);
       result.textContent = t(...labels[result.dataset.state]);
     }
     const melt = degrees(selected.melting), boil = degrees(selected.boiling);
@@ -125,16 +131,16 @@ export function setupPhaseComparison(t) {
     if (button.dataset.phaseSample) {
       selected = samples.find(sample => sample.name === button.dataset.phaseSample);
     } else if (button.hasAttribute('data-phase-preset')) {
-      temperature = Number(button.dataset.phasePreset);
+      temperatures.set(selected, Number(button.dataset.phasePreset));
     } else if (button.dataset.phaseEdge) {
-      temperature = selected[button.dataset.phaseEdge];
+      temperatures.set(selected, selected[button.dataset.phaseEdge]);
     } else if (button.dataset.phaseBand) {
       const examples = {
         solid: selected.melting - 5,
         liquid: Math.floor((selected.melting + selected.boiling) / 2),
         gas: selected.boiling + 5,
       };
-      temperature = examples[button.dataset.phaseBand];
+      temperatures.set(selected, examples[button.dataset.phaseBand]);
     } else {
       return;
     }
@@ -142,7 +148,7 @@ export function setupPhaseComparison(t) {
     render();
   });
   range.addEventListener('input', () => {
-    temperature = Number(range.value);
+    temperatures.set(selected, Number(range.value));
     render();
   });
   setRange();

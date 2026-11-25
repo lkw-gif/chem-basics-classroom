@@ -30,16 +30,29 @@ const carbon = buildScene('acid', 'C', 1);
 assert.equal(carbon.metalPresent, true, 'The carbon comparison must remain visible');
 assert.equal(carbon.state, 'unchanged');
 assert.equal(carbon.shapes.filter(shape => shape.bubble).length, 0);
+const halogenColours = new Set();
 for (const [symbol, state] of [['F', 'gas'], ['Cl', 'gas'], ['Br', 'liquid'], ['I', 'solid']]) {
   const scene = buildScene('halogen', symbol, 0, 5);
+  const spheres = scene.shapes.filter(shape => shape.type === 'sphere');
   assert.equal(scene.state, state);
-  assert.ok(scene.bonds > 1);
-  assert.equal(scene.shapes.filter(shape => shape.type === 'sphere').length, scene.bonds * 2, 'Halogens must remain as diatomic molecules');
+  assert.ok(scene.molecules > 1);
+  assert.equal(spheres.length, scene.molecules * 2, 'Halogens must remain as diatomic molecules');
+  const lines = scene.shapes.filter(shape => shape.type === 'line');
+  assert.ok(lines.every(line => line.width <= 0.02), 'Only the thin container and grid lines should be drawn');
+  for (let i = 0; i < spheres.length; i += 2) {
+    const [a, b] = spheres.slice(i, i + 2);
+    const distance = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+    assert.ok(distance > a.radius && distance <= a.radius + b.radius, 'Each pair should touch and show two separate spheres');
+    halogenColours.add(a.colour);
+    halogenColours.add(b.colour);
+  }
 }
+assert.equal(halogenColours.size, 1, 'All four models should use the same colour');
+assert.match([...halogenColours][0], /^#([\da-f]{2})\1\1$/i, 'The particle colour should be grey');
 for (const symbol of ['He', 'Ne', 'Ar']) {
   const scene = buildScene('noble', symbol, 0, 5);
   assert.ok(scene.particles > 1);
-  assert.equal(scene.bonds, 0, 'Noble gas atoms must not be joined into molecules');
+  assert.equal(scene.molecules, 0, 'Noble gas atoms must not be joined into molecules');
 }
 // Catch invalid geometry at animation boundaries and throughout both reactions.
 for (const [kind, symbols] of [['water', ['Li', 'Na', 'K']], ['acid', ['Mg', 'Ca', 'C']], ['halogen', ['F', 'Cl', 'Br', 'I']], ['noble', ['He', 'Ne', 'Ar']]]) {

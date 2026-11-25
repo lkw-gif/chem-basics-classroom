@@ -234,7 +234,25 @@ function renderGroupTwo() {
 }
 
 function renderHalogens() {
-  return `<div class="halogen-intro"><div class="panel simple-panel"><span class="eyebrow">GROUP VII</span><h2>${t('四種常見鹵素', 'Four familiar halogens')}</h2><p>${t('它們都是非金屬，', 'They are non-metals with ')}${highlight('最外層有 7 粒電子', 'seven outer electrons', 'blue')}${t('。由上而下，顏色加深，室溫狀態由', '. Down the group, colour deepens and room-temperature state changes from ')}${highlight('氣體轉成液體、再到固體', 'gas to liquid to solid', 'orange')}${t('。', '.')}</p>${renderGroupLocator('halogens')}</div>${renderGroupTrend('halogens')}</div><section class="panel halogen-panel"><div class="panel-heading"><h2>${t('3D 粒子模型：每兩個原子一組', '3D particles: two atoms per molecule')}</h2><span>${t('選擇元素，比較室溫下的排列與移動', 'Compare arrangement and motion at room temperature')}</span></div><div class="selector-row" role="group" aria-label="${t('選擇鹵素', 'Choose a halogen')}">${Object.entries(halogenData).map(([symbol, item]) => `<button type="button" class="halogen-choice" data-halo="${symbol}" data-tone="${item.tone}" aria-pressed="${symbol === 'Cl'}"><strong>${symbol}</strong><small>${t(item.zh, item.en)}</small><span class="halogen-choice-meta"><i aria-hidden="true"></i>${t(item.colourZh, item.colourEn)} · ${t(item.stateZh, item.stateEn)}</span></button>`).join('')}</div><div class="group-model-layout">${modelMarkup('halogen-model', 'halogen', en)}<div class="halogen-detail" id="halogen-detail" aria-live="polite"></div></div><div class="table-scroll"><table class="data-table"><thead><tr><th>${t('元素', 'Element')}</th><th>${t('室溫狀態', 'State at room temp.')}</th><th>${t('熔點 °C', 'Melting °C')}</th><th>${t('沸點 °C', 'Boiling °C')}</th></tr></thead><tbody>${Object.entries(halogenData).map(([symbol, item]) => `<tr><th scope="row">${symbol} · ${t(item.zh, item.en)}</th><td>${t(item.stateZh, item.stateEn)}</td><td>${item.melt}</td><td>${item.boil}</td></tr>`).join('')}</tbody></table></div></section><div class="panel prediction-card"><span class="eyebrow">LOOK AHEAD</span><h2>${t('推測砈（At）', 'Predict astatine (At)')}</h2><p>${t('砈在碘的下一行，同屬第 VII 族。因此可以肯定它位於第 6 週期、最外層有 7 粒電子；其反應強弱可按同族趨勢作推測。', 'Astatine is below iodine in Group VII. Its position tells us it is in Period 6 with seven outer electrons; its reactivity can be predicted from the group trend.')}</p></div>`;
+  return `<div class="halogen-intro"><div class="panel simple-panel"><span class="eyebrow">GROUP VII</span><h2>${t('四種常見鹵素', 'Four familiar halogens')}</h2><p>${t('它們都是非金屬，', 'They are non-metals with ')}${highlight('最外層有 7 粒電子', 'seven outer electrons', 'blue')}${t('。由上而下，顏色加深，室溫狀態由', '. Down the group, colour deepens and room-temperature state changes from ')}${highlight('氣體轉成液體、再到固體', 'gas to liquid to solid', 'orange')}${t('。', '.')}</p>${renderGroupLocator('halogens')}</div>${renderGroupTrend('halogens')}</div>
+<section class="panel halogen-panel" id="halogen-views" data-mode="sample">
+  <div class="panel-heading"><h2>${t('從鹵素樣本看分子', 'Halogens up close')}</h2><span>${t('比較室溫下的樣本', 'Compare samples at room temperature')}</span></div>
+  <div class="selector-row" role="group" aria-label="${t('選擇鹵素', 'Choose a halogen')}">${Object.entries(halogenData).map(([symbol, item]) => `<button type="button" class="halogen-choice" data-halo="${symbol}" data-tone="${item.tone}" aria-pressed="${symbol === 'Cl'}"><strong>${symbol}</strong><small>${t(item.zh, item.en)}</small><span class="halogen-choice-meta"><i aria-hidden="true"></i>${t(item.colourZh, item.colourEn)} · ${t(item.stateZh, item.stateEn)}</span></button>`).join('')}</div>
+  <div class="halogen-view-switch" role="group" aria-label="${t('觀察視角', 'Observation view')}">
+    <button type="button" data-halogen-view="sample" aria-pressed="true" aria-controls="halogen-sample-view">${t('觀察樣本', 'Sample view')}</button>
+    <button type="button" data-halogen-view="particles" aria-pressed="false" aria-controls="halogen-particle-view">${t('放大看粒子', 'Zoom in to particles')}</button>
+  </div>
+  <div class="group-model-layout" id="halogen-sample-view">
+    <div class="halogen-sample-stage">
+      <div class="halogen-vial" role="img"><div class="halogen-vial-cap" aria-hidden="true"></div><div class="halogen-vial-glass" aria-hidden="true"><span class="halogen-vial-material"></span><span class="halogen-crystals"><i></i><i></i><i></i></span></div></div>
+    </div>
+    <div class="halogen-detail" id="halogen-sample-detail" aria-live="polite"></div>
+  </div>
+  <div class="group-model-layout" id="halogen-particle-view" hidden>
+    ${modelMarkup('halogen-model', 'halogen', en)}
+    <div class="halogen-detail" id="halogen-particle-detail" aria-live="polite"></div>
+  </div>
+  <div class="table-scroll"><table class="data-table"><thead><tr><th>${t('元素', 'Element')}</th><th>${t('室溫狀態', 'State at room temp.')}</th><th>${t('熔點 °C', 'Melting °C')}</th><th>${t('沸點 °C', 'Boiling °C')}</th></tr></thead><tbody>${Object.entries(halogenData).map(([symbol, item]) => `<tr><th scope="row">${symbol} · ${t(item.zh, item.en)}</th><td>${t(item.stateZh, item.stateEn)}</td><td>${item.melt}</td><td>${item.boil}</td></tr>`).join('')}</tbody></table></div></section><div class="panel prediction-card"><span class="eyebrow">LOOK AHEAD</span><h2>${t('推測砈（At）', 'Predict astatine (At)')}</h2><p>${t('砈在碘的下一行，同屬第 VII 族。因此可以肯定它位於第 6 週期、最外層有 7 粒電子；其反應強弱可按同族趨勢作推測。', 'Astatine is below iodine in Group VII. Its position tells us it is in Period 6 with seven outer electrons; its reactivity can be predicted from the group trend.')}</p></div>`;
 }
 
 function renderNoble() {
@@ -421,18 +439,56 @@ function setupPosition() {
 }
 
 function setupHalogens() {
-  const detail = document.querySelector('#halogen-detail');
-  if (!detail) return;
-  const model = createClassroomModel(document.querySelector('#halogen-model'), 'Cl', en);
-  const select = (symbol) => {
-    model.setElement(symbol);
-    const item = halogenData[symbol];
-    document.querySelectorAll('[data-halo]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.halo === symbol)));
-    detail.dataset.tone = item.tone;
-    detail.innerHTML = `<div><span class="eyebrow">${symbol}₂ · ${highlight('雙原子分子', 'Diatomic molecule', 'blue')}</span><h3>${t(item.zh, item.en)} <small>${en ? symbol : item.en}</small></h3><div class="halogen-highlights"><p class="halogen-highlight"><span>${t('室溫狀態', 'State at room temperature')}</span><b>${t(item.stateZh, item.stateEn)}</b></p><p class="halogen-highlight"><span>${t('元素顏色', 'Elemental colour')}</span><b><i aria-hidden="true"></i>${t(item.colourZh, item.colourEn)}</b></p></div><div class="model-takeaway"><b>${t('兩球相連＝一個分子', 'Two joined spheres = one molecule')}</b><p>${['F', 'Cl'].includes(symbol) ? t('分子相隔較遠，向不同方向移動。', 'Molecules are far apart and move in different directions.') : symbol === 'Br' ? t('分子靠近，可以互相滑過。', 'Molecules stay close and slide past one another.') : t('分子排列整齊，在原位振動。', 'Molecules form an ordered arrangement and vibrate in place.')}</p></div>${symbol === 'I' ? `<p>${t('碘受熱昇華，可形成紫色蒸氣。', 'Iodine can sublime on heating to form purple vapour.')}</p>` : ''}</div>`;
-
+  const root = document.querySelector('#halogen-views');
+  if (!root) return;
+  const sampleView = root.querySelector('#halogen-sample-view');
+  const particleView = root.querySelector('#halogen-particle-view');
+  const sampleDetail = root.querySelector('#halogen-sample-detail');
+  const particleDetail = root.querySelector('#halogen-particle-detail');
+  const vial = sampleView.querySelector('.halogen-vial');
+  const modelRoot = root.querySelector('#halogen-model');
+  const model = createClassroomModel(modelRoot, 'Cl', en);
+  modelRoot.querySelector('canvas').setAttribute('aria-describedby', particleDetail.id);
+  const elements = root.querySelectorAll('[data-halo]');
+  const views = root.querySelectorAll('[data-halogen-view]');
+  const motion = {
+    Gas: t('分子相隔較遠，向不同方向移動。', 'Molecules are far apart and move in different directions.'),
+    Liquid: t('分子靠得很近，可以互相滑過。', 'Molecules stay close and slide past one another.'),
+    Solid: t('分子排列整齊，在原位振動。', 'Molecules form an ordered arrangement and vibrate in place.'),
   };
-  document.querySelectorAll('[data-halo]').forEach((button) => button.addEventListener('click', () => select(button.dataset.halo)));
+
+  function select(symbol) {
+    const item = halogenData[symbol];
+    const name = t(item.zh, item.en);
+    const state = t(item.stateZh, item.stateEn);
+    const colour = t(item.colourZh, item.colourEn);
+    elements.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.halo === symbol)));
+    vial.dataset.tone = item.tone;
+    vial.dataset.state = item.stateEn.toLowerCase();
+    vial.setAttribute('aria-label', t(`${name}樣本示意圖，室溫下呈${colour}${state}。`, `Illustration of a ${name.toLowerCase()} sample at room temperature: ${colour.toLowerCase()} ${state.toLowerCase()}.`));
+    sampleDetail.dataset.tone = item.tone;
+    sampleDetail.innerHTML = `<div><span class="eyebrow">${t('室溫樣本示意圖', 'Room-temperature sample illustration')}</span><h3>${name} <small>${symbol}₂</small></h3>
+      <div class="halogen-highlights">
+        <p class="halogen-highlight"><span>${t('室溫狀態', 'State at room temperature')}</span><b>${state}</b></p>
+        <p class="halogen-highlight"><span>${t('樣本顏色', 'Sample colour')}</span><b><i aria-hidden="true"></i>${colour}</b></p>
+      </div>
+      ${symbol === 'I' ? `<p>${t('碘受熱昇華，可形成紫色蒸氣。', 'Iodine can sublime on heating to form purple vapour.')}</p>` : ''}</div>`;
+    particleDetail.innerHTML = `<div><span class="eyebrow">${symbol}₂ · ${highlight('雙原子分子', 'Diatomic molecules', 'blue')}</span><h3>${name} <small>· ${state}</small></h3>
+      <div class="model-takeaway">
+        <div class="halogen-pair-key"><span aria-hidden="true"><i></i><i></i></span><b>${t('每個分子含兩個原子', 'Two atoms per molecule')}</b></div>
+        <p>${motion[item.stateEn]}</p>
+      </div><p>${t('四種粒子模型都用灰白色球代表原子。樣本顏色可在「觀察樣本」查看。', 'Grey spheres represent atoms in all four models. Switch to Sample view to see the sample colour.')}</p></div>`;
+    model.setElement(symbol);
+  }
+
+  elements.forEach(button => button.addEventListener('click', () => select(button.dataset.halo)));
+  views.forEach(button => button.addEventListener('click', () => {
+    const mode = button.dataset.halogenView;
+    root.dataset.mode = mode;
+    sampleView.hidden = mode !== 'sample';
+    particleView.hidden = mode !== 'particles';
+    views.forEach(view => view.setAttribute('aria-pressed', String(view === button)));
+  }));
   select('Cl');
 }
 

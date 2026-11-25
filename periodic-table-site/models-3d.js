@@ -12,10 +12,7 @@ export function shellElectronPositions(count, radius, center = 145) {
 }
 
 export const reactionSeconds = { Li: 16, Na: 11, K: 7, Mg: 14, Ca: 8, C: 8 };
-const halo = {
-  F: { state: 'gas', colour: '#dae681' }, Cl: { state: 'gas', colour: '#99cd66' },
-  Br: { state: 'liquid', colour: '#b96142' }, I: { state: 'solid', colour: '#9582bb' },
-};
+const halogenStates = { F: 'gas', Cl: 'gas', Br: 'liquid', I: 'solid' };
 const nobleColours = { He: '#e6b965', Ne: '#ee916a', Ar: '#70c7d9' };
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const mix = (a, b, n) => a + (b - a) * n;
@@ -31,7 +28,7 @@ export function reactionPhase(progress, symbol) {
 }
 
 export function buildScene(kind, symbol, progress = 0, time = 0) {
-  const scene = { shapes: [], state: '', particles: 0, bonds: 0, metalPresent: false };
+  const scene = { shapes: [], state: '', particles: 0, molecules: 0, metalPresent: false };
   const polygon = (points, colour, opacity = 1, stroke = '') => scene.shapes.push({ type: 'polygon', points, colour, opacity, stroke });
   const line = (a, b, colour, width = 0.02, opacity = 1) => scene.shapes.push({ type: 'line', points: [a, b], colour, width, opacity });
   const ball = (position, radius, colour, label = '', opacity = 1, bubble = false) => scene.shapes.push({ type: 'sphere', ...position, radius, colour, label, opacity, bubble });
@@ -102,8 +99,8 @@ export function buildScene(kind, symbol, progress = 0, time = 0) {
     return scene;
   }
   const isHalogen = kind === 'halogen';
-  const state = isHalogen ? halo[symbol].state : 'gas';
-  const colour = isHalogen ? halo[symbol].colour : nobleColours[symbol];
+  const state = isHalogen ? halogenStates[symbol] : 'gas';
+  const colour = isHalogen ? '#c7c7c7' : nobleColours[symbol];
   const count = state === 'gas' ? 8 : 12;
   const gasSeeds = [[-1, 0.85, -0.65], [0.9, 1.05, 0.6], [-1, -0.85, 0.7], [0.85, -0.9, -0.8], [-0.05, 0.18, -1.05], [0.2, -0.2, 1.05], [-1.12, 0.1, -0.1], [1.05, 0.08, 0.1]];
   const extent = 1.55;
@@ -118,20 +115,26 @@ export function buildScene(kind, symbol, progress = 0, time = 0) {
       x = reflect(gasSeeds[i][0] + time * (i % 2 ? 0.32 : -0.29), 1.15);
       y = reflect(gasSeeds[i][1] + time * (i % 3 ? -0.26 : 0.35), 1.12);
       z = reflect(gasSeeds[i][2] + time * (i % 2 ? -0.24 : 0.31), 1.15);
+    } else if (state === 'liquid') {
+      const layer = Math.floor(i / 6);
+      const angle = (i % 6) * Math.PI / 3 + layer * 0.5 + (layer ? -0.22 : 0.34) * time;
+      const radius = 0.92 + 0.13 * Math.sin(time * 1.3 + i * 1.6);
+      x = Math.cos(angle) * radius;
+      y = layer * 0.68 - 0.96 + 0.06 * Math.sin(time * 1.6 + i);
+      z = Math.sin(angle) * radius;
     } else {
-      const motion = state === 'liquid' ? 0.12 : 0.017;
+      const motion = 0.017;
       x = (i % 3 - 1) * 0.87 + Math.sin(time * 1.4 + i) * motion;
       y = (Math.floor(i / 3) % 2) * 0.64 - 0.95 + Math.cos(time * 1.9 + i * 2) * motion;
       z = (Math.floor(i / 6) - 0.5) * 1.2 + Math.sin(time * 1.5 + i * 3) * motion;
     }
     if (isHalogen) {
       const angle = state === 'solid' ? 0 : time * 0.2 + i * 1.8;
-      const a = point(x - Math.cos(angle) * 0.19, y - Math.sin(angle) * 0.19, z);
-      const b = point(x + Math.cos(angle) * 0.19, y + Math.sin(angle) * 0.19, z);
-      line(a, b, '#d9e7ed', 0.09);
-      ball(a, 0.215, colour, symbol);
-      ball(b, 0.215, colour, symbol);
-      scene.bonds++;
+      const a = point(x - Math.cos(angle) * 0.16, y - Math.sin(angle) * 0.16, z);
+      const b = point(x + Math.cos(angle) * 0.16, y + Math.sin(angle) * 0.16, z);
+      ball(a, 0.17, colour);
+      ball(b, 0.17, colour);
+      scene.molecules++;
     } else ball(point(x, y, z), 0.20, colour, symbol);
   }
   scene.state = state;
@@ -142,6 +145,11 @@ export function buildScene(kind, symbol, progress = 0, time = 0) {
 export function modelMarkup(id, kind, en) {
   const t = (zh, english) => en ? english : zh;
   const reaction = kind === 'water' || kind === 'acid';
+  const halogen = kind === 'halogen';
+  const caption = halogen ? t('每兩個相貼的球代表一個分子', 'Two touching spheres represent one molecule') : t('一個球代表一個原子', 'One sphere represents one atom');
+  const note = reaction ? t('簡化觀察模型；顏色與速度只作示意。', 'Simplified observation model; colours and speeds are illustrative.')
+    : halogen ? t('大小和距離只作示意。', 'Sizes and distances are illustrative.')
+    : t('粒子的顏色、大小和距離只作示意。', 'Particle colours, sizes and distances are illustrative.');
   return `<div class="classroom-3d" id="${id}" data-kind="${kind}">
     <div class="scene-heading"><b>3D ${t('模型', 'MODEL')}</b><span data-scene-phase aria-live="polite"></span></div>
     <canvas class="scene-canvas" tabindex="0" role="img" aria-label="${t('可旋轉三維模型。拖曳或用方向鍵旋轉，使用下方按鈕縮放。', 'Rotatable 3D model. Drag or use arrow keys to rotate; zoom with the controls below.')}">${t('三維教學模型；文字觀察列在模型旁。', '3D teaching model; the observation is also described beside the model.')}</canvas>
@@ -152,8 +160,8 @@ export function modelMarkup(id, kind, en) {
       <button type="button" data-view="in" aria-label="${t('放大模型', 'Zoom in')}"><svg aria-hidden="true"><use href="../classroom-icons.svg#zoom-in"/></svg></button>
       <button type="button" data-view="reset" aria-label="${t('重設視角', 'Reset view')}"><svg aria-hidden="true"><use href="../classroom-icons.svg#reset"/></svg></button>
     </div></div>
-    <div class="scene-playback"><button type="button" class="scene-play" data-play></button>${reaction ? `<button type="button" data-restart>${t('重新開始', 'Restart')}</button><label class="scene-timeline"><span>${t('反應進度', 'Reaction progress')}</span><input type="range" min="0" max="100" value="0" step="1" data-progress /></label>` : `<span class="particle-caption">${t('一個球代表一個原子', 'One sphere represents one atom')}</span>`}</div>
-    <p class="scene-note">${reaction ? t('簡化觀察模型；顏色與速度只作示意。', 'Simplified observation model; colours and speeds are illustrative.') : t('粒子的顏色、大小和距離只作示意。', 'Particle colours, sizes and distances are illustrative.')}</p>
+    <div class="scene-playback"><button type="button" class="scene-play" data-play></button>${reaction ? `<button type="button" data-restart>${t('重新開始', 'Restart')}</button><label class="scene-timeline"><span>${t('反應進度', 'Reaction progress')}</span><input type="range" min="0" max="100" value="0" step="1" data-progress /></label>` : `<span class="particle-caption">${caption}</span>`}</div>
+    <p class="scene-note">${note}</p>
   </div>`;
 }
 
@@ -215,9 +223,9 @@ export function createClassroomModel(root, initialSymbol, en) {
       } else if (shape.type === 'sphere') {
         const radius = shape.radius * scale * p.factor;
         const gradient = ctx.createRadialGradient(p.x - radius * 0.32, p.y - radius * 0.4, radius * 0.02, p.x, p.y, radius);
-        gradient.addColorStop(0, shape.bubble ? '#ffffffbb' : '#f7ffff');
+        gradient.addColorStop(0, shape.bubble ? '#ffffffbb' : kind === 'halogen' ? '#fafafa' : '#f7ffff');
         gradient.addColorStop(0.28, shape.bubble ? '#bdefff40' : shape.colour);
-        gradient.addColorStop(1, shape.bubble ? '#a6dbe57a' : '#23374b');
+        gradient.addColorStop(1, shape.bubble ? '#a6dbe57a' : kind === 'halogen' ? '#5b5b5b' : '#23374b');
         ctx.beginPath(); ctx.arc(p.x, p.y, radius, 0, Math.PI * 2); ctx.fillStyle = gradient; ctx.fill();
         if (shape.bubble) { ctx.strokeStyle = '#d8f8ff'; ctx.lineWidth = 0.75; ctx.stroke(); }
         if (shape.label && radius > 9) { ctx.fillStyle = '#ffffff'; ctx.font = `700 ${Math.max(10, radius * 0.8)}px Arial`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(shape.label, p.x, p.y); }
