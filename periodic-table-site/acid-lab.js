@@ -1,6 +1,6 @@
 const samples = [
-  { tube:'A', symbol:'Ca', name:['鈣','Calcium'], product:['氯化鈣','calcium chloride'], reacts:true, bubbles:14 },
-  { tube:'B', symbol:'Mg', name:['鎂','Magnesium'], product:['氯化鎂','magnesium chloride'], reacts:true, bubbles:8 },
+  { tube:'A', symbol:'Ca', name:['鈣','Calcium'], product:['氯化鈣','calcium chloride'], reacts:true, bubbles:22 },
+  { tube:'B', symbol:'Mg', name:['鎂','Magnesium'], product:['氯化鎂','magnesium chloride'], reacts:true, bubbles:6 },
   { tube:'C', symbol:'C', name:['碳','Carbon'], reacts:false, bubbles:0 },
 ];
 
@@ -40,7 +40,7 @@ export function acidLabMarkup(t) {
     <div class="acid-lab-bench">
       <div class="acid-run">
         <button type="button" data-acid-run></button>
-        <span>${t('由頭依次示範 A、B、C，並自動記錄結果。','Start a fresh run of A, B and C and record the results automatically.')}</span>
+        <span>${t('三支試管同時開始，方便比較氣泡，再自動記錄結果。','Start all three tubes at the same time to compare the bubbles, then record the results automatically.')}</span>
       </div>
       <div class="acid-stations" role="group" aria-label="${t('選擇試管','Choose a test tube')}">${samples.map(sample => tubeMarkup(sample,t)).join('')}</div>
       <div class="acid-controls">
@@ -85,8 +85,8 @@ export function setupAcidLab(t) {
   const run = lab.querySelector('[data-acid-run]');
   const selectors = [...lab.querySelectorAll('[data-select]')];
   const pop = new Audio(new URL('./splint-pop.wav', import.meta.url));
-  const runAudio = new Audio(new URL('./all-tubes-pop.wav', import.meta.url));
-  // The two pops in runAudio start 390 ms after each of the first two splint tests.
+  const runAudio = new Audio(new URL('./parallel-tubes-pop.wav', import.meta.url));
+  // The shared pop cue follows the simultaneous splint tests by 390 ms.
   const splintAt = 2300;
   const recordAt = 3100;
   pop.preload = 'auto';
@@ -98,7 +98,9 @@ export function setupAcidLab(t) {
   function render() {
     const sample = samples[selected];
     const stage = stages[selected];
-    lab.querySelector('[data-acid-title]').textContent = t(`試管 ${sample.tube} · ${sample.name[0]}`, `Tube ${sample.tube} · ${sample.name[1]}`);
+    lab.querySelector('[data-acid-title]').textContent = running
+      ? t('同時比較 A、B、C','Compare tubes A, B and C')
+      : t(`試管 ${sample.tube} · ${sample.name[0]}`, `Tube ${sample.tube} · ${sample.name[1]}`);
     add.textContent = t(`加入${sample.name[0]}`, `Add ${sample.name[1].toLowerCase()}`);
     run.textContent = running ? t('停止自動實驗','Stop automatic run') : t('一次完成三支試管','Run all three tubes');
     add.disabled = running || stage !== 'ready';
@@ -115,7 +117,9 @@ export function setupAcidLab(t) {
       ? t(' 燃燒的木條發出「噗」聲，氣體是氫氣。',' The gas burns with a squeaky pop, identifying it as hydrogen.')
       : t(' 木條沒有發出「噗」聲，沒有氣體產生。',' There is no pop. No gas was produced.');
     if (recorded.has(sample.tube)) message += t(' 已記錄結果。',' Result recorded.');
-    if (running) message = t(`試管 ${sample.tube}：`, `Tube ${sample.tube}: `) + message;
+    if (running) message = stage === 'tested'
+      ? t('鈣和鎂的氣體測試呈陽性，兩支試管都產生氫氣。碳沒有產生氣體。','Both calcium and magnesium give a positive pop test for hydrogen. Carbon produces no gas.')
+      : t('比較同一時間的氣泡：鈣冒出的氣泡較密，鎂較疏，碳沒有氣泡。','Compare at the same moment: calcium fizzes more vigorously than magnesium. Carbon produces no bubbles.');
     lab.querySelector('[data-acid-feedback]').textContent = message;
 
     samples.forEach((item,index) => {
@@ -123,14 +127,15 @@ export function setupAcidLab(t) {
       const tube = lab.querySelector(`[data-tube="${item.tube}"]`);
       tube.dataset.stage = current;
       selectors[index].disabled = running;
-      selectors[index].setAttribute('aria-pressed', String(index === selected));
+      selectors[index].setAttribute('aria-pressed', String(!running && index === selected));
       const saved = recorded.has(item.tube);
       tube.querySelector('[data-tube-progress]').textContent = saved ? t('已記錄','Recorded')
         : current === 'tested' ? t('待記錄','Ready to record')
         : current === 'observed' ? t('待測試','Ready to test') : t('未開始','Ready');
       const cells = lab.querySelectorAll(`[data-result="${item.tube}"] td`);
       const mark = !saved ? '—' : item.reacts ? t('有','Yes') : t('沒有','No');
-      cells[0].textContent = mark;
+      cells[0].textContent = !saved || !item.reacts ? mark
+        : item.symbol === 'Ca' ? t('有，冒泡較快','Yes, faster fizzing') : t('有，冒泡較慢','Yes, slower fizzing');
       cells[1].textContent = mark;
       cells[2].textContent = !saved ? '—' : item.reacts ? t('氫氣 (H₂)','Hydrogen (H₂)') : t('沒有','None');
       const equation = lab.querySelector(`[data-equation="${item.tube}"]`);
@@ -179,24 +184,6 @@ export function setupAcidLab(t) {
     recorded.clear();
     lab.querySelectorAll('details[open]').forEach(detail => { detail.open = false; });
   }
-  function runTube(index) {
-    selected = index;
-    stages[index] = 'observed';
-    render();
-    timer = setTimeout(() => {
-      stages[index] = 'tested';
-      render();
-      timer = setTimeout(() => {
-        recorded.add(samples[index].tube);
-        if (index + 1 < samples.length) runTube(index + 1);
-        else {
-          stopAutomaticRun();
-          render();
-          lab.querySelector('[data-acid-feedback]').textContent = t('三支試管的結果已記錄。','All three results have been recorded.');
-        }
-      }, recordAt - splintAt);
-    }, splintAt);
-  }
   run.addEventListener('click', () => {
     if (running) {
       stopAutomaticRun();
@@ -204,11 +191,25 @@ export function setupAcidLab(t) {
       return;
     }
     clearResults();
+    render();
+    // Commit the ready state so a stopped run can replay its bubble animation.
+    void lab.offsetWidth;
     running = true;
+    stages.fill('observed');
+    render();
     runAudio.currentTime = 0;
-    // Use a single audio track started by the click, including the two timed cues.
+    // Start playback on the gesture so touch browsers allow sound.
     void runAudio.play().catch(() => {});
-    runTube(0);
+    timer = setTimeout(() => {
+      stages.fill('tested');
+      render();
+      timer = setTimeout(() => {
+        for (const sample of samples) recorded.add(sample.tube);
+        stopAutomaticRun();
+        render();
+        lab.querySelector('[data-acid-feedback]').textContent = t('三支試管的結果已一併記錄。','All three results have been recorded together.');
+      }, recordAt - splintAt);
+    }, splintAt);
   });
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden || !running) return;
