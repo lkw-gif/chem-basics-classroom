@@ -44,7 +44,19 @@ export function phaseComparisonMarkup(t) {
         <span><b id="phase-temperature-label"></b> <output id="phase-temperature" for="phase-temperature-range" aria-hidden="true"></output></span>
         <input id="phase-temperature-range" type="range" step="1" min="-200" max="100" value="${initialTemperature}" aria-labelledby="phase-temperature-label">
       </label>
-      <div class="phase-scale">
+      <p class="phase-reading" data-phase-reading role="status" aria-atomic="true"></p>
+    </div>
+    <div class="phase-comparison-data">
+      <table>
+        <caption>${t('各元素的溫度和狀態（氣壓不變）','Temperature and state of each element (constant pressure)')}</caption>
+        <thead><tr><th scope="col">${t('元素','Element')}</th><th scope="col">${t('熔點','Melting point')}</th><th scope="col">${t('沸點','Boiling point')}</th><th scope="col">${t('溫度與狀態','Temperature and state')}</th></tr></thead>
+        <tbody>${samples.map(sample => `<tr data-phase-row="${sample.name}"><th scope="row">${sample.name}</th><td>${degrees(sample.melting)}</td><td>${degrees(sample.boiling)}</td><td><div class="phase-table-reading"><span data-phase-row-temperature></span><strong data-phase-result></strong></div></td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+    <div class="phase-examples" role="group" aria-labelledby="phase-examples-title">
+      <h3 id="phase-examples-title"></h3>
+      <p>${t('點一下固體、液體或氣體試一個例子。點熔點或沸點，看看剛好達到該溫度時的結果。','Tap Solid, Liquid or Gas to try an example. Tap either transition point to test that exact temperature.')}</p>
+      <div class="phase-example-buttons">
         <button type="button" data-phase-band="solid"><b>${t('固體','Solid')}</b><small>${t('低於熔點','Below melting point')}</small></button>
         <button type="button" data-phase-edge="melting">
           <span>${t('熔點','Melting point')}</span><strong data-melting-value></strong>
@@ -55,15 +67,6 @@ export function phaseComparisonMarkup(t) {
         </button>
         <button type="button" data-phase-band="gas"><b>${t('氣體','Gas')}</b><small>${t('高於沸點','Above boiling point')}</small></button>
       </div>
-      <p class="phase-reading" data-phase-reading role="status" aria-atomic="true"></p>
-    </div>
-    <div class="phase-comparison-data">
-      <table>
-        <caption>${t('各元素的溫度和狀態（氣壓不變）','Temperature and state of each element (constant pressure)')}</caption>
-        <thead><tr><th scope="col">${t('元素','Element')}</th><th scope="col">${t('熔點','Melting point')}</th><th scope="col">${t('沸點','Boiling point')}</th><th scope="col">${t('溫度與狀態','Temperature and state')}</th></tr></thead>
-        <tbody>${samples.map(sample => `<tr data-phase-row="${sample.name}"><th scope="row">${sample.name}</th><td>${degrees(sample.melting)}</td><td>${degrees(sample.boiling)}</td><td><div class="phase-table-reading"><span data-phase-row-temperature></span><strong data-phase-result></strong></div></td></tr>`).join('')}</tbody>
-      </table>
-      <p>${t('點一下固體、液體或氣體試一個例子。點熔點或沸點，看看剛好達到該溫度時的結果。','Tap Solid, Liquid or Gas to try an example. Tap either transition point to test that exact temperature.')}</p>
     </div>
   </section>`;
 }
@@ -73,6 +76,7 @@ export function setupPhaseComparison(t) {
   if (!root) return;
   const range = root.querySelector('input[type="range"]');
   const rangeLabel = root.querySelector('#phase-temperature-label');
+  const exampleTitle = root.querySelector('#phase-examples-title');
   const output = root.querySelector('#phase-temperature');
   const reading = root.querySelector('[data-phase-reading]');
   const sampleButtons = [...root.querySelectorAll('[data-phase-sample]')];
@@ -95,6 +99,7 @@ export function setupPhaseComparison(t) {
     range.value = String(temperature);
     range.setAttribute('aria-valuetext', point);
     rangeLabel.textContent = t(`元素 ${selected.name} 的溫度`, `Temperature of element ${selected.name}`);
+    exampleTitle.textContent = t(`試一試元素 ${selected.name} 的不同溫度`, `Try different temperatures for element ${selected.name}`);
     output.textContent = point;
     root.querySelector('[data-melting-value]').textContent = degrees(selected.melting);
     root.querySelector('[data-boiling-value]').textContent = degrees(selected.boiling);
