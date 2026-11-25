@@ -18,10 +18,12 @@ const models = await readFile(resolve(output, 'models-3d.js'));
 const lab = await readFile(resolve(output, 'acid-lab.js'));
 const labCss = await readFile(resolve(output, 'acid-lab.css'));
 const waterDemo = await readFile(resolve(output, 'alkali-demo.js'));
+const phaseComparison = await readFile(resolve(output, 'phase-comparison.js'));
 const versionedJs = js.toString()
   .replace("from './models-3d.js'", `from './models-3d.js?v=${version(models)}'`)
   .replace("from './acid-lab.js'", `from './acid-lab.js?v=${version(lab)}'`)
-  .replace("from './alkali-demo.js'", `from './alkali-demo.js?v=${version(waterDemo)}'`);
+  .replace("from './alkali-demo.js'", `from './alkali-demo.js?v=${version(waterDemo)}'`)
+  .replace("from './phase-comparison.js'", `from './phase-comparison.js?v=${version(phaseComparison)}'`);
 await writeFile(resolve(output, 'site.js'), versionedJs);
 const page = (await readFile(resolve(output, 'index.html'), 'utf8'))
   .replace('href="./styles.css"', `href="./styles.css?v=${version(css)}"`)

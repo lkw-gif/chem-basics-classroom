@@ -249,3 +249,42 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 .alkali-moments span { color:#06745c; font-weight:700; }
 .alkali-moments [aria-current="step"] { background:#e6f4ee; border-color:#75ab9a; }
 @media(max-width:1010px) { .alkali-layout { grid-template-columns:minmax(0,1fr); } }
+
+/* Read a single temperature against both thresholds before comparing all four examples. */
+.phase-comparison { margin:20px 0; container-type:inline-size; scroll-margin-top:92px; color:#172c40; }
+.phase-comparison-head,.phase-workspace,.phase-comparison-data { padding:clamp(10px,3cqi,26px); }
+.phase-comparison-head h2 { margin:0 0 6px; font-size:clamp(21px,4cqi,30px); line-height:1.25; }
+.phase-comparison p { margin:0; color:#3d586b; }
+.phase-workspace { background:#f1f7fa; border-block:1px solid #dce5eb; }
+.phase-controls { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; }
+.phase-choice-group { display:flex; align-items:center; flex-wrap:wrap; gap:5px; }
+.phase-choice-group > span { font-size:15px; font-weight:700; padding-inline-end:4px; }
+.phase-comparison button { border:1px solid #b5cbd7; color:#213e50; background:white; border-radius:8px; cursor:pointer; min-height:44px; min-width:44px; padding:5px 8px; font-size:15px; font-weight:700; }
+.phase-comparison button[aria-pressed="true"] { background:#06745c; color:white; border-color:#06745c; }
+.phase-comparison :is(button,input):focus-visible { outline:3px solid #245fa5; outline-offset:2px; }
+.phase-slider { display:grid; gap:3px; padding:12px 0 9px; font-size:16px; font-weight:700; }
+.phase-slider > span { display:flex; justify-content:space-between; align-items:center; gap:6px; }
+.phase-slider output { padding:1px 8px; border-radius:7px; background:#e2f1e9; color:#084f3e; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.phase-slider input { width:100%; margin:0; min-height:38px; accent-color:#06745c; }
+.phase-scale { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); gap:5px; }
+.phase-scale [data-phase-band] { display:grid; align-content:center; gap:3px; text-align:center; border-radius:8px; padding:8px 4px; border:1px solid #c4d6df; background:#fff; line-height:1.35; }
+.phase-scale [data-phase-band] small { color:#3d586b; font-size:13px; }
+.phase-scale [data-phase-band].is-current { background:#dff1e9; color:#084f3e; border-color:#06745c; box-shadow:inset 0 0 0 1px #06745c; }
+.phase-scale [data-phase-edge] { display:grid; place-content:center; line-height:1.25; font-size:13px; }
+.phase-scale strong { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.phase-comparison .phase-reading { display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; margin:11px 0 0; padding:9px 11px; border-left:3px solid #06745c; border-radius:4px; background:white; color:#172c40; font-variant-numeric:tabular-nums; }
+.phase-comparison-data table { width:100%; table-layout:fixed; border-collapse:collapse; font-size:clamp(13px,2.4cqi,17px); line-height:1.35; }
+.phase-comparison-data caption { color:#172c40; text-align:left; font-weight:700; font-size:clamp(16px,3cqi,21px); padding:0 0 9px; }
+.phase-comparison-data :is(th,td) { text-align:left; border-bottom:1px solid #dce5eb; padding:9px 5px; font-variant-numeric:tabular-nums; }
+.phase-comparison-data th:first-child { width:17%; }
+.phase-comparison-data thead th:last-child { width:31%; }
+.phase-comparison-data thead { background:#edf4f8; }
+.phase-comparison-data tr.is-selected { background:#e6f4ee; }
+.phase-comparison-data tr.is-selected th { box-shadow:inset 3px 0 #06745c; }
+.phase-comparison-data [data-phase-result] { font-weight:700; overflow-wrap:anywhere; }
+.phase-comparison-data > p { margin:11px 0 0; font-size:14px; }
+@container (width < 555px) {
+  .phase-scale { grid-template-columns:1fr; gap:4px; }
+  .phase-scale [data-phase-band] { display:flex; justify-content:space-between; align-items:center; text-align:left; padding:7px 10px; }
+  .phase-scale [data-phase-edge] { display:flex; gap:6px; justify-content:center; align-items:center; min-height:44px; }
+}
