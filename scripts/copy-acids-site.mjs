@@ -9,7 +9,7 @@ const destination=resolve(base,'acids-and-bases');
 if(!destination.startsWith(base+sep))throw new Error('Acid output escaped its target directory');
 await mkdir(destination,{recursive:true});
 await cp(resolve(root,'acids-site'),destination,{recursive:true});
-const files=['curriculum.js','lessons.js','diagrams.js','questions-early.js','questions-late.js','questions-supplement.js','questions.js','tutoring.js','site.js','site.css'];
+const files=['curriculum.js','lessons.js','diagrams.js','questions-early.js','questions-late.js','questions-supplement.js','questions.js','tutoring.js','titration-data.js','titration-lab.js','titration-lab.css','site.js','site.css'];
 // One content version covers the complete module graph, including indirect imports.
 const hash=createHash('sha256');for(const name of files)hash.update(await readFile(resolve(destination,name)));
 const version=hash.digest('hex').slice(0,12);
@@ -17,8 +17,12 @@ for(const name of files.filter(x=>x.endsWith('.js'))){
  const path=resolve(destination,name),text=await readFile(path,'utf8');
  await writeFile(path,text.replace(/from '(\.\/[^']+\.js)'/g,`from '$1?v=${version}'`));
 }
-const template=(await readFile(resolve(root,'acids-site/index.html'),'utf8')).replace('href="./site.css"',`href="./site.css?v=${version}"`).replace('src="./site.js"',`src="./site.js?v=${version}"`);
+const template=(await readFile(resolve(root,'acids-site/index.html'),'utf8')).replace(/href="\.\/(site|titration-lab)\.css"/g,`href="./$1.css?v=${version}"`).replace('src="./site.js"',`src="./site.js?v=${version}"`);
 await writeFile(resolve(destination,'index.html'),template);
 for(const l of lessons){const dir=resolve(destination,'sessions',l.id);await mkdir(dir,{recursive:true});await writeFile(resolve(dir,'index.html'),template.replace('<head>','<head><base href="../../"/>').replace('<title>酸與鹼 · DSE CHEM</title>',`<title>${l.title[0]} · DSE CHEM</title>`));}
 const revision=resolve(destination,'revision');await mkdir(revision,{recursive:true});await writeFile(resolve(revision,'index.html'),template.replace('<head>','<head><base href="../"/>').replace('<title>酸與鹼 · DSE CHEM</title>','<title>全課重點與練習索引 · DSE CHEM</title>'));
-console.log(`Created DSE acids: ${lessons.length} lesson routes, curriculum home and revision index in ${base}.`);
+const lab=resolve(destination,'titration-lab');await mkdir(lab,{recursive:true});
+await writeFile(resolve(lab,'index.html'),template.replace('<head>','<head><base href="../"/>')
+  .replace('<title>酸與鹼 · DSE CHEM</title>','<title>滴定 Virtual Lab · DSE CHEM</title>')
+  .replace('DSE 酸與鹼自學：36 項課程目標、雙語 Notes、示範及參考答案自評練習。','DSE 化學滴定 Virtual Lab：五組滴定管讀數、真題練習、回滴及雙語答題字眼。'));
+console.log(`Created DSE acids: ${lessons.length} lesson routes, curriculum home, revision index and titration lab in ${base}.`);
